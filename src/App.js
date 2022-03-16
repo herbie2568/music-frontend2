@@ -1,25 +1,78 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
+import Add from './components/Add'
+import Edit from './components/Edit'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const App = () => {
+
+let [songs, setSongs] = useState([])
+
+const getSong = () => {
+ axios
+   .get('https://glacial-wave-24104.herokuapp.com/api/songs')
+   .then(
+     (response) => setSongs(response.data),
+     (err) => console.error(err)
+   )
+   .catch((error) => console.error(error))
 }
+
+const handleDelete = (event) => {
+  axios
+    .delete('https://glacial-wave-24104.herokuapp.com/api/songs/' + event.target.value)
+    .then((response) => {
+      getSong()
+    })
+}
+
+const handleUpdate = (editSong) => {
+  console.log(editSong.id)
+  axios
+    .put('https://glacial-wave-24104.herokuapp.com/api/songs/' + editSong.id, editSong)
+    .then((response) => {
+      getSong()
+    })
+}
+
+const handleCreate = (addSong) => {
+  axios
+    .post('https://glacial-wave-24104.herokuapp.com/api/songs', addSong)
+    .then((response) => {
+      console.log(response)
+      getSong()
+    })
+}
+
+
+useEffect(() => {
+ getSong()
+}, [])
+
+  return (
+    <>
+      <h1>Music App</h1>
+      <div className="songContainer">
+{songs.map((song) => {
+return (
+<div className="songCard" key={song.id}>
+ <h4 className = 'name'>{song.name}</h4>
+
+ <h5>Artist: {song.artist}</h5>
+ <h5>Genre: {song.genre}</h5>
+ <img className = 'songImage' src = {song.image}></img>
+ <Edit handleUpdate={handleUpdate} id={song.id} /><br/>
+ <button className = 'deleteButton' onClick={handleDelete} value={song.id}>
+   Delete
+ </button>
+</div>
+)
+})}
+    <Add className = 'addForm' handleCreate={handleCreate}/>
+</div>
+
+    </>
+  )
+}
+
 
 export default App;
