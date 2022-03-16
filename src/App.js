@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import Add from './components/Add'
 import Edit from './components/Edit'
+import './App.css';
 
 const App = () => {
 
@@ -67,8 +68,9 @@ return (
 </div>
 )
 })}
-    <Add className = 'addForm' handleCreate={handleCreate}/>
+
 </div>
+<Add className = 'addForm' handleCreate={handleCreate}/>
 
     </>
   )
