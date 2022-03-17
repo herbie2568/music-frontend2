@@ -17,7 +17,6 @@ const Add = (props) => {
   let emptySong = { name: '', artist: '', genre: '', image: '', audio: '' }
   const [song, setSong] = useState(emptySong)
   return (
-<<<<<<< HEAD
     <div className='addForm'>
       <h3>Add Song</h3>
       <form onSubmit={handleSubmit}>
@@ -47,36 +46,6 @@ const Add = (props) => {
         <label htmlFor="audio">audio</label>
         <input type="file" id="audio" name="audio" accept="audio/*"></input>
         <input className='addInput' type="text" name="audio" value={song.audio} onChange={handleChange} placeholder='Audio file...' />
-=======
-    <div className = 'addForm'>
-    <h3>Add Song</h3>
-    <form onSubmit={handleSubmit}>
-        <label htmlFor="name"></label>
-        <input className = 'addInput' type="text" name="name" value={song.name} onChange={handleChange} placeholder = 'Name...'/>
-        <br />
-        <br />
-        <label htmlFor="artist"></label>
-        <input className = 'addInput' type="text" name="artist" value={song.artist} onChange={handleChange} placeholder = 'Artist...'/>
-        <br />
-        <br />
-
-        <label htmlFor = 'genre'></label>
-        <select name = 'genre' id = 'genre' value = {song.genre} onChange = {handleChange}>
-            <option value = 'pop'>Pop</option>
-            <option value = 'rock'>Rock</option>
-            <option value = 'techno'>Techno</option>
-            <option value = 'hiphop'>Hip-hop</option>
-
-        </select><br/><br/>
-
-        <label htmlFor="image"></label>
-        <input className = 'addInput' type="text" name="image" value={song.image} onChange={handleChange} placeholder = 'Image URL...'/>
-        <br />
-        <br />
-
-        <label htmlFor="audio"></label>
-        <input className = 'addInput' type="text" name="audio" value={song.audio} onChange={handleChange} placeholder = 'Audio file...'/>
->>>>>>> c9f3be57cc05c5ff625a21167d2fba77942d6032
         <br />
         <br />
 
