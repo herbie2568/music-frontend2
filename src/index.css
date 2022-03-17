@@ -1,3 +1,129 @@
+:root {
+  --white: #fff;
+  --active-color: #00aeb0;
+}
+
 img {
     width: 250px;
+}
+.audioPlayer {
+  display: flex;
+  align-items: center;
+  width: 700px;
+}
+.audioPlayer1 {
+  display: none;
+}
+
+.forwardBackward {
+  background-color: none;
+  border: none;
+  display: flex;
+  align-items: center;
+  font-family: monospace;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.forwardBackward:hover {
+  color: aqua;
+}
+
+.playPause {
+  background-color: none;
+  border: none;
+  border-radius: 50%;
+  width: 75px;
+  height: 75px;
+  font-size: 32px;
+  color: beige;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+.currentTime, .duration {
+  font-family: monospace;
+  font-size: 16px;
+}
+
+.currentTime {
+  margin-left: 25px;
+}
+
+.progressBar {
+  --bar-bg: pink;
+  --seek-before-width: 100px;
+  --seek-before-color: rgb(0, 218, 65);
+  --knobby: purple;
+  --selectedKnobby: teal;
+
+  appearance: none;
+  background: tan;
+  border-radius: 10px;
+  position: relative;
+  width: 100%;
+  height: 11px;
+  outline: none;
+}
+/* for safari */
+.progressBar::-webkit-slider-runnable-track {
+    --bar-bg: pink;
+  --seek-before-width: 100px;
+  --seek-before-color: yellow;
+  --knobby: rgb(48, 8, 48);
+  --selectedKnobby: teal;
+}
+
+.progressBar::before {
+  content: '';
+  height: 11px;
+  widith:var(--seek-before-width);
+  background-color: var(--seek-before-color);
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  cursor: pointer;
+}
+
+.progressBar::-webkit-silder-thumb{
+  -webkit-appearance: none;
+  height: 15px;
+  width: 15px;
+  border-radius: 50%;
+  border: none;
+  background-color: var(--knoby);
+  cursor: pointer;
+  position: relative;
+  margin: -2px 0 0 0;
+  z-index: 3;
+  box-sizing: border-box
+}
+
+.progressBar:active::-webkit-slider-thumb{
+  transform: scale(1.2);
+  background: var(--selectedKnobby);
+}
+
+.songCard-playing {
+  background: linear-gradient(45deg, var(--active-color) 20%, transparent 100%) no-repeat;
+  z-index: -1;
+  animation: colorChange 5s alternate infinite;
+}
+
+.songCard {
+  background: linear-gradient(45deg, var(--active-color) 20%, transparent 100%) no-repeat;
+  z-index: -1;
+}
+
+@keyframes colorChange {
+  from {
+    filter: hue-rotate(0deg);
+  }
+	to {
+    filter: hue-rotate(360deg);
+  }
 }
