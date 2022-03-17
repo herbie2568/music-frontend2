@@ -1,129 +1,115 @@
+
 :root {
-  --white: #fff;
+  --white: rgb(108, 177, 255);
   --active-color: #00aeb0;
 }
 
 img {
     width: 250px;
 }
-.audioPlayer {
-  display: flex;
-  align-items: center;
-  width: 700px;
-}
-.audioPlayer1 {
-  display: none;
-}
 
-.forwardBackward {
-  background-color: none;
-  border: none;
-  display: flex;
-  align-items: center;
-  font-family: monospace;
-  font-size: 16px;
-  cursor: pointer;
-}
-
-.forwardBackward:hover {
-  color: aqua;
-}
-
-.playPause {
-  background-color: none;
-  border: none;
-  border-radius: 50%;
-  width: 75px;
-  height: 75px;
-  font-size: 32px;
-  color: beige;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-}
-.currentTime, .duration {
-  font-family: monospace;
-  font-size: 16px;
-}
-
-.currentTime {
-  margin-left: 25px;
-}
-
-.progressBar {
-  --bar-bg: pink;
-  --seek-before-width: 100px;
-  --seek-before-color: rgb(0, 218, 65);
-  --knobby: purple;
-  --selectedKnobby: teal;
-
-  appearance: none;
-  background: tan;
-  border-radius: 10px;
+#player-wrapper {
   position: relative;
-  width: 100%;
-  height: 11px;
-  outline: none;
-}
-/* for safari */
-.progressBar::-webkit-slider-runnable-track {
-    --bar-bg: pink;
-  --seek-before-width: 100px;
-  --seek-before-color: yellow;
-  --knobby: rgb(48, 8, 48);
-  --selectedKnobby: teal;
+  padding: 3%;
 }
 
-.progressBar::before {
-  content: '';
-  height: 11px;
-  widith:var(--seek-before-width);
-  background-color: var(--seek-before-color);
-  border-top-left-radius: 10px;
-  border-bottom-left-radius: 10px;
+#react-player {
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 2;
-  cursor: pointer;
 }
 
-.progressBar::-webkit-silder-thumb{
-  -webkit-appearance: none;
-  height: 15px;
-  width: 15px;
-  border-radius: 50%;
-  border: none;
-  background-color: var(--knoby);
-  cursor: pointer;
+.player-wrapper {
   position: relative;
-  margin: -2px 0 0 0;
-  z-index: 3;
-  box-sizing: border-box
+  padding-top: 56.25%; /* 720 / 1280 = 0.5625 */
 }
 
-.progressBar:active::-webkit-slider-thumb{
-  transform: scale(1.2);
-  background: var(--selectedKnobby);
+.react-player {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+audio::-webkit-media-controls-enclosure, video::-webkit-media-controls-enclosure {
+    width: 100%;
+    max-width: 800px;
+    height: 30px;
+    flex-shrink: 0;
+    bottom: 0;
+    text-indent: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+audio::-webkit-media-controls-panel{
+  background-color: tan;
+}
+audio::-webkit-media-controls-play-button {
+    -webkit-appearance: media-play-button;
+    display: flex;
+    flex: none;
+    border: none;
+    box-sizing: border-box;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    margin-left: 9px;
+    margin-right: 9px;
+    padding: 0;
+    background-color: initial;
+    color: inherit;
+}
+audio::-webkit-media-controls-play-button {
+    -webkit-appearance: media-play-button;
+    box-sizing: border-box;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    margin-left: 9px;
+    margin-right: 9px;
+    padding: 0;
+    background-color: initial;
+    color: white;
+}
+audio::-webkit-media-controls-current-time-display, audio::-webkit-media-controls-time-remaining-display {
+    -webkit-appearance: media-current-time-display;
+    -webkit-user-select: none;
+    flex: none;
+    display: flex;
+    border: none;
+    cursor: default;
+    height: 30px;
+    margin: 0 9px 0 0;
+    padding: 0;
+    line-height: 30px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    font-weight: bold;
+    font-style: normal;
+    color: white;
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0;
+    text-shadow: none;
+    text-decoration: none;
+}
+audio::-webkit-media-controls-timeline {
+    -webkit-appearance: media-slider;
+    background-color: transparent;
+    min-width: 25px;
+    border: initial;
+    color: inherit;
+}
+audio::-webkit-media-controls-volume-slider {
+    -webkit-appearance: media-volume-slider;
+    display: flex;
+    flex: 1 1.9 auto;
+    height: 8px;
+    max-width: 70px;
+    margin: 0 15px 0 0;
+    padding: 0;
+    background-color: transparent;
+    min-width: 15px;
+    border: initial;
+    color: inherit;
 }
 
-.songCard-playing {
-  background: linear-gradient(45deg, var(--active-color) 20%, transparent 100%) no-repeat;
-  z-index: -1;
-  animation: colorChange 5s alternate infinite;
-}
-
-.songCard {
-  background: linear-gradient(45deg, var(--active-color) 20%, transparent 100%) no-repeat;
-  z-index: -1;
-}
-
-@keyframes colorChange {
-  from {
-    filter: hue-rotate(0deg);
-  }
-	to {
-    filter: hue-rotate(360deg);
-  }
-}
