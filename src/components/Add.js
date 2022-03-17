@@ -4,17 +4,17 @@ import React, { useState, useEffect } from 'react'
 const Add = (props) => {
 
 
-    const handleChange = (event) => {
-      setSong({ ...song, [event.target.name]: event.target.value })
-    }
+  const handleChange = (event) => {
+    setSong({ ...song, [event.target.name]: event.target.value })
+  }
 
-    const handleSubmit = (event) => {
-      event.preventDefault()
-      props.handleCreate(song)
-    }
+  const handleSubmit = (event) => {
+    event.preventDefault()
+    props.handleCreate(song)
+  }
 
 
-  let emptySong = { name: '', artist: '', genre: '', image: '', audio: ''}
+  let emptySong = { name: '', artist: '', genre: '', image: '', audio: '' }
   const [song, setSong] = useState(emptySong)
   return (
     <div className = 'addForm'>
@@ -44,12 +44,12 @@ const Add = (props) => {
         <br />
 
         <label htmlFor="audio"></label>
-        <input className = 'addInput' type="text" name="audio" value={song.audio} onChange={handleChange} placeholder = 'Audio file...'/>
+
         <br />
         <br />
 
-        <input className = 'submitButton' type="submit" />
-    </form>
+        <input className='submitButton' type="submit" />
+      </form>
     </div>
   )
 }
