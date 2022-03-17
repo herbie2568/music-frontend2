@@ -1,4 +1,3 @@
-
 :root {
   --white: rgb(108, 177, 255);
   --active-color: #00aeb0;
@@ -112,4 +111,3 @@ audio::-webkit-media-controls-volume-slider {
     border: initial;
     color: inherit;
 }
-
