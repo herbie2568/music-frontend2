@@ -17,35 +17,34 @@ const Add = (props) => {
   let emptySong = { name: '', artist: '', genre: '', image: '', audio: '' }
   const [song, setSong] = useState(emptySong)
   return (
-    <div className='addForm'>
-      <h3>Add Song</h3>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="name">name</label>
-        <input className='addInput' type="text" name="name" value={song.name} onChange={handleChange} placeholder='Name...' />
+    <div className = 'addForm'>
+    <h3>Add Song</h3>
+    <form onSubmit={handleSubmit}>
+        <label htmlFor="name"></label>
+        <input className = 'addInput' type="text" name="name" value={song.name} onChange={handleChange} placeholder = 'Name...'/>
         <br />
         <br />
-        <label htmlFor="artist">artist</label>
-        <input className='addInput' type="text" name="artist" value={song.artist} onChange={handleChange} placeholder='Artist...' />
-        <br />
-        <br />
-
-        <label htmlFor='genre'>genre</label>
-        <select name='genre' id='genre' value={song.genre} onChange={handleChange}>
-          <option value='pop'>Pop</option>
-          <option value='rock'>Rock</option>
-          <option value='techno'>Techno</option>
-          <option value='hiphop'>Hip-hop</option>
-
-        </select>
-        <label for='pop'>Pop</label>
-        <label htmlFor="image">image</label>
-        <input className='addInput' type="text" name="image" value={song.image} onChange={handleChange} placeholder='Image URL...' />
+        <label htmlFor="artist"></label>
+        <input className = 'addInput' type="text" name="artist" value={song.artist} onChange={handleChange} placeholder = 'Artist...'/>
         <br />
         <br />
 
-        <label htmlFor="audio">audio</label>
-        <input type="file" id="audio" name="audio" accept="audio/*"></input>
-        <input className='addInput' type="text" name="audio" value={song.audio} onChange={handleChange} placeholder='Audio file...' />
+        <label htmlFor = 'genre'></label>
+        <select name = 'genre' id = 'genre' value = {song.genre} onChange = {handleChange}>
+            <option value = 'pop'>Pop</option>
+            <option value = 'rock'>Rock</option>
+            <option value = 'techno'>Techno</option>
+            <option value = 'hiphop'>Hip-hop</option>
+
+        </select><br/><br/>
+
+        <label htmlFor="image"></label>
+        <input className = 'addInput' type="text" name="image" value={song.image} onChange={handleChange} placeholder = 'Image URL...'/>
+        <br />
+        <br />
+
+        <label htmlFor="audio"></label>
+
         <br />
         <br />
 
