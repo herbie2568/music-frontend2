@@ -2,9 +2,53 @@ import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
 import axios from 'axios'
 import Add from './components/Add'
 import Edit from './components/Edit'
+<<<<<<< HEAD
 import Euphoria from './assets/euphoria.mp3'
 import './App.css';
 import ReactPlayer from 'react-player'
+=======
+import './App.css';
+
+const App = () => {
+
+let [songs, setSongs] = useState([])
+
+const getSong = () => {
+ axios
+   .get('https://glacial-wave-24104.herokuapp.com/api/songs')
+   .then(
+     (response) => setSongs(response.data),
+     (err) => console.error(err)
+   )
+   .catch((error) => console.error(error))
+}
+
+const handleDelete = (event) => {
+  axios
+    .delete('https://glacial-wave-24104.herokuapp.com/api/songs/' + event.target.value)
+    .then((response) => {
+      getSong()
+    })
+}
+
+const handleUpdate = (editSong) => {
+  console.log(editSong.id)
+  axios
+    .put('https://glacial-wave-24104.herokuapp.com/api/songs/' + editSong.id, editSong)
+    .then((response) => {
+      getSong()
+    })
+}
+
+const handleCreate = (addSong) => {
+  axios
+    .post('https://glacial-wave-24104.herokuapp.com/api/songs', addSong)
+    .then((response) => {
+      console.log(response)
+      getSong()
+    })
+}
+>>>>>>> c9f3be57cc05c5ff625a21167d2fba77942d6032
 
 
 const AudioPlayer = () => {
@@ -65,6 +109,7 @@ const AudioPlayer = () => {
     <>
       <h1>Music App</h1>
 
+<<<<<<< HEAD
       <div className="{styles.audioPlayer}">
         {songs.map((song) => {
           return (
@@ -74,6 +119,21 @@ const AudioPlayer = () => {
                 <h4 className='name'>{song.name}</h4>
                 <h5>Artist: {song.artist}</h5>
                 <h5>Genre: {song.genre}</h5>
+=======
+ <h5>Artist: {song.artist}</h5>
+ <h5>Genre: {song.genre}</h5>
+ <img className = 'songImage' src = {song.image}></img>
+ <Edit handleUpdate={handleUpdate} id={song.id} /><br/>
+ <button className = 'deleteButton' onClick={handleDelete} value={song.id}>
+   Delete
+ </button>
+</div>
+)
+})}
+
+</div>
+<Add className = 'addForm' handleCreate={handleCreate}/>
+>>>>>>> c9f3be57cc05c5ff625a21167d2fba77942d6032
 
 
                 <div id='player-wrapper'>
