@@ -2,7 +2,9 @@ import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
 import axios from 'axios'
 import Add from './components/Add'
 import Edit from './components/Edit'
+
 import Register from './components/Register'
+
 import Euphoria from './assets/euphoria.mp3'
 import './App.css';
 import ReactPlayer from 'react-player'
@@ -81,6 +83,7 @@ const App = () => {
     )
     .catch((error) => console.error(error))
   }
+
 
 
 
