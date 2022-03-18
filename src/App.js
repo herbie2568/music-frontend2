@@ -40,6 +40,7 @@ const App = () => {
   const [errorMessage, setErrorMessage] = useState('')
   const [toggleLogout, setToggleLogout] = useState(false)
   const [currentUser, setCurrentUser] = useState({})
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
   // const [isPlaying, setIsPlaying] = useState(false);
   // const [url, setUrl] = useState(null)
   // const [controls, setControls] = useState(true)
@@ -50,6 +51,29 @@ const App = () => {
   // const [pause, setPause] = useState(null)
   // const [duration, setDuration] = useState(0)
   // const [loop, setLoop] = useState(false)
+  const handleSubmitLogin = async (event) => {
+    event.preventDefault()
+    try {
+      axios
+          .put('http://localhost:8000/api/useraccount/login', ({username, password}))
+          .then((response) => {
+            console.log(response.data)
+            setCurrentUser(response.data)
+            setIsAuthenticated(true)
+          })
+    } catch (err) {
+      setErrorMessage(err)
+    }
+    //console.log(user, password)
+    // handleLogin(event)
+  }
+
+  const handleLogout = (event) => {
+    setPassword('')
+    setUsername('')
+    setCurrentUser({})
+    setIsAuthenticated(false)
+  }
 
   const getAccountInfo = () => {
     axios
@@ -124,7 +148,7 @@ const App = () => {
 
 
 
-  const handleCreate = (addSong) => {
+  const handleCreateSong = (addSong) => {
     axios
       .post('https://glacial-wave-24104.herokuapp.com/api/songs', addSong)
       .then((response) => {
@@ -138,9 +162,8 @@ const App = () => {
       <h1>Music App</h1>
 
 
-      <Login />
-
-      {/* <Add className=' addForm' handleCreate={handleCreate} /> */}
+      {isAuthenticated ? (
+        <>
       <div className = 'navbarDiv'>
         <h1>insert cool title here</h1>
         <nav className = 'navBar'>
@@ -148,12 +171,12 @@ const App = () => {
           <Link className = 'link' to='/new'>Add Song</Link>
           <Link className = 'link' to='/account'>Account Details</Link>
           <Link className = 'link' to='/cart'>Your Cart</Link>
+           <button onClick={handleLogout}>Log out</button>
         </nav>
       </div>
 
       <div className="wrapper">
         <Routes>
-          <Route path="/login" element = {<Login />}/>
           <Route path="/signup" element = {<Signup />}/>
           <Route path="/songs/*" element={<Songs />}/>
           <Route path="/account" element={<Account handleCreateAccount= {handleCreateAccount}/>}/>
@@ -162,12 +185,49 @@ const App = () => {
 
           <Route path="/createaccount" element={<User handleCreateUser = {handleCreateUser}/>}/>
 
-          <Route path="/new" element={<Add handleCreate = {handleCreate}/>}/>
+          <Route path="/new" element={<Add handleCreateSong = {handleCreateSong}/>}/>
         </Routes>
       </div>
     </>
-  )
+) : (
+     <>
+       <section className="login-box">
+         <h1>Login</h1>
+         <form onSubmit={handleSubmitLogin}>
+             <label htmlFor="username">Username:</label>
+             <input
+                 type="text"
+                 id="username"
+                 onChange={(e) => setUsername(e.target.value)}
+                 value={username}
+                 required
+             />
+             <label htmlFor="password">Password:</label>
+             <input
+                 type="password"
+                 id="password"
+                 onChange={(e) => setPassword(e.target.value)}
+                 value={password}
+                 required
+             />
+             <button>Sign In</button>
+         </form>
+         <p>
+             Need an account?<br />
+             <span className="line">
+                 <a href="/createaccount">Sign Up</a>
+             </span>
+         </p>
+         </section>
+         <div className="wrapper">
+         <Routes>
+           <Route path="/createaccount" component={<Signup handleCreateUser={handleCreateUser} />} />
+         </Routes>
+       </div>
+     </>
+   )}
+ </>
+)
 }
-
 
 export default App;
