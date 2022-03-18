@@ -10,7 +10,7 @@ const Add = (props) => {
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    props.handleCreate(song)
+    props.handleCreateSong(song)
   }
 
 
