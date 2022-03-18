@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
 import axios from 'axios'
 import Add from './components/Add'
 import Edit from './components/Edit'
+import Login from './components/Login'
+import Register from './components/Register'
 import Euphoria from './assets/euphoria.mp3'
 import './App.css';
 import ReactPlayer from 'react-player'
@@ -66,6 +68,8 @@ const AudioPlayer = () => {
     <>
       <h1>Music App</h1>
 
+
+      <Login />
       <div className="{styles.audioPlayer}">
         {songs.map((song) => {
           return (
