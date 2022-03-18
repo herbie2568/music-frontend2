@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react'
 //only need props as a param if we are passing in props to this component (we are going to here).
 const Add = (props) => {
 
+    let emptySong = { name: '', artist: '', genre: '', image: '', audio: '', price: ''}
+    const [song, setSong] = useState(emptySong)
 
   const handleChange = (event) => {
     setSong({ ...song, [event.target.name]: event.target.value })
@@ -13,9 +15,12 @@ const Add = (props) => {
     props.handleCreate(song)
   }
 
+<<<<<<< HEAD
+=======
 
   let emptySong = { name: '', artist: '', genre: '', image: '', audio: '' }
   const [song, setSong] = useState(emptySong)
+>>>>>>> 4451bfc283276653416a7aa7d89a5872094b2e33
   return (
     <div className = 'addForm'>
     <h3>Add Song</h3>
@@ -30,7 +35,7 @@ const Add = (props) => {
         <br />
 
         <label htmlFor = 'genre'></label>
-        <select name = 'genre' id = 'genre' value = {song.genre} onChange = {handleChange}>
+        <select name = 'genre' id = 'genre' value = {song.genre} onChange = {handleChange} required>
             <option value = 'pop'>Pop</option>
             <option value = 'rock'>Rock</option>
             <option value = 'techno'>Techno</option>
@@ -44,7 +49,16 @@ const Add = (props) => {
         <br />
 
         <label htmlFor="audio"></label>
+<<<<<<< HEAD
+        <input className = 'addInput' type="file" name="audio" value={song.audio} onChange={handleChange} placeholder = 'Audio file...'/>
+        <br />
+        <br />
 
+        <label htmlFor="price"></label>
+        <input className = 'addInput' type="text" name="price" value={song.price} onChange={handleChange} placeholder = 'Price...'/>
+=======
+
+>>>>>>> 4451bfc283276653416a7aa7d89a5872094b2e33
         <br />
         <br />
 
