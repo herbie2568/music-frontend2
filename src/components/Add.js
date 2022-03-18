@@ -16,6 +16,7 @@ const Add = (props) => {
 
   let emptySong = { name: '', artist: '', genre: '', image: '', audio: '' }
   const [song, setSong] = useState(emptySong)
+
   return (
     <div className='addForm'>
       <h3>Add Song</h3>
@@ -49,6 +50,7 @@ const Add = (props) => {
         <label htmlFor="audio">audio</label>
         <input type="file" id="audio" name="audio" accept="audio/*"></input>
         <input className='addInput' type="text" name="audio" value={song.audio} onChange={handleChange} placeholder='Audio file...' />
+
 
         <br />
         <br />
