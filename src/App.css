@@ -12,6 +12,8 @@ img {
     flex-flow: row wrap;
     justify-content: center;
     gap: 3vw;
+    margin-top: 3vh;
+    z-index: 999;
 }
 
 .songCard {
@@ -19,4 +21,47 @@ img {
     color: black;
     border-radius: 5px;
     padding: 0 20px 20px 20px;
+}
+
+.navbarDiv {
+    /* position: fixed; */
+    z-index: 999;
+}
+
+.navBar {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    margin-left: 5vw;
+    margin-top: 3vh;
+    gap: 50px;
+}
+
+.link {
+    color: white;
+    text-decoration: none;
+    transition-duration: 0.4s;
+}
+
+.link:hover {
+    cursor: pointer;
+    color: red;
+    transform: scale(1.1);
+}
+
+.searchDiv {
+    position: relative;
+}
+
+.searchInput {
+  height: 30px;
+  width: 20vw;
+  border-radius: 8px;
+  position: fixed;
+  z-index: 1000;
+  bottom: 90.75vh;
+  right: 4vw;
+  padding-left: 10px;
+  font-size: 1em;
+  font-weight: 600;
 }
