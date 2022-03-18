@@ -10,11 +10,11 @@
     "react": "^17.0.2",
     "react-audio-player": "^0.17.0",
     "react-dom": "^17.0.2",
-<<<<<<< HEAD
+
     "react-router-dom": "^6.2.2",
-=======
+
     "react-player": "^2.9.0",
->>>>>>> 4451bfc283276653416a7aa7d89a5872094b2e33
+
     "react-scripts": "5.0.0",
     "web-vitals": "^2.1.4"
   },
