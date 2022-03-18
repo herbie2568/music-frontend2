@@ -17,13 +17,11 @@ const Signup = () => {
 
   const onSubmit = e => {
     e.preventDefault();
-
     const user = {
       username: username,
       password: password,
 
     };
-
     fetch('https://glacial-wave-24104.herokuapp.com/api/users', {
       method: 'POST',
       headers: {

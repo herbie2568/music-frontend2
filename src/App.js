@@ -28,31 +28,22 @@ import {
 } from "react-router-dom";
 
 
-// let [songs, setSongs] = useState([])
-// let [users, setUsers] = useState([])
-// let [accountInfo, setAccountInfo] = useState([])
-// const [name, setName] = useState('')
-// const [username, setUsername] = useState('')
-// const [password, setPassword] = useState('')
-// const [toggleLogin, setToggleLogin] = useState(true)
-// const [toggleError, setToggleError] = useState(false)
-// const [errorMessage, setErrorMessage] = useState('')
-// const [toggleLogout, setToggleLogout] = useState(false)
-// const [currentUser, setCurrentUser] = useState({})
-
 const App = () => {
 
   const [songs, setSongs] = useState([])
-  let [users, setUsers] = useState([])
-  let [accountInfo, setAccountInfo] = useState([])
+  const [users, setUsers] = useState([])
+  const [accountInfo, setAccountInfo] = useState([])
   const [name, setName] = useState('')
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const [currentUser, setCurrentUser] = useState({})
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [toggleLogin, setToggleLogin] = useState(true)
   const [toggleError, setToggleError] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
   const [toggleLogout, setToggleLogout] = useState(false)
-  const [currentUser, setCurrentUser] = useState({})
+
+
   // const [isPlaying, setIsPlaying] = useState(false);
   // const [url, setUrl] = useState(null)
   // const [controls, setControls] = useState(true)
@@ -63,6 +54,30 @@ const App = () => {
   // const [pause, setPause] = useState(null)
   // const [duration, setDuration] = useState(0)
   // const [loop, setLoop] = useState(false)
+
+  const handleSubmitLogin = async (event) => {
+    event.preventDefault()
+    try {
+      axios
+          .put('http://localhost:8000/api/useraccount/login', ({username, password}))
+          .then((response) => {
+            console.log(response.data)
+            setCurrentUser(response.data)
+            setIsAuthenticated(true)
+          })
+    } catch (err) {
+      setErrorMessage(err)
+    }
+    //console.log(user, password)  
+    // handleLogin(event)
+  }
+
+  const handleLogout = (event) => {
+    setPassword('')
+    setUsername('')
+    setCurrentUser({})
+    setIsAuthenticated(false)
+  }
 
   const getAccountInfo = () => {
     axios
@@ -83,9 +98,6 @@ const App = () => {
     )
     .catch((error) => console.error(error))
   }
-
-
-
 
   useEffect(() => {
     getSong()
@@ -129,46 +141,11 @@ const App = () => {
   const handleCreateAccount = (addAccountInfo) => {
       axios.post('https://glacial-wave-24104.herokuapp.com/api/accounts', addAccountInfo)
       .then((response) => {
-          getAccountInfo()
+        getAccountInfo()
       })
-
   }
 
-// const handleCreateUser = (event) => {
-//
-//     setUsername('')
-//     setPassword('')
-//     axios.post('https://glacial-wave-24104.herokuapp.com/api/users',
-// {
-//     name:name,
-//     username: username,
-//     password: password
-// })
-// .then((response) => {
-//     if(response.data.username){
-//        setToggleError(false)
-//        setErrorMessage('')
-//        setCurrentUser(response.data)
-//        handleToggleLogout()
-//      } else {
-//        setErrorMessage(response.data)
-//        setToggleError(true)
-//      }
-// })
-//
-// }
-//
-// const handleToggleLogout = () => {
-//   if(toggleLogout) {
-//     setToggleLogout(false)
-//   } else {
-//     setToggleLogout(true)
-//   }
-// }
-
-
-
-  const handleCreate = (addSong) => {
+  const handleCreateSong = (addSong) => {
     axios
       .post('https://glacial-wave-24104.herokuapp.com/api/songs', addSong)
       .then((response) => {
@@ -181,34 +158,67 @@ const App = () => {
     <>
       <h1>Music App</h1>
 
-
-      <Login />
-      
-      {/* <Add className=' addForm' handleCreate={handleCreate} /> */}
-      <div className = 'navbarDiv'>
-        <h1>insert cool title here</h1>
-        <nav className = 'navBar'>
-          <Link className = 'link'to="/songs">Home</Link>
-          <Link className = 'link' to='/new'>Add Song</Link>
-          <Link className = 'link' to='/account'>Account Details</Link>
-          <Link className = 'link' to='/cart'>Your Cart</Link>
-        </nav>
-      </div>
-
-      <div className="wrapper">
-        <Routes>
-          <Route path="/login" element = {<Login />}/>
-          <Route path="/signup" element = {<Signup />}/>
-          <Route path="/songs" element={<Songs />}/>
-          <Route path="/account" element={<Account handleCreateAccount= {handleCreateAccount}/>}/>
-          <Route path="/cart" element={<Cart />}/>
-          <Route path = '/songs/:id' element = {<Show songs = {songs} handleUpdate={handleUpdate} />}/>
-
-          <Route path="/createaccount" element={<User handleCreateUser = {handleCreateUser}/>}/>
-
-          <Route path="/new" element={<Add handleCreate = {handleCreate}/>}/>
-        </Routes>
-      </div>
+      {isAuthenticated ? (
+        <>
+          <div className = 'navbarDiv'>
+            <h1>insert cool title here</h1>
+            <nav className = 'navBar'>
+              <Link className = 'link'to="/songs">Home</Link>
+              <Link className = 'link' to='/new'>Add Song</Link>
+              <Link className = 'link' to='/account'>Account Details</Link>
+              <Link className='link' to='/cart'>Your Cart</Link>
+              <button onClick={handleLogout}>Log out</button>
+            </nav>
+          </div>
+          <div className="wrapper">
+            <Routes>
+              <Route path="/signup" element = {<Signup />}/>
+              <Route path="/songs" element={<Songs />}/>
+              <Route path="/account" element={<Account handleCreateAccount= {handleCreateAccount}/>}/>
+              <Route path="/cart" element={<Cart />}/>
+              <Route path = '/songs/:id' element = {<Show songs = {songs} handleUpdate={handleUpdate} />}/>
+              <Route path="/new" element={<Add handleCreateSong={handleCreateSong} />} />
+              
+            </Routes>
+          </div>
+        </>
+      ) : (
+        <>
+          <section className="login-box">
+            <h1>Login</h1>
+            <form onSubmit={handleSubmitLogin}>
+                <label htmlFor="username">Username:</label>
+                <input
+                    type="text"
+                    id="username"
+                    onChange={(e) => setUsername(e.target.value)}
+                    value={username}
+                    required
+                />
+                <label htmlFor="password">Password:</label>
+                <input
+                    type="password"
+                    id="password"
+                    onChange={(e) => setPassword(e.target.value)}
+                    value={password}
+                    required
+                />
+                <button>Sign In</button>
+            </form>
+            <p>
+                Need an account?<br />
+                <span className="line">
+                    <a href="/createaccount">Sign Up</a>
+                </span>
+            </p>
+            </section>
+            <div className="wrapper">
+            <Routes>
+              <Route path="/createaccount" component={<Signup handleCreateUser={handleCreateUser} />} />
+            </Routes>
+          </div>
+        </>  
+      )} 
     </>
   )
 }

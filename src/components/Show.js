@@ -8,10 +8,11 @@ const Show = (props) => {
     const [songs, setSongs] = useState([])
 
     useEffect(() => {
-        axios.get('https://glacial-wave-24104.herokuapp.com/api/songs/' + params.id)
-.then((response) =>
-    setSongs(response.data))
-}, []);
+        axios
+            .get('https://glacial-wave-24104.herokuapp.com/api/songs/' + params.id)
+            .then((response) =>
+        setSongs(response.data))
+    }, []);
     return (
         <>
         <h1>song details {params.id}</h1>
