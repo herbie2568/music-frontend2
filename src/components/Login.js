@@ -1,78 +1,102 @@
-import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useRef, useState, useEffect, useContext } from 'react'
+import AuthContext from '../contexts/AuthProvider'
+
+
 
 const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [errors, setErrors] = useState(false);
-  const [loading, setLoading] = useState(true);
+    const { setAuth } = useContext(AuthContext)
+    const usesrRef = useRef();
+    const errRef = useRef();
 
-  useEffect(() => {
-    if (localStorage.getItem('token') !== null) {
-      window.location.replace('http://localhost:3000/songs');
-    } else {
-      setLoading(false);
-    }
-  }, []);
+    const [user, setUser] = useState('')
+    const [password, setPassword] = useState('')
+    const [errMsg, setErrMsg] = useState('')
+    const [success, setSuccess] = useState(false)
 
-  const onSubmit = e => {
-    e.preventDefault();
+    // useEffect(() => {
+    //     usesrRef.current.focus()
+    // }, [])
 
-    const user = {
-      email: email,
-      password: password
-    };
+    useEffect(() => {
+        setErrMsg('')
+    }, [user, password])
 
-    fetch('http://127.0.0.1:8000/api/v1/users/auth/login/', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(user)
-    })
-      .then(res => res.json())
-      .then(data => {
-        if (data.key) {
-          localStorage.clear();
-          localStorage.setItem('token', data.key);
-          window.location.replace('http://localhost:3000/songs');
-        } else {
-          setEmail('');
-          setPassword('');
-          localStorage.clear();
-          setErrors(true);
+
+    const handleSubmit = async (event) => {
+        event.preventDefault()
+        try {
+            axios
+                .put('https://glacial-wave-24104.herokuapp.com/api/useraccount/login', ({user, password}))
+                .then((response) => {
+
+                })
+            setUser('')
+            setPassword('')
+            // successfully submitted form
+            setSuccess(true)
+        } catch (err) {
+
         }
-      });
-  };
+        //console.log(user, password)
 
-  return (
-    <div>
-      {loading === false && <h1>Login</h1>}
-      {errors === true && <h2>Cannot log in with provided credentials</h2>}
-      {loading === false && (
-        <form onSubmit={onSubmit}>
-          <label htmlFor='email'>Email address:</label> <br />
-          <input
-            name='email'
-            type='email'
-            value={email}
-            required
-            onChange={e => setEmail(e.target.value)}
-          />{' '}
-          <br />
-          <label htmlFor='password'>Password:</label> <br />
-          <input
-            name='password'
-            type='password'
-            value={password}
-            required
-            onChange={e => setPassword(e.target.value)}
-          />{' '}
-          <br />
-          <input type='submit' value='Login' />
-        </form>
-      )}
-    </div>
-  );
-};
+        handleLogin(event)
+    }
 
-export default Login;
+    const handleLogin = (event) => {
+        axios
+            .put('https://glacial-wave-24104.herokuapp.com/api/useraccount/login')
+            .then((response) => {
+                console.log(response)
+            })
+
+    }
+
+    return (
+        <>
+            {success ? (
+                <section>
+                    <h1>you are logged in!</h1>
+                    <br />
+                    <p>
+                        <a href="#">Go home</a>
+                    </p>
+                </section>
+
+            ) : (
+
+                <section className="login-box">
+                    <h1>Login</h1>
+                    <form onSubmit={handleSubmit}>
+                        <label htmlFor="username">Username:</label>
+                        <input
+                            type="text"
+                            id="username"
+                            onChange={(e) => setUser(e.target.value)}
+                            value={user}
+                            required
+                        />
+                        <label htmlFor="password">Password:</label>
+                        <input
+                            type="password"
+                            id="password"
+                            onChange={(e) => setPassword(e.target.value)}
+                            value={password}
+                            required
+                        />
+                        <button>Sign In</button>
+                    </form>
+                    <p>
+                        Need an account?<br />
+                        <span className="line">
+
+                            <a href="#">Sign Up</a>
+                        </span>
+                    </p>
+                </section>
+            )}
+        </>
+    )
+}
+
+export default Login

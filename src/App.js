@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
 import axios from 'axios'
 import Add from './components/Add'
 import Edit from './components/Edit'
@@ -21,29 +21,22 @@ import {
   useParams
 } from "react-router-dom";
 
+
+
+
 const App = () => {
 
-let [songs, setSongs] = useState([])
-let [users, setUsers] = useState([])
-let [accountInfo, setAccountInfo] = useState([])
-const [name, setName] = useState('')
-const [username, setUsername] = useState('')
-const [password, setPassword] = useState('')
-const [toggleLogin, setToggleLogin] = useState(true)
-const [toggleError, setToggleError] = useState(false)
-const [errorMessage, setErrorMessage] = useState('')
-const [toggleLogout, setToggleLogout] = useState(false)
-const [currentUser, setCurrentUser] = useState({})
-
-const getSong = () => {
- axios
-   .get('https://glacial-wave-24104.herokuapp.com/api/songs')
-   .then(
-     (response) => setSongs(response.data),
-     (err) => console.error(err)
-   )
-   .catch((error) => console.error(error))
-}
+    const [songs, setSongs] = useState([])
+      let [users, setUsers] = useState([])
+      let [accountInfo, setAccountInfo] = useState([])
+      const [name, setName] = useState('')
+      const [username, setUsername] = useState('')
+      const [password, setPassword] = useState('')
+      const [toggleLogin, setToggleLogin] = useState(true)
+      const [toggleError, setToggleError] = useState(false)
+      const [errorMessage, setErrorMessage] = useState('')
+      const [toggleLogout, setToggleLogout] = useState(false)
+      const [currentUser, setCurrentUser] = useState({})
 
 const getAccountInfo = () => {
  axios
@@ -73,23 +66,23 @@ const handleDelete = (event) => {
     })
 }
 
-const handleUpdate = (editSong) => {
-  console.log(editSong.id)
+const getSong = () => {
   axios
-    .put('https://glacial-wave-24104.herokuapp.com/api/songs/' + editSong.id, editSong)
-    .then((response) => {
-      getSong()
-    })
+    .get('https://glacial-wave-24104.herokuapp.com/api/songs')
+    .then(
+      (response) => setSongs(response.data),
+      (err) => console.error(err)
+    )
+    .catch((error) => console.error(error))
 }
 
-const handleCreate = (addSong) => {
-  axios
-    .post('https://glacial-wave-24104.herokuapp.com/api/songs', addSong)
-    .then((response) => {
-      console.log(response)
-      getSong()
-    })
-}
+
+  useEffect(() => {
+    getSong()
+  }, [])
+
+
+
 
 const handleCreateUser = (addUser) => {
   axios
@@ -142,9 +135,14 @@ const handleCreateAccount = (addAccountInfo) => {
 
 
 
-useEffect(() => {
- getSong()
-}, [])
+  const handleCreate = (addSong) => {
+    axios
+      .post('https://glacial-wave-24104.herokuapp.com/api/songs', addSong)
+      .then((response) => {
+        console.log(response)
+        getSong()
+      })
+  }
 
   return (
     <>
