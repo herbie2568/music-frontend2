@@ -168,9 +168,7 @@ useEffect(() => {
     <Route path="/account" element={<Account handleCreateAccount= {handleCreateAccount}/>}/>
     <Route path="/cart" element={<Cart />}/>
     <Route path = '/songs/:id' element = {<Show songs = {songs} handleUpdate={handleUpdate} />}/>
-
     <Route path="/createaccount" element={<User handleCreateUser = {handleCreateUser}/>}/>
-
     <Route path="/new" element={<Add handleCreate = {handleCreate}/>}/>
     </Routes>
     </div>
