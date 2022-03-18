@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 //only need props as a param if we are passing in props to this component (we are going to here).
 const Edit = (props) => {
 
-    let emptySong = { id: props.id, name: '', artist: '', genre: '', image: '', audio: ''}
+    let emptySong = { id: props.id, name: '', artist: '', genre: '', image: '', audio: '', price: ''}
     const [song, setSong] = useState(emptySong)
 
 
@@ -39,6 +39,8 @@ const Edit = (props) => {
             <option value = 'hiphop'>Hip-hop</option>
 
         </select>
+        <br />
+        <br />
 
         <label htmlFor="image"></label>
         <input className = 'addInput' type="text" name="image" value={song.image} onChange={handleChange} placeholder = 'Image URL...'/>
@@ -46,7 +48,12 @@ const Edit = (props) => {
         <br />
 
         <label htmlFor="audio"></label>
-        <input className = 'addInput' type="text" name="audio" value={song.audio} onChange={handleChange} placeholder = 'Audio file...'/>
+        <input className = 'addInput' type="file" name="audio" value={song.audio} onChange={handleChange} placeholder = 'Audio file...'/>
+        <br />
+        <br />
+
+        <label htmlFor="price"></label>
+        <input className = 'addInput' type="text" name="price" value={song.price} onChange={handleChange} placeholder = 'Price...'/>
         <br />
         <br />
 
