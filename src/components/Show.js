@@ -35,6 +35,9 @@ const Show = (props) => {
 if (!songs.image) {
     songs.image = 'https://i.imgur.com/D3aOVsJ.png'
 }
+if (!songs.price) {
+    songs.price = '1.29'
+}
     return (
         <>
         <h1>song details {params.id}</h1>
@@ -43,7 +46,7 @@ if (!songs.image) {
         <h2>{songs.genre}</h2>
         <img src = {songs.image}></img>
         <h4>hi</h4>
-        <Edit handleUpdate = {handleUpdate}/>
+        <Edit handleUpdate = {handleUpdate} songs = {songs} setSongs = {setSongs} />
         </>
     )
 }

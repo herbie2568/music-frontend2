@@ -159,15 +159,18 @@ const App = () => {
 
   return (
     <>
-      <h1>Music App</h1>
+
 
 
       {isAuthenticated ? (
         <>
       <div className = 'navbarDiv'>
-        <h1>insert cool title here</h1>
+      <div className = 'logoName'>
+      <img className = 'logo' src = 'https://i.imgur.com/bZRUMGT.png'></img>
+      <div className = 'appName'>Music App</div>
+      </div>
         <nav className = 'navBar'>
-          <Link className = 'link'to="/songs">Home</Link>
+          <Link className = 'link'to="/">Home</Link>
           <Link className = 'link' to='/new'>Add Song</Link>
           <Link className = 'link' to='/account'>Account Details</Link>
           <Link className = 'link' to='/cart'>Your Cart</Link>
@@ -178,7 +181,7 @@ const App = () => {
       <div className="wrapper">
         <Routes>
           <Route path="/signup" element = {<Signup />}/>
-          <Route path="/songs/*" element={<Songs />}/>
+          <Route path="/*" element={<Songs />}/>
           <Route path="/account" element={<Account handleCreateAccount= {handleCreateAccount}/>}/>
           <Route path="/cart" element={<Cart />}/>
           <Route path = '/songs/:id' element = {<Show songs = {songs} handleUpdate={handleUpdate} />}/>
@@ -191,31 +194,40 @@ const App = () => {
     </>
 ) : (
      <>
+     <div className = 'logoName'>
+     <img className = 'logo' src = 'https://i.imgur.com/bZRUMGT.png'></img>
+     <div className = 'appName'>Music App</div>
+     </div>
+
        <section className="login-box">
          <h1>Login</h1>
-         <form onSubmit={handleSubmitLogin}>
+         <form className = 'loginForm' onSubmit={handleSubmitLogin}>
              <label htmlFor="username">Username:</label>
              <input
+             placeholder = 'Username...'
+                className = 'loginInput'
                  type="text"
                  id="username"
                  onChange={(e) => setUsername(e.target.value)}
                  value={username}
                  required
-             />
+             /><br/>
              <label htmlFor="password">Password:</label>
              <input
+                placeholder = 'Password...'
+                className = 'loginInput'
                  type="password"
                  id="password"
                  onChange={(e) => setPassword(e.target.value)}
                  value={password}
                  required
-             />
-             <button>Sign In</button>
+             /><br/>
+             <button className = 'signinButton'>Sign In</button>
          </form>
-         <p>
+         <p className = 'needAccount'>
              Need an account?<br />
              <span className="line">
-                 <a href="/createaccount">Sign Up</a>
+                 <a className = 'signupAnchor' href="/createaccount">Sign Up</a>
              </span>
          </p>
          </section>

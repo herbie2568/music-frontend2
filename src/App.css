@@ -1,17 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;500;600;700;800;900&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+}
 body {
     background: black;
     color: white;
+    font-family: 'Nunito', sans-serif;
 }
 
 img {
-    width: 250px;
+    width: 200px;
 }
 
 .songContainer {
     display: flex;
     flex-flow: row wrap;
     justify-content: center;
-    gap: 3vw;
+    gap: 20px;
     margin-top: 3vh;
     z-index: 999;
 }
@@ -26,6 +32,10 @@ img {
 .navbarDiv {
     /* position: fixed; */
     z-index: 999;
+    background: black;
+    
+    padding-bottom: 20px;
+
 }
 
 .navBar {
@@ -35,6 +45,7 @@ img {
     margin-left: 5vw;
     margin-top: 3vh;
     gap: 50px;
+    padding-top: 20px;
 }
 
 .link {
@@ -45,7 +56,7 @@ img {
 
 .link:hover {
     cursor: pointer;
-    color: red;
+    color: #15a9e9;
     transform: scale(1.1);
 }
 
@@ -63,5 +74,72 @@ img {
   right: 4vw;
   padding-left: 10px;
   font-size: 1em;
-  font-weight: 600;
+  font-weight: 500;
+  font-family: 'Nunito', sans-serif;
+}
+
+.logoName {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    padding-top: 20px;
+    margin-left: 10px;
+}
+
+.appName {
+    font-size: 2em;
+    align-self: center;
+}
+
+.logo {
+    width: min(6%, 70px);
+}
+
+.login-box {
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.loginInput {
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin-left: 10px;
+    margin-top: 10px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+}
+
+.signinButton {
+    padding: 8px 20px;
+    background: white;
+    border-radius: 20px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    transition-duration: 0.4s;
+}
+
+.signinButton:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+    background: #15a9e9;
+}
+
+.loginForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 30px;
+}
+
+.signupAnchor {
+    color: #15a9e9;
+}
+
+.needAccount {
+    text-align: center;
+    margin-top: 30px;
 }

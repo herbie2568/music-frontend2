@@ -17,6 +17,12 @@ const Edit = (props) => {
     }
 
 
+    if (!song.image) {
+        song.image = 'https://i.imgur.com/D3aOVsJ.png'
+    }
+    if (!song.price) {
+        song.price = '1.29'
+    }
 
   return (
     <div className = 'addForm'>
