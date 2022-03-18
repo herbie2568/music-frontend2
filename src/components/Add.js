@@ -32,10 +32,10 @@ const Add = (props) => {
 
         <label htmlFor = 'genre'></label>
         <select name = 'genre' id = 'genre' value = {song.genre} onChange = {handleChange} required>
-            <option value = 'pop'>Pop</option>
-            <option value = 'rock'>Rock</option>
-            <option value = 'techno'>Techno</option>
-            <option value = 'hiphop'>Hip-hop</option>
+            <option value='pop' id='pop'>Pop</option>
+            <option value='rock' id='rock'>Rock</option>
+            <option value='techno' id='techno'>Techno</option>
+            <option value='hiphop' id='hiphop'>Hip-hop</option>
         </select>
         <label for='pop'>Pop</label>
         <label htmlFor="image">image</label>

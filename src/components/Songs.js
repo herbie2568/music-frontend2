@@ -105,24 +105,22 @@ const Songs = () => {
                     song.price = '1.29'
                 }
                 return (
-
-
                     <div className="songCard" key={song.id + index}
                     onClick = {() => {
                         navigate('/songs/' + song.id
                     )
-                }}>
-                <h4 className = 'name'>{song.name}</h4>
+                    }}>
+                    <h4 className = 'name'>{song.name}</h4>
 
-                <h5>Artist: {song.artist}</h5>
-                <h5>Genre: {song.genre}</h5>
-                <h5>Price: ${song.price}</h5>
-                <img className = 'songImage' src = {song.image}></img>
-                <br/>
-                <button className = 'deleteButton' onClick={handleDelete} value={song.id}>
-                Delete
-                </button>
-                <Edit />
+                    <h5>Artist: {song.artist}</h5>
+                    <h5>Genre: {song.genre}</h5>
+                    <h5>Price: ${song.price}</h5>
+                    <img className = 'songImage' src = {song.image}></img>
+                    <br/>
+                    <button className = 'deleteButton' onClick={handleDelete} value={song.id}>
+                        Delete
+                    </button>
+                    <Edit />
                 </div>
 
             )
