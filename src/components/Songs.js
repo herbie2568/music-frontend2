@@ -105,8 +105,12 @@ const Songs = () => {
                     song.price = '1.29'
                 }
                 return (
-
-
+                    <>
+                    <div>
+                    <Routes>
+                      <Route path='/songs/:id' element = {<Show songs = {songs} handleUpdate={handleUpdate}/>}/>
+                     </Routes>
+                     </div>
                     <div className="songCard" key={song.id + index}
                     >
                 <h4 className = 'name'>{song.name}</h4>
@@ -122,9 +126,9 @@ const Songs = () => {
                 <button className = 'deleteButton' onClick={handleDelete} value={song.id}>
                 Delete
                 </button>
-                <Edit />
-                </div>
 
+                </div>
+                </>
             )
 
         })}

@@ -27,18 +27,6 @@ import {
 } from "react-router-dom";
 
 
-// let [songs, setSongs] = useState([])
-// let [users, setUsers] = useState([])
-// let [accountInfo, setAccountInfo] = useState([])
-// const [name, setName] = useState('')
-// const [username, setUsername] = useState('')
-// const [password, setPassword] = useState('')
-// const [toggleLogin, setToggleLogin] = useState(true)
-// const [toggleError, setToggleError] = useState(false)
-// const [errorMessage, setErrorMessage] = useState('')
-// const [toggleLogout, setToggleLogout] = useState(false)
-// const [currentUser, setCurrentUser] = useState({})
-
 const App = () => {
 
   const [songs, setSongs] = useState([])
@@ -133,37 +121,6 @@ const App = () => {
 
   }
 
-// const handleCreateUser = (event) => {
-//
-//     setUsername('')
-//     setPassword('')
-//     axios.post('https://glacial-wave-24104.herokuapp.com/api/users',
-// {
-//     name:name,
-//     username: username,
-//     password: password
-// })
-// .then((response) => {
-//     if(response.data.username){
-//        setToggleError(false)
-//        setErrorMessage('')
-//        setCurrentUser(response.data)
-//        handleToggleLogout()
-//      } else {
-//        setErrorMessage(response.data)
-//        setToggleError(true)
-//      }
-// })
-//
-// }
-//
-// const handleToggleLogout = () => {
-//   if(toggleLogout) {
-//     setToggleLogout(false)
-//   } else {
-//     setToggleLogout(true)
-//   }
-// }
 
 
 
@@ -198,7 +155,7 @@ const App = () => {
         <Routes>
           <Route path="/login" element = {<Login />}/>
           <Route path="/signup" element = {<Signup />}/>
-          <Route path="/songs" element={<Songs />}/>
+          <Route path="/songs/*" element={<Songs />}/>
           <Route path="/account" element={<Account handleCreateAccount= {handleCreateAccount}/>}/>
           <Route path="/cart" element={<Cart />}/>
           <Route path = '/songs/:id' element = {<Show songs = {songs} handleUpdate={handleUpdate} />}/>
