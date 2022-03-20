@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
 import axios from 'axios'
 import Add from './components/Add'
 import Edit from './components/Edit'
-
 import Register from './components/Register'
 
 import Euphoria from './assets/euphoria.mp3'
@@ -17,6 +16,7 @@ import Account from './components/Account'
 import Cart from './components/Cart'
 import Show from './components/Show'
 
+
 import './App.css';
 import {
   BrowserRouter as Router,
@@ -28,23 +28,11 @@ import {
 } from "react-router-dom";
 
 
-// let [songs, setSongs] = useState([])
-// let [users, setUsers] = useState([])
-// let [accountInfo, setAccountInfo] = useState([])
-// const [name, setName] = useState('')
-// const [username, setUsername] = useState('')
-// const [password, setPassword] = useState('')
-// const [toggleLogin, setToggleLogin] = useState(true)
-// const [toggleError, setToggleError] = useState(false)
-// const [errorMessage, setErrorMessage] = useState('')
-// const [toggleLogout, setToggleLogout] = useState(false)
-// const [currentUser, setCurrentUser] = useState({})
-
-const App = () => {
+const App = (props) => {
 
   const [songs, setSongs] = useState([])
-  let [users, setUsers] = useState([])
-  let [accountInfo, setAccountInfo] = useState([])
+  const [users, setUsers] = useState([])
+  const [accountInfo, setAccountInfo] = useState([])
   const [name, setName] = useState('')
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
@@ -53,16 +41,64 @@ const App = () => {
   const [errorMessage, setErrorMessage] = useState('')
   const [toggleLogout, setToggleLogout] = useState(false)
   const [currentUser, setCurrentUser] = useState({})
-  // const [isPlaying, setIsPlaying] = useState(false);
-  // const [url, setUrl] = useState(null)
-  // const [controls, setControls] = useState(true)
-  // const [volume, setVolume] = useState(0.7)
-  // const [muted, setMuted] = useState(false)
-  // const [played, setPlayed] = useState(0)
-  // const [play, setPlay] = useState(null)
-  // const [pause, setPause] = useState(null)
-  // const [duration, setDuration] = useState(0)
-  // const [loop, setLoop] = useState(false)
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [toggleSignUp, setToggleSignUp] = useState(false)
+  
+
+  const handleLogin = (user) => {
+      axios({
+        method: 'put',
+        url: 'https://glacial-wave-24104.herokuapp.com/api/useraccount/login',
+        data: {
+          username: user.username,
+          password: user.password
+        }
+      })
+      .then((response) => {
+        console.log(response.data)
+        setCurrentUser(response.data)
+        setIsAuthenticated(true)
+      })
+  }
+
+  const handleToggleSignUp = (event) => {
+  if (toggleLogin) {
+    setToggleLogin(false)
+  } else {
+    setToggleLogin(true)
+  }
+}
+
+
+  const handleLogout = (event) => {
+    setPassword('')
+    setUsername('')
+    setCurrentUser({})
+    setIsAuthenticated(false)
+  }
+
+  const getAccountInfo = () => {
+    axios
+   .get('https://glacial-wave-24104.herokuapp.com/api/accounts')
+   .then(
+     (response) => setSongs(response.data),
+     (err) => console.error(err)
+   )
+   .catch((error) => console.error(error))
+  }
+
+  const getUser = () => {
+  axios
+    .get('https://glacial-wave-24104.herokuapp.com/api/users')
+    .then(
+      (response) => setUsers(response.data),
+      (err) => console.error(err)
+    )
+    .catch((error) => console.error(error))
+  }
+
+  
+
 
   const getAccountInfo = () => {
     axios
@@ -83,8 +119,6 @@ const App = () => {
     )
     .catch((error) => console.error(error))
   }
-
-
 
 
   useEffect(() => {
@@ -119,12 +153,16 @@ const App = () => {
   }
   const handleCreateUser = (addUser) => {
     axios
-      .post('https://glacial-wave-24104.herokuapp.com/api/users', addUser)
+      .post('https://glacial-wave-24104.herokuapp.com/api/useraccount', addUser)
       .then((response) => {
-        console.log(response)
-        getUser()
+        console.log(response.data)
+        setCurrentUser(response.data)
+        setIsAuthenticated(true)
+        //getUser()
       })
+      .catch((error) => console.log(error))
   }
+
 
   const handleCreateAccount = (addAccountInfo) => {
       axios.post('https://glacial-wave-24104.herokuapp.com/api/accounts', addAccountInfo)
@@ -134,41 +172,7 @@ const App = () => {
 
   }
 
-// const handleCreateUser = (event) => {
-//
-//     setUsername('')
-//     setPassword('')
-//     axios.post('https://glacial-wave-24104.herokuapp.com/api/users',
-// {
-//     name:name,
-//     username: username,
-//     password: password
-// })
-// .then((response) => {
-//     if(response.data.username){
-//        setToggleError(false)
-//        setErrorMessage('')
-//        setCurrentUser(response.data)
-//        handleToggleLogout()
-//      } else {
-//        setErrorMessage(response.data)
-//        setToggleError(true)
-//      }
-// })
-//
-// }
-//
-// const handleToggleLogout = () => {
-//   if(toggleLogout) {
-//     setToggleLogout(false)
-//   } else {
-//     setToggleLogout(true)
-//   }
-// }
-
-
-
-  const handleCreate = (addSong) => {
+  const handleCreateSong = (addSong) => {
     axios
       .post('https://glacial-wave-24104.herokuapp.com/api/songs', addSong)
       .then((response) => {
@@ -179,39 +183,63 @@ const App = () => {
 
   return (
     <>
-      <h1>Music App</h1>
+      {isAuthenticated ? (
+        <>
+          <div className = 'navbarDiv'>
+          <div className = 'logoName'>
+          <img className = 'logo' src = 'https://i.imgur.com/bZRUMGT.png'></img>
+          <div className = 'appName'>Music App</div>
+          </div>
+            <nav className = 'navBar'>
+              <Link className = 'link'to="/">Home</Link>
+              <Link className = 'link' to='/new'>Add Song</Link>
+              <Link className = 'link' to='/account'>Account Details</Link>
+              <Link className = 'link' to='/cart'>Your Cart</Link>
+               <button onClick={handleLogout}>Log out</button>
+            </nav>
+          </div>
 
+        <div className="wrapper">
+          <Routes>
+            <Route path="/signup" element = {<Signup />}/>
+            <Route path="/*" element={<Songs />}/>
+            <Route path="/account" element={<Account handleCreateAccount= {handleCreateAccount}/>}/>
+            <Route path="/cart" element={<Cart />}/>
+            <Route path = '/songs/:id' element = {<Show songs = {songs}  handleDelete = {handleDelete}/>}/>
 
-      <Login />
-      
-      {/* <Add className=' addForm' handleCreate={handleCreate} /> */}
-      <div className = 'navbarDiv'>
-        <h1>insert cool title here</h1>
-        <nav className = 'navBar'>
-          <Link className = 'link'to="/songs">Home</Link>
-          <Link className = 'link' to='/new'>Add Song</Link>
-          <Link className = 'link' to='/account'>Account Details</Link>
-          <Link className = 'link' to='/cart'>Your Cart</Link>
-        </nav>
-      </div>
-
-      <div className="wrapper">
-        <Routes>
-          <Route path="/login" element = {<Login />}/>
-          <Route path="/signup" element = {<Signup />}/>
-          <Route path="/songs" element={<Songs />}/>
-          <Route path="/account" element={<Account handleCreateAccount= {handleCreateAccount}/>}/>
-          <Route path="/cart" element={<Cart />}/>
-          <Route path = '/songs/:id' element = {<Show songs = {songs} handleUpdate={handleUpdate} />}/>
-
-          <Route path="/createaccount" element={<User handleCreateUser = {handleCreateUser}/>}/>
-
-          <Route path="/new" element={<Add handleCreate = {handleCreate}/>}/>
-        </Routes>
-      </div>
+            <Route path="/createaccount" element={<User handleCreateUser = {handleCreateUser}/>}/>
+            <Route path = "/edit" element = {<Edit handleUpdate = {handleUpdate}/>} />
+            <Route path="/new" element={<Add handleCreateSong = {handleCreateSong}/>}/>
+          </Routes>
+        </div>
+      </>
+    ) : (
+       <>
+       {toggleLogin ? (
+         <>
+           <Login handleLogin={handleLogin} />
+             <p className = 'needAccount'>
+               <span>Need an account?</span><br/>
+               <div className = 'signupDiv' onClick={handleToggleSignUp}>Sign up</div>
+             </p>
+         </>
+         ) : (
+         <>
+           <Register handleCreateUser={handleCreateUser} />
+           <p className = 'needAccount'>
+             <span>Have an account already?</span><br/>
+             <div className = 'signupDiv' onClick={handleToggleSignUp}>Login</div>
+           </p>
+         </>
+        )}
+       </>
+      )
+    }
     </>
-  )
+   )
 }
 
 
+
 export default App;
+
