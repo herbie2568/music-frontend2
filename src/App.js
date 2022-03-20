@@ -206,7 +206,7 @@ const handleCreateAccount = (addAccountInfo) => {
      {toggleLogin ? (
    <>
      <Login handleLogin={handleLogin} />
-       <p>
+       <p className = 'needAccount'>
          <span>Need an account?</span><br/>
          <button onClick={handleToggleSignUp}>Sign up</button>
        </p>
