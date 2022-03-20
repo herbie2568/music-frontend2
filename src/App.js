@@ -33,12 +33,12 @@ const App = () => {
   const [songs, setSongs] = useState([])
   const [users, setUsers] = useState([])
   const [accountInfo, setAccountInfo] = useState([])
-  const [name, setName] = useState('')
+  //const [name, setName] = useState('')
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [currentUser, setCurrentUser] = useState({})
   const [isAuthenticated, setIsAuthenticated] = useState(false)
-  const [toggleSignUp, setToggleSignUp] = useState(false)
+  //const [toggleSignUp, setToggleSignUp] = useState(false)
   const [toggleLogin, setToggleLogin] = useState(true)
   const [toggleError, setToggleError] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
@@ -66,13 +66,21 @@ const App = () => {
         }
       })
       .then((response) => {
-        console.log(response.data)
-        setCurrentUser(response.data)
-        setIsAuthenticated(true)
+        if (response.data.username) {
+          console.log(response.data)
+          setToggleError(false)
+          setErrorMessage('')
+          setCurrentUser(response.data)
+          setIsAuthenticated(true)
+        } else {
+          console.log(response.data)
+          setErrorMessage('Sorry, invalid login.')
+          setToggleError(true)
+          
+        }
       })
   }
 
-  
 
   const handleToggleSignUp = (event) => {
     if (toggleLogin) {
@@ -82,6 +90,8 @@ const App = () => {
     }
   }
   
+
+
   const handleLogout = (event) => {
     setPassword('')
     setUsername('')
@@ -173,7 +183,7 @@ const App = () => {
       {isAuthenticated ? (
         <>
           <div className='navbarDiv'>
-            <h1>insert cool title here</h1>
+            <h1>Welcome, {currentUser.username}!</h1>
             <nav className='navBar'>
               <Link className='link' to="/songs">Home</Link>
               <Link className='link' to='/new'>Add Song</Link>
@@ -196,7 +206,12 @@ const App = () => {
         <>
           {toggleLogin ? (
             <>
-              <Login handleLogin={handleLogin} />
+                <Login handleLogin={handleLogin} />
+                {toggleError ? (
+                  <h5 className='errorMsg'>{errorMessage}</h5>  
+                ) : (
+                    null
+                )}
                 <p>
                   <span>Need an account?</span><br/>
                   <button onClick={handleToggleSignUp}>Sign up</button>
@@ -204,7 +219,12 @@ const App = () => {
             </>
           ) : (
             <>
-              <Register handleCreateUser={handleCreateUser} />
+                  <Register handleCreateUser={handleCreateUser} />
+                  {toggleError ? (
+                    <h5 className='errorMsg'>{errorMessage}</h5> 
+                  ) : (
+                      null
+                  )}
               <br />
               <p>
                 <span>Have an account already?</span><br/>

@@ -11,8 +11,7 @@ const Login = (props) => {
     
     let emptyUser = { username: '', password: ''}
     const [user, setUser] = useState(emptyUser)
-    // const [username, setUsername] = useState('')
-    // const [password, setPassword] = useState('')
+
     const [errMsg, setErrMsg] = useState('')
 
     // useEffect(() => {
@@ -31,7 +30,7 @@ const Login = (props) => {
 
     const handleSubmit = async (event) => {
         event.preventDefault()
-        console.log(user)
+        //console.log(user)
         props.handleLogin(user)
     }
 
