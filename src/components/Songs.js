@@ -15,7 +15,7 @@ import {
 } from "react-router-dom";
 import Show from './Show.js'
 
-const Songs = () => {
+const Songs = (props) => {
 
     let [songs, setSongs] = useState([])
     let [users, setUsers] = useState([])
@@ -108,24 +108,23 @@ const Songs = () => {
                     <>
                     <div>
                     <Routes>
-                      <Route path='/songs/:id' element = {<Show songs = {songs} handleUpdate={handleUpdate}/>}/>
+                      <Route path='/songs/:id' element = {<Show songs = {songs} song = {song} handleUpdate={handleUpdate} handleDelete = {handleDelete}/>}/>
                      </Routes>
                      </div>
                     <div className="songCard" key={song.id + index}
                     >
+                    <img onClick = {() => {
+                        navigate('/songs/' + song.id
+                    )
+                }} className = 'songImage' src = {song.image}></img>
                 <h4 className = 'name'>{song.name}</h4>
 
                 <h5>Artist: {song.artist}</h5>
                 <h5>Genre: {song.genre}</h5>
                 <h5>Price: ${song.price}</h5>
-                <img onClick = {() => {
-                    navigate('/songs/' + song.id
-                )
-            }} className = 'songImage' src = {song.image}></img>
+
                 <br/>
-                <button className = 'deleteButton' onClick={handleDelete} value={song.id}>
-                Delete
-                </button>
+
 
                 </div>
                 </>

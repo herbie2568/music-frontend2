@@ -27,7 +27,7 @@ import {
 } from "react-router-dom";
 
 
-const App = () => {
+const App = (props) => {
 
   const [songs, setSongs] = useState([])
   let [users, setUsers] = useState([])
@@ -184,16 +184,17 @@ const App = () => {
           <Route path="/*" element={<Songs />}/>
           <Route path="/account" element={<Account handleCreateAccount= {handleCreateAccount}/>}/>
           <Route path="/cart" element={<Cart />}/>
-          <Route path = '/songs/:id' element = {<Show songs = {songs} handleUpdate={handleUpdate} />}/>
+          <Route path = '/songs/:id' element = {<Show songs = {songs}  handleDelete = {handleDelete}/>}/>
 
           <Route path="/createaccount" element={<User handleCreateUser = {handleCreateUser}/>}/>
-
+          <Route path = "/edit" element = {<Edit handleUpdate = {handleUpdate}/>} />
           <Route path="/new" element={<Add handleCreateSong = {handleCreateSong}/>}/>
         </Routes>
       </div>
     </>
 ) : (
      <>
+     <section className = 'loginPage'>
      <div className = 'logoName'>
      <img className = 'logo' src = 'https://i.imgur.com/bZRUMGT.png'></img>
      <div className = 'appName'>Music App</div>
@@ -236,6 +237,7 @@ const App = () => {
            <Route path="/createaccount" component={<Signup handleCreateUser={handleCreateUser} />} />
          </Routes>
        </div>
+       </section>
      </>
    )}
  </>
