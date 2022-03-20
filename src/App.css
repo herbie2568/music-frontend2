@@ -149,6 +149,15 @@ body {
     color: #15a9e9;
 }
 
+.signupDiv {
+    text-decoration: underline;
+    color: #15a9e9;
+}
+
+.signupDiv:hover {
+    cursor: pointer;
+}
+
 .needAccount {
     text-align: center;
     margin-top: 30px;
