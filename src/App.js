@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
 import axios from 'axios'
 import Add from './components/Add'
 import Edit from './components/Edit'
-
+import Register from './components/Register'
 
 import Euphoria from './assets/euphoria.mp3'
 import './App.css';
@@ -41,6 +41,7 @@ const App = (props) => {
   const [toggleLogout, setToggleLogout] = useState(false)
   const [currentUser, setCurrentUser] = useState({})
   const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [toggleSignUp, setToggleSignUp] = useState(false)
   // const [isPlaying, setIsPlaying] = useState(false);
   // const [url, setUrl] = useState(null)
   // const [controls, setControls] = useState(true)
@@ -51,22 +52,30 @@ const App = (props) => {
   // const [pause, setPause] = useState(null)
   // const [duration, setDuration] = useState(0)
   // const [loop, setLoop] = useState(false)
-  const handleSubmitLogin = async (event) => {
-    event.preventDefault()
-    try {
-      axios
-          .put('http://localhost:8000/api/useraccount/login', ({username, password}))
-          .then((response) => {
-            console.log(response.data)
-            setCurrentUser(response.data)
-            setIsAuthenticated(true)
-          })
-    } catch (err) {
-      setErrorMessage(err)
-    }
-    //console.log(user, password)
-    // handleLogin(event)
+  const handleLogin = (user) => {
+      axios({
+        method: 'put',
+        url: 'https://glacial-wave-24104.herokuapp.com/api/useraccount/login',
+        data: {
+          username: user.username,
+          password: user.password
+        }
+      })
+      .then((response) => {
+        console.log(response.data)
+        setCurrentUser(response.data)
+        setIsAuthenticated(true)
+      })
   }
+
+  const handleToggleSignUp = (event) => {
+  if (toggleLogin) {
+    setToggleLogin(false)
+  } else {
+    setToggleLogin(true)
+  }
+}
+
 
   const handleLogout = (event) => {
     setPassword('')
@@ -129,21 +138,23 @@ const App = (props) => {
       })
   }
   const handleCreateUser = (addUser) => {
-    axios
-      .post('https://glacial-wave-24104.herokuapp.com/api/users', addUser)
-      .then((response) => {
-        console.log(response)
-        getUser()
-      })
-  }
+  axios
+    .post('https://glacial-wave-24104.herokuapp.com/api/useraccount', addUser)
+    .then((response) => {
+      console.log(response.data)
+      setCurrentUser(response.data)
+      setIsAuthenticated(true)
+      //getUser()
+    })
+    .catch((error) => console.log(error))
+}
 
-  const handleCreateAccount = (addAccountInfo) => {
-      axios.post('https://glacial-wave-24104.herokuapp.com/api/accounts', addAccountInfo)
-      .then((response) => {
-          getAccountInfo()
-      })
-
-  }
+const handleCreateAccount = (addAccountInfo) => {
+    axios.post('https://glacial-wave-24104.herokuapp.com/api/accounts', addAccountInfo)
+    .then((response) => {
+      getAccountInfo()
+    })
+}
 
 
 
@@ -159,8 +170,6 @@ const App = (props) => {
 
   return (
     <>
-
-
 
       {isAuthenticated ? (
         <>
@@ -194,54 +203,30 @@ const App = (props) => {
     </>
 ) : (
      <>
-     <section className = 'loginPage'>
-     <div className = 'logoName'>
-     <img className = 'logo' src = 'https://i.imgur.com/bZRUMGT.png'></img>
-     <div className = 'appName'>Music App</div>
-     </div>
-
-       <section className="login-box">
-         <h1>Login</h1>
-         <form className = 'loginForm' onSubmit={handleSubmitLogin}>
-             <label htmlFor="username">Username:</label>
-             <input
-             placeholder = 'Username...'
-                className = 'loginInput'
-                 type="text"
-                 id="username"
-                 onChange={(e) => setUsername(e.target.value)}
-                 value={username}
-                 required
-             /><br/>
-             <label htmlFor="password">Password:</label>
-             <input
-                placeholder = 'Password...'
-                className = 'loginInput'
-                 type="password"
-                 id="password"
-                 onChange={(e) => setPassword(e.target.value)}
-                 value={password}
-                 required
-             /><br/>
-             <button className = 'signinButton'>Sign In</button>
-         </form>
-         <p className = 'needAccount'>
-             Need an account?<br />
-             <span className="line">
-                 <a className = 'signupAnchor' href="/createaccount">Sign Up</a>
-             </span>
-         </p>
-         </section>
-         <div className="wrapper">
-         <Routes>
-           <Route path="/createaccount" component={<Signup handleCreateUser={handleCreateUser} />} />
-         </Routes>
-       </div>
-       </section>
-     </>
-   )}
- </>
+     {toggleLogin ? (
+   <>
+     <Login handleLogin={handleLogin} />
+       <p>
+         <span>Need an account?</span><br/>
+         <button onClick={handleToggleSignUp}>Sign up</button>
+       </p>
+   </>
+ ) : (
+   <>
+     <Register handleCreateUser={handleCreateUser} />
+     <br />
+     <p>
+       <span>Have an account already?</span><br/>
+       <button onClick={handleToggleSignUp}>Login</button>
+     </p>
+   </>
+ )}
+</>
 )
 }
+</>
+)
+}
+
 
 export default App;
