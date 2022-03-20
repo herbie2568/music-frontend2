@@ -56,22 +56,23 @@ const App = () => {
   // const [duration, setDuration] = useState(0)
   // const [loop, setLoop] = useState(false)
 
-  const handleSubmitLogin = async (event) => {
-    event.preventDefault()
-    try {
-      axios
-          .put('http://localhost:8000/api/useraccount/login', ({username, password}))
-          .then((response) => {
-            console.log(response.data)
-            setCurrentUser(response.data)
-            setIsAuthenticated(true)
-          })
-    } catch (err) {
-      setErrorMessage(err)
-    }
-    //console.log(user, password)  
-    // handleLogin(event)
+  const handleLogin = (user) => {
+      axios({
+        method: 'put',
+        url: 'https://glacial-wave-24104.herokuapp.com/api/useraccount/login',
+        data: {
+          username: user.username,
+          password: user.password
+        }
+      })
+      .then((response) => {
+        console.log(response.data)
+        setCurrentUser(response.data)
+        setIsAuthenticated(true)
+      })
   }
+
+  
 
   const handleToggleSignUp = (event) => {
     if (toggleLogin) {
@@ -81,7 +82,6 @@ const App = () => {
     }
   }
   
-
   const handleLogout = (event) => {
     setPassword('')
     setUsername('')
@@ -141,11 +141,11 @@ const App = () => {
   }
   const handleCreateUser = (addUser) => {
     axios
-      .post('https://glacial-wave-24104.herokuapp.com/api/users', addUser)
+      .post('https://glacial-wave-24104.herokuapp.com/api/useraccount', addUser)
       .then((response) => {
         console.log(response.data)
-        setUsername(response.data.username)
-        setPassword(response.data.password)
+        setCurrentUser(response.data)
+        setIsAuthenticated(true)
         //getUser()
       })
       .catch((error) => console.log(error))
@@ -170,65 +170,51 @@ const App = () => {
   return (
     <>
       <h1>Music App</h1>
-
       {isAuthenticated ? (
         <>
-          <div className = 'navbarDiv'>
+          <div className='navbarDiv'>
             <h1>insert cool title here</h1>
-            <nav className = 'navBar'>
-              <Link className = 'link'to="/songs">Home</Link>
-              <Link className = 'link' to='/new'>Add Song</Link>
-              <Link className = 'link' to='/account'>Account Details</Link>
+            <nav className='navBar'>
+              <Link className='link' to="/songs">Home</Link>
+              <Link className='link' to='/new'>Add Song</Link>
+              <Link className='link' to='/account'>Account Details</Link>
               <Link className='link' to='/cart'>Your Cart</Link>
               <button onClick={handleLogout}>Log out</button>
             </nav>
           </div>
           <div className="wrapper">
             <Routes>
-              <Route path="/signup" element = {<Signup />}/>
-              <Route path="/songs" element={<Songs />}/>
-              <Route path="/account" element={<Account handleCreateAccount= {handleCreateAccount}/>}/>
-              <Route path="/cart" element={<Cart />}/>
-              <Route path = '/songs/:id' element = {<Show songs = {songs} handleUpdate={handleUpdate} />}/>
+              <Route path="/songs" element={<Songs />} />
+              <Route path="/account" element={<Account handleCreateAccount={handleCreateAccount} />} />
+              <Route path="/cart" element={<Cart />} />
+              <Route path='/songs/:id' element={<Show songs={songs} handleUpdate={handleUpdate} />} />
               <Route path="/new" element={<Add handleCreateSong={handleCreateSong} />} />
-              
             </Routes>
           </div>
         </>
       ) : (
         <>
-          <section className="login-box">
-            <h1>Login</h1>
-            <form onSubmit={handleSubmitLogin}>
-                <label htmlFor="username">Username:</label>
-                <input
-                    type="text"
-                    id="username"
-                    onChange={(e) => setUsername(e.target.value)}
-                    value={username}
-                    required
-                />
-                <label htmlFor="password">Password:</label>
-                <input
-                    type="password"
-                    id="password"
-                    onChange={(e) => setPassword(e.target.value)}
-                    value={password}
-                    required
-                />
-                <button>Sign In</button>
-            </form>
-            <p>
-                Need an account?<br />
-                <span className="line">
-                    <button>Sign Up</button>
-                </span>
-            </p>
-            </section>
-            <Register handleCreateUser={handleCreateUser}/>
-            
-        </>  
-      )} 
+          {toggleLogin ? (
+            <>
+              <Login handleLogin={handleLogin} />
+                <p>
+                  <span>Need an account?</span><br/>
+                  <button onClick={handleToggleSignUp}>Sign up</button>
+                </p>
+            </>
+          ) : (
+            <>
+              <Register handleCreateUser={handleCreateUser} />
+              <br />
+              <p>
+                <span>Have an account already?</span><br/>
+                <button onClick={handleToggleSignUp}>Login</button>
+              </p>
+            </>
+          )}
+        </>
+      )
+      }
     </>
   )
 }

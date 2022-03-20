@@ -15,42 +15,42 @@ const Register = (props) => {
     }
  
     return (
-        <section className="login-box">
+        <section className="register-box">
                 <h1>Sign Up</h1>
                 <form onSubmit={handleSubmit}>
-                <label htmlFor="name">Name:</label>
-                  <input
-                      type="text"
-                      id="name"
-                      onChange={handleChange}
-                      value={newUser.name}
-                      required
-                  />
-                  <label htmlFor="email">Email:</label>
-                  <input
-                      type="text"
-                      id="email"
-                      onChange={handleChange}
-                      value={newUser.email}
-                      required
-                  />
-                  <label htmlFor="username">Username:</label>
-                  <input
-                      type="text"
-                      id="username"
-                      onChange={handleChange}
-                      value={newUser.username}
-                      required
-                  />
-                  <label htmlFor="password">Password:</label>
-                  <input
-                      type="password"
-                      id="password"
-                      onChange={handleChange}
-                      value={newUser.password}
-                      required
-                  />
-                  <button>Sign Up</button>
+                    <label htmlFor="name">Name:</label>
+                    <input
+                        type="text"
+                        name="name"
+                        onChange={handleChange}
+                        value={newUser.name}
+                        required
+                    /><br/><br/>
+                    <label htmlFor="email">Email:</label>
+                    <input
+                        type="text"
+                        name="email"
+                        onChange={handleChange}
+                        value={newUser.email}
+                        required
+                    /><br/><br/>
+                    <label htmlFor="username">Username:</label>
+                    <input
+                        type="text"
+                        name="username"
+                        onChange={handleChange}
+                        value={newUser.username}
+                        required
+                    /><br/><br/>
+                    <label htmlFor="password">Password:</label>
+                    <input
+                        type="password"
+                        name="password"
+                        onChange={handleChange}
+                        value={newUser.password}
+                        required
+                    /><br/><br/>
+                <input type="submit" value='Register' />
                 </form>
               </section>
     )
