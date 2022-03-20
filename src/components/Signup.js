@@ -17,33 +17,36 @@ const Signup = () => {
 
   const onSubmit = e => {
     e.preventDefault();
-    const user = {
-      username: username,
-      password: password,
 
-    };
-    fetch('https://glacial-wave-24104.herokuapp.com/api/useraccount', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(user)
-    })
-      .then(res => res.json())
-      .then(data => {
-        if (data.key) {
-          localStorage.clear();
-          localStorage.setItem('token', data.key);
-          window.location.replace('https://glacial-wave-24104.herokuapp.com/api/songs');
-        } else {
-          setUsername('');
-          setPassword('');
-
-          localStorage.clear();
-          setErrors(true);
-        }
-      });
+  const user = {
+    username: username,
+    password: password,
   };
+
+    
+//     fetch('https://glacial-wave-24104.herokuapp.com/api/useraccount', {
+
+//       method: 'POST',
+//       headers: {
+//         'Content-Type': 'application/json'
+//       },
+//       body: JSON.stringify(user)
+//     })
+//       .then(res => res.json())
+//       .then(data => {
+//         if (data.key) {
+//           localStorage.clear();
+//           localStorage.setItem('token', data.key);
+//           window.location.replace('https://glacial-wave-24104.herokuapp.com/api/songs');
+//         } else {
+//           setUsername('');
+//           setPassword('');
+
+//           localStorage.clear();
+//           setErrors(true);
+//         }
+//       });
+//   };
 
   return (
     <div>

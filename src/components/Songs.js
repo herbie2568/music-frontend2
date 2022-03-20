@@ -15,7 +15,9 @@ import {
 } from "react-router-dom";
 import Show from './Show.js'
 
+
 const Songs = (props) => {
+
 
     let [songs, setSongs] = useState([])
     let [users, setUsers] = useState([])
@@ -105,35 +107,37 @@ const Songs = (props) => {
                     song.price = '1.29'
                 }
                 return (
+
                     <>
-                    <div>
-                    <Routes>
-                      <Route path='/songs/:id' element = {<Show songs = {songs} song = {song} handleUpdate={handleUpdate} handleDelete = {handleDelete}/>}/>
-                     </Routes>
-                     </div>
-                    <div className="songCard" key={song.id + index}
-                    >
-                    <img onClick = {() => {
-                        navigate('/songs/' + song.id
-                    )
-                }} className = 'songImage' src = {song.image}></img>
-                <h4 className = 'name'>{song.name}</h4>
+                      <div>
+                        <Routes>
+                          <Route path='/songs/:id' element = {<Show songs = {songs} song = {song} handleUpdate={handleUpdate} handleDelete = {handleDelete}/>}/>
+                        </Routes>
+                      </div>
+                      <div className="songCard" key={song.id + index}>
+                        <img onClick = {() => {
+                          navigate('/songs/' + song.id
+                        )
+                        }} className = 'songImage' src = {song.image}></img>
 
-                <h5>Artist: {song.artist}</h5>
-                <h5>Genre: {song.genre}</h5>
-                <h5>Price: ${song.price}</h5>
+                        <h4 className = 'name'>{song.name}</h4>
 
-                <br/>
+                        <h5>Artist: {song.artist}</h5>
+                        <h5>Genre: {song.genre}</h5>
+                        <h5>Price: ${song.price}</h5>
 
 
-                </div>
-                </>
-            )
+                        <button className = 'deleteButton' onClick={handleDelete} value={song.id}>
+                          Delete
+                        </button>
+                        <Edit />
+                      </div>
+                  </>
 
-        })}
+              )
 
-
-        </div>
+          })}
+          </div>
         </>
     )
 }
