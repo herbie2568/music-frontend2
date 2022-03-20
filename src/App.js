@@ -38,6 +38,7 @@ const App = () => {
   const [password, setPassword] = useState('')
   const [currentUser, setCurrentUser] = useState({})
   const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [toggleSignUp, setToggleSignUp] = useState(false)
   const [toggleLogin, setToggleLogin] = useState(true)
   const [toggleError, setToggleError] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
@@ -71,6 +72,15 @@ const App = () => {
     //console.log(user, password)  
     // handleLogin(event)
   }
+
+  const handleToggleSignUp = (event) => {
+    if (toggleLogin) {
+      setToggleLogin(false)
+    } else {
+      setToggleLogin(true)
+    }
+  }
+  
 
   const handleLogout = (event) => {
     setPassword('')
@@ -133,9 +143,12 @@ const App = () => {
     axios
       .post('https://glacial-wave-24104.herokuapp.com/api/users', addUser)
       .then((response) => {
-        console.log(response)
-        getUser()
+        console.log(response.data)
+        setUsername(response.data.username)
+        setPassword(response.data.password)
+        //getUser()
       })
+      .catch((error) => console.log(error))
   }
 
   const handleCreateAccount = (addAccountInfo) => {
@@ -208,15 +221,12 @@ const App = () => {
             <p>
                 Need an account?<br />
                 <span className="line">
-                    <a href="/createaccount">Sign Up</a>
+                    <button>Sign Up</button>
                 </span>
             </p>
             </section>
-            <div className="wrapper">
-            <Routes>
-              <Route path="/createaccount" component={<Signup handleCreateUser={handleCreateUser} />} />
-            </Routes>
-          </div>
+            <Register handleCreateUser={handleCreateUser}/>
+            
         </>  
       )} 
     </>
