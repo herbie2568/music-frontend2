@@ -21,41 +21,51 @@ const Register = (props) => {
         <div className = 'appName'>Music App</div>
         </div>
         <section className="register-box">
-                <h1>Sign Up</h1>
-                <form onSubmit={handleSubmit}>
+                <h1>Create an Account</h1>
+                <form className = 'registerForm' onSubmit={handleSubmit}>
+
                     <label htmlFor="name">Name:</label>
                     <input
+                        placeholder = 'Your name...'
                         type="text"
                         name="name"
                         onChange={handleChange}
                         value={newUser.name}
+                        className = 'loginInput'
                         required
-                    /><br/><br/>
+                    />
+
                     <label htmlFor="email">Email:</label>
                     <input
+                    placeholder = 'Email address...'
                         type="text"
                         name="email"
                         onChange={handleChange}
                         value={newUser.email}
+                        className = 'loginInput'
                         required
-                    /><br/><br/>
+                    />
                     <label htmlFor="username">Username:</label>
                     <input
+                    placeholder = 'Create a username...'
                         type="text"
                         name="username"
                         onChange={handleChange}
+                        className = 'loginInput'
                         value={newUser.username}
                         required
-                    /><br/><br/>
+                    />
                     <label htmlFor="password">Password:</label>
                     <input
+                    className = 'loginInput'
+                    placeholder = 'Create a password...'
                         type="password"
                         name="password"
                         onChange={handleChange}
                         value={newUser.password}
                         required
-                    /><br/><br/>
-                <input type="submit" value='Register' />
+                    />
+                <input className = 'signinButton' type="submit" value='Register' />
                 </form>
               </section>
         </>

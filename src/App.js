@@ -214,8 +214,8 @@ const handleCreateAccount = (addAccountInfo) => {
  ) : (
    <>
      <Register handleCreateUser={handleCreateUser} />
-     <br />
-     <p>
+    
+     <p className = 'needAccount'>
        <span>Have an account already?</span><br/>
        <div className = 'signupDiv' onClick={handleToggleSignUp}>Login</div>
      </p>
