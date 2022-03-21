@@ -130,7 +130,7 @@ const Songs = (props) => {
                         <button className = 'deleteButton' onClick={handleDelete} value={song.id}>
                           Delete
                         </button>
-                        <Edit />
+                        {/* <Edit /> */}
                       </div>
                   </>
 

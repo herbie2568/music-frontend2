@@ -11,7 +11,7 @@ import User from './components/User'
 import Songs from './components/Songs'
 import Navbar from './components/Navbar'
 import Login from './components/Login'
-import Signup from './components/Signup'
+
 import Account from './components/Account'
 import Cart from './components/Cart'
 import Show from './components/Show'
@@ -41,6 +41,7 @@ const App = (props) => {
   const [errorMessage, setErrorMessage] = useState('')
   const [toggleLogout, setToggleLogout] = useState(false)
   const [currentUser, setCurrentUser] = useState({})
+  const [currentAccount, setCurrentAccount] = useState({})
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [toggleSignUp, setToggleSignUp] = useState(false)
   
@@ -55,20 +56,30 @@ const App = (props) => {
         }
       })
       .then((response) => {
-        console.log(response.data)
-        setCurrentUser(response.data)
-        setIsAuthenticated(true)
+        if (response.data.username) {
+          console.log(response.data)
+          setToggleError(false)
+          setErrorMessage('')
+          setCurrentUser(response.data)
+          setIsAuthenticated(true)
+        } else {
+          console.log(response.data)
+          setErrorMessage('Sorry, invalid login.')
+          setToggleError(true)
+          
+        }
       })
   }
 
-  const handleToggleSignUp = (event) => {
-  if (toggleLogin) {
-    setToggleLogin(false)
-  } else {
-    setToggleLogin(true)
-  }
-}
 
+  const handleToggleSignUp = (event) => {
+    if (toggleLogin) {
+      setToggleLogin(false)
+    } else {
+      setToggleLogin(true)
+    }
+  }
+  
 
   const handleLogout = (event) => {
     setPassword('')
@@ -85,39 +96,6 @@ const App = (props) => {
      (err) => console.error(err)
    )
    .catch((error) => console.error(error))
-  }
-
-  const getUser = () => {
-  axios
-    .get('https://glacial-wave-24104.herokuapp.com/api/users')
-    .then(
-      (response) => setUsers(response.data),
-      (err) => console.error(err)
-    )
-    .catch((error) => console.error(error))
-  }
-
-  
-
-
-  const getAccountInfo = () => {
-    axios
-   .get('https://glacial-wave-24104.herokuapp.com/api/accounts')
-   .then(
-     (response) => setSongs(response.data),
-     (err) => console.error(err)
-   )
-   .catch((error) => console.error(error))  
-  }
-
-  const getUser = () => {
-  axios
-    .get('https://glacial-wave-24104.herokuapp.com/api/users')
-    .then(
-      (response) => setUsers(response.data),
-      (err) => console.error(err)
-    )
-    .catch((error) => console.error(error))
   }
 
 
@@ -143,7 +121,7 @@ const App = (props) => {
       })
   }
 
-  const handleUpdate = (editSong) => {
+  const handleUpdateSong = (editSong) => {
     console.log(editSong.id)
     axios
       .put('https://glacial-wave-24104.herokuapp.com/api/songs/' + editSong.id, editSong)
@@ -151,25 +129,35 @@ const App = (props) => {
         getSong()
       })
   }
-  const handleCreateUser = (addUser) => {
+
+  const handleCreateUser = async (addUser) => {
     axios
       .post('https://glacial-wave-24104.herokuapp.com/api/useraccount', addUser)
       .then((response) => {
         console.log(response.data)
         setCurrentUser(response.data)
         setIsAuthenticated(true)
-        //getUser()
+        handleCreateAccount(currentUser)
       })
       .catch((error) => console.log(error))
   }
 
 
-  const handleCreateAccount = (addAccountInfo) => {
-      axios.post('https://glacial-wave-24104.herokuapp.com/api/accounts', addAccountInfo)
+  const handleCreateAccount = (newAccount) => {
+    axios({
+      method: 'post',
+      url: 'https://glacial-wave-24104.herokuapp.com/api/accounts',
+      data: {
+        owner: newAccount
+      }
+    })
       .then((response) => {
-          getAccountInfo()
+        if (response.data.owner) {
+          console.log(response.data)
+        } else {
+          console.log(response.data)
+        }
       })
-
   }
 
   const handleCreateSong = (addSong) => {
@@ -201,14 +189,13 @@ const App = (props) => {
 
         <div className="wrapper">
           <Routes>
-            <Route path="/signup" element = {<Signup />}/>
             <Route path="/*" element={<Songs />}/>
-            <Route path="/account" element={<Account handleCreateAccount= {handleCreateAccount}/>}/>
+            <Route path="/account" element={<Account currentUser={currentUser} handleCreateAccount= {handleCreateAccount}/>}/>
             <Route path="/cart" element={<Cart />}/>
             <Route path = '/songs/:id' element = {<Show songs = {songs}  handleDelete = {handleDelete}/>}/>
 
             <Route path="/createaccount" element={<User handleCreateUser = {handleCreateUser}/>}/>
-            <Route path = "/edit" element = {<Edit handleUpdate = {handleUpdate}/>} />
+            <Route path = "/edit" element = {<Edit handleUpdateSong = {handleUpdateSong}/>} />
             <Route path="/new" element={<Add handleCreateSong = {handleCreateSong}/>}/>
           </Routes>
         </div>
@@ -218,18 +205,18 @@ const App = (props) => {
        {toggleLogin ? (
          <>
            <Login handleLogin={handleLogin} />
-             <p className = 'needAccount'>
+             <div className = 'needAccount'>
                <span>Need an account?</span><br/>
                <div className = 'signupDiv' onClick={handleToggleSignUp}>Sign up</div>
-             </p>
+             </div>
          </>
          ) : (
          <>
-           <Register handleCreateUser={handleCreateUser} />
-           <p className = 'needAccount'>
+            <Register handleCreateUser={handleCreateUser} handleCreateAccount={handleCreateAccount}/>
+           <div className = 'needAccount'>
              <span>Have an account already?</span><br/>
              <div className = 'signupDiv' onClick={handleToggleSignUp}>Login</div>
-           </p>
+           </div>
          </>
         )}
        </>
@@ -242,4 +229,3 @@ const App = (props) => {
 
 
 export default App;
-

@@ -23,7 +23,7 @@ const Add = (props) => {
       <h3>Add Song</h3>
     <div className='addFormDiv'>
 
-      <form classname = 'addForm' onSubmit={handleSubmit}>
+      <form className = 'addForm' onSubmit={handleSubmit}>
         <label htmlFor="name">Name: </label><br/>
         <input className='addInput' type="text" name="name" value={song.name} onChange={handleChange} placeholder='Name...' />
         <br />
@@ -36,10 +36,10 @@ const Add = (props) => {
 
         <label htmlFor = 'genre'>Genre: </label><br/>
         <select name = 'genre' id = 'genre' value = {song.genre} onChange = {handleChange} required>
-            <option value = 'pop'>Pop</option>
-            <option value = 'rock'>Rock</option>
-            <option value = 'techno'>Techno</option>
-            <option value = 'hiphop'>Hip-hop</option>
+            <option value='pop' id='pop'>Pop</option>
+            <option value='rock' id='rock'>Rock</option>
+            <option value='techno' id='techno'>Techno</option>
+            <option value='hiphop' id='hiphop'>Hip-hop</option>
         </select>
 
         <br />

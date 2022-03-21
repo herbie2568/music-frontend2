@@ -11,9 +11,7 @@ const Login = (props) => {
     const { setAuth } = useContext(AuthContext)
     const usesrRef = useRef();
     const errRef = useRef();
-
-
-
+    
     let emptyUser = { username: '', password: ''}
     const [user, setUser] = useState(emptyUser)
     const [errMsg, setErrMsg] = useState('')
@@ -22,7 +20,6 @@ const Login = (props) => {
     const handleChange = (event) => {
         setUser({...user, [event.target.name]: event.target.value})
     }
-
 
 
     const handleSubmit = async (event) => {
