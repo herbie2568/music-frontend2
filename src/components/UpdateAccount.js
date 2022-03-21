@@ -8,11 +8,6 @@ const UpdateAccount = (props) => {
     const [currentUser, setCurrentUser] = useState(props.currentUser)
     const [currentAccount, setCurrentAccount] = useState(accountDetails)
 
-<<<<<<< HEAD
-
-=======
-    
->>>>>>> dc23469fcdc4f889e8b4a413d593bdac8e7de909
 
     return (
         <>
@@ -44,14 +39,7 @@ const UpdateAccount = (props) => {
             </form>
         </>
     )
-<<<<<<< HEAD
 
 }
 
 export default UpdateAccount
-=======
-     
-}
-
-export default UpdateAccount
->>>>>>> dc23469fcdc4f889e8b4a413d593bdac8e7de909

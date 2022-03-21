@@ -59,12 +59,13 @@ if (!songs.price) {
         <h3>{songs.artist}</h3>
         <h3>{songs.genre}</h3>
 
-
-        <Link to = '/songs'><button className = 'deleteButton' onClick={handleDelete} value={songs.id}>
+        <div className = 'showButtons'>
+        <Link className = 'linkButton' to = '/songs'><button className = 'deleteButtonShow' onClick={handleDelete} value={songs.id}>
         Delete
         </button></Link>
 
         <Edit handleUpdate = {handleUpdate} songs = {songs} setSongs = {setSongs} />
+        </div>
         </div>
     )
 }

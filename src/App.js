@@ -93,7 +93,7 @@ const App = (props) => {
     axios
    .get('https://glacial-wave-24104.herokuapp.com/api/accounts')
    .then(
-     (response) => setSongs(response.data),
+     (response) => setAccountInfo(response.data),
      (err) => console.error(err)
    )
    .catch((error) => console.error(error))
@@ -103,6 +103,11 @@ const App = (props) => {
   useEffect(() => {
     getSong()
   }, [])
+
+
+    useEffect(() => {
+      getAccountInfo()
+    }, [])
 
   const getSong = () => {
     axios
@@ -128,6 +133,15 @@ const App = (props) => {
       .put('https://glacial-wave-24104.herokuapp.com/api/songs/' + editSong.id, editSong)
       .then((response) => {
         getSong()
+      })
+  }
+
+  const handleUpdateAccount = (editAccount) => {
+    console.log(editAccount.id)
+    axios
+      .put('https://glacial-wave-24104.herokuapp.com/api/accounts/' + editAccount.id, editAccount)
+      .then((response) => {
+        getAccountInfo()
       })
   }
 
@@ -195,7 +209,7 @@ const App = (props) => {
         <Routes>
 
           <Route path="/*" element={<Songs />}/>
-          <Route path="/account" element={<Account currentUser = {currentUser} handleCreateAccount= {handleCreateAccount}/>}/>
+          <Route path="/account" element={<Account currentUser = {currentUser} accountInfo = {accountInfo} handleCreateAccount= {handleCreateAccount} handleUpdateAccount = {handleUpdateAccount}/>}/>
           <Route path="/cart" element={<Cart />}/>
           <Route path = '/songs/:id' element = {<Show songs = {songs}  handleDelete = {handleDelete}/>}/>
 
