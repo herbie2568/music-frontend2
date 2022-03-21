@@ -42,10 +42,8 @@
     </Routes>
   </div>
   </section>
-</>
-)}
-</>
-)
-}
+ 
 
-export default App;
+
+
+

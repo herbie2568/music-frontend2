@@ -11,10 +11,11 @@ import User from './components/User'
 import Songs from './components/Songs'
 import Navbar from './components/Navbar'
 import Login from './components/Login'
-import Signup from './components/Signup'
+
 import Account from './components/Account'
 import Cart from './components/Cart'
 import Show from './components/Show'
+
 
 import './App.css';
 import {
@@ -31,8 +32,8 @@ import {
 const App = (props) => {
 
   const [songs, setSongs] = useState([])
-  let [users, setUsers] = useState([])
-  let [accountInfo, setAccountInfo] = useState([])
+  const [users, setUsers] = useState([])
+  const [accountInfo, setAccountInfo] = useState([])
   const [name, setName] = useState('')
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
@@ -41,18 +42,11 @@ const App = (props) => {
   const [errorMessage, setErrorMessage] = useState('')
   const [toggleLogout, setToggleLogout] = useState(false)
   const [currentUser, setCurrentUser] = useState({})
+  const [currentAccount, setCurrentAccount] = useState({})
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [toggleSignUp, setToggleSignUp] = useState(false)
-  // const [isPlaying, setIsPlaying] = useState(false);
-  // const [url, setUrl] = useState(null)
-  // const [controls, setControls] = useState(true)
-  // const [volume, setVolume] = useState(0.7)
-  // const [muted, setMuted] = useState(false)
-  // const [played, setPlayed] = useState(0)
-  // const [play, setPlay] = useState(null)
-  // const [pause, setPause] = useState(null)
-  // const [duration, setDuration] = useState(0)
-  // const [loop, setLoop] = useState(false)
+
+
   const handleLogin = (user) => {
     axios({
       method: 'put',
@@ -78,13 +72,14 @@ const App = (props) => {
     })
 }
 
+
   const handleToggleSignUp = (event) => {
-  if (toggleLogin) {
-    setToggleLogin(false)
-  } else {
-    setToggleLogin(true)
+    if (toggleLogin) {
+      setToggleLogin(false)
+    } else {
+      setToggleLogin(true)
+    }
   }
-}
 
 
   const handleLogout = (event) => {
@@ -135,25 +130,36 @@ const App = (props) => {
         getSong()
       })
   }
-  const handleCreateUser = (addUser) => {
-  axios
-    .post('https://glacial-wave-24104.herokuapp.com/api/useraccount', addUser)
-    .then((response) => {
-      console.log(response.data)
-      setCurrentUser(response.data)
-      setIsAuthenticated(true)
-      //getUser()
-    })
-    .catch((error) => console.log(error))
-}
 
-const handleCreateAccount = (newAccount) => {
-    axios.post('https://glacial-wave-24104.herokuapp.com/api/accounts', newAccount)
+  const handleCreateUser = async (addUser) => {
+    axios
+      .post('https://glacial-wave-24104.herokuapp.com/api/useraccount', addUser)
       .then((response) => {
-      console.log(response.data)
-      getAccountInfo()
+        console.log(response.data)
+        setCurrentUser(response.data)
+        setIsAuthenticated(true)
+        handleCreateAccount(currentUser)
+      })
+      .catch((error) => console.log(error))
+  }
+
+
+  const handleCreateAccount = (newAccount) => {
+    axios({
+      method: 'post',
+      url: 'https://glacial-wave-24104.herokuapp.com/api/accounts',
+      data: {
+        owner: newAccount
+      }
     })
-}
+      .then((response) => {
+        if (response.data.owner) {
+          console.log(response.data)
+        } else {
+          console.log(response.data)
+        }
+      })
+  }
 
   const handleCreateSong = (addSong) => {
     axios
@@ -166,7 +172,6 @@ const handleCreateAccount = (newAccount) => {
 
   return (
     <>
-
       {isAuthenticated ? (
         <>
       <div className = 'navbarDiv'>
@@ -190,7 +195,7 @@ const handleCreateAccount = (newAccount) => {
         <Routes>
 
           <Route path="/*" element={<Songs />}/>
-          <Route path="/account" element={<Account handleCreateAccount= {handleCreateAccount}/>}/>
+          <Route path="/account" element={<Account currentUser = {currentUser} handleCreateAccount= {handleCreateAccount}/>}/>
           <Route path="/cart" element={<Cart />}/>
           <Route path = '/songs/:id' element = {<Show songs = {songs}  handleDelete = {handleDelete}/>}/>
 
@@ -244,6 +249,7 @@ const handleCreateAccount = (newAccount) => {
 </>
 )
 }
+
 
 
 export default App;

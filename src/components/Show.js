@@ -2,13 +2,16 @@ import {useParams} from 'react-router-dom'
 import {useState, useEffect} from 'react'
 import axios from 'axios'
 import Edit from './Edit.js'
+
 import {
     Link,
 } from "react-router-dom";
 
+
 const Show = (props) => {
     const params = useParams();
     const [songs, setSongs] = useState([])
+
 
     const getSong = () => {
       axios
@@ -35,13 +38,13 @@ const Show = (props) => {
         .then((response) => {
           getSong()
         })
-    }
+     }
 
-    useEffect(() => {
+     useEffect(() => {
         axios.get('https://glacial-wave-24104.herokuapp.com/api/songs/' + params.id)
-.then((response) =>
-    setSongs(response.data))
-}, []);
+        .then((response) =>
+        setSongs(response.data))
+      }, []);
 
 if (!songs.image) {
     songs.image = 'https://i.imgur.com/D3aOVsJ.png'

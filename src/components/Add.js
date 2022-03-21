@@ -24,15 +24,13 @@ const Add = (props) => {
       <h3 className = 'addSong'>Add Song</h3>
 
 
-      <form classname = 'addForm' onSubmit={handleSubmit}>
+      <form className = 'addForm' onSubmit={handleSubmit}>
         <label htmlFor="name">Name: </label><br/>
         <input className='loginInput' type="text" name="name" value={song.name} onChange={handleChange} placeholder='Enter song name...' />
         <br/>
         <label htmlFor="artist">Artist: </label><br/>
         <input className='loginInput' type="text" name="artist" value={song.artist} onChange={handleChange} placeholder='Enter the artist...' />
-        <br />
-
-        <label htmlFor="image">Image URL: </label><br/>
+        <br />        <label htmlFor="image">Image URL: </label><br/>
         <input className='loginInput' type="text" name="image" value={song.image} onChange={handleChange} placeholder='Enter the image URL...' />
         <br />
 
