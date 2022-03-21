@@ -41,6 +41,7 @@ const App = (props) => {
   const [errorMessage, setErrorMessage] = useState('')
   const [toggleLogout, setToggleLogout] = useState(false)
   const [currentUser, setCurrentUser] = useState({})
+  const [currentAccount, setCurrentAccount] = useState({})
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [toggleSignUp, setToggleSignUp] = useState(false)
   
@@ -128,24 +129,34 @@ const App = (props) => {
         getSong()
       })
   }
-  const handleCreateUser = (addUser) => {
+
+  const handleCreateUser = async (addUser) => {
     axios
       .post('https://glacial-wave-24104.herokuapp.com/api/useraccount', addUser)
       .then((response) => {
         console.log(response.data)
         setCurrentUser(response.data)
         setIsAuthenticated(true)
-        //getUser()
+        handleCreateAccount(currentUser)
       })
       .catch((error) => console.log(error))
   }
 
 
   const handleCreateAccount = (newAccount) => {
-      axios.post('https://glacial-wave-24104.herokuapp.com/api/accounts', newAccount)
-        .then((response) => {
-        console.log(response.data)
-        getAccountInfo()
+    axios({
+      method: 'post',
+      url: 'https://glacial-wave-24104.herokuapp.com/api/accounts',
+      data: {
+        owner: newAccount
+      }
+    })
+      .then((response) => {
+        if (response.data.owner) {
+          console.log(response.data)
+        } else {
+          console.log(response.data)
+        }
       })
   }
 
@@ -179,7 +190,7 @@ const App = (props) => {
         <div className="wrapper">
           <Routes>
             <Route path="/*" element={<Songs />}/>
-            <Route path="/account" element={<Account handleCreateAccount= {handleCreateAccount}/>}/>
+            <Route path="/account" element={<Account currentUser={currentUser} handleCreateAccount= {handleCreateAccount}/>}/>
             <Route path="/cart" element={<Cart />}/>
             <Route path = '/songs/:id' element = {<Show songs = {songs}  handleDelete = {handleDelete}/>}/>
 
@@ -218,4 +229,3 @@ const App = (props) => {
 
 
 export default App;
-

@@ -9,7 +9,7 @@ const Register = (props) => {
 
     const handleChange = (event) => {
         setNewUser({ ...newUser, [event.target.name]: event.target.value })
-        setNewAccount({ owner: newUser })
+        // setNewAccount({ owner: newUser })
         //console.log(newAccount)
     }
 
@@ -17,7 +17,7 @@ const Register = (props) => {
         event.preventDefault()
         //account should be created with new user
         props.handleCreateUser(newUser)
-        props.handleCreateAccount(newAccount)
+        // props.handleCreateAccount(newAccount)
     }
 
     return (
