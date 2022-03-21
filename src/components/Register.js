@@ -4,7 +4,7 @@ const Register = (props) => {
     let emptyUser = { name: '', email: '', username: '', password: '' }
     let emptyAccount = { owner:'' }
     const [newUser, setNewUser] = useState(emptyUser)
-     const [newAccount, setNewAccount] = useState(emptyAccount)
+    const [newAccount, setNewAccount] = useState(emptyAccount)
 
 
     const handleChange = (event) => {
