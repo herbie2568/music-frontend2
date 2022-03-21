@@ -92,6 +92,7 @@ const Songs = (props) => {
         <input className = 'searchInput' type="text" placeholder="search..." value={filter} onChange={(e) => {e.preventDefault(); setFilter(e.target.value);
         }}
         ></input>
+         <img className = 'search-picshow' src = 'https://www.freeiconspng.com/thumbs/magnifying-glass-icon/magnifying-glass-icon-13.png'></img>
 
         </div>
 
