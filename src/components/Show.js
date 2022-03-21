@@ -2,13 +2,16 @@ import {useParams} from 'react-router-dom'
 import {useState, useEffect} from 'react'
 import axios from 'axios'
 import Edit from './Edit.js'
+
 import {
     Link,
 } from "react-router-dom";
 
+
 const Show = (props) => {
     const params = useParams();
     const [songs, setSongs] = useState([])
+
 
     const getSong = () => {
       axios
@@ -35,14 +38,15 @@ const Show = (props) => {
         .then((response) => {
           getSong()
         })
-    }
+     }
 
-    useEffect(() => {
+     useEffect(() => {
         axios.get('https://glacial-wave-24104.herokuapp.com/api/songs/' + params.id)
-.then((response) =>
-    setSongs(response.data))
-}, []);
+        .then((response) =>
+        setSongs(response.data))
+      }, []);
 
+<<<<<<< HEAD
 if (!songs.image) {
     songs.image = 'https://i.imgur.com/D3aOVsJ.png'
 }
@@ -63,6 +67,31 @@ if (!songs.price) {
 
         <Edit handleUpdate = {handleUpdate} songs = {songs} setSongs = {setSongs} />
         </div>
+=======
+
+    if (!songs.image) {
+        songs.image = 'https://i.imgur.com/D3aOVsJ.png'
+    }
+    if (!songs.price) {
+        songs.price = '1.29'
+    }
+        return (
+          <>
+          <h1>song details {params.id}</h1>
+          <h2>{songs.name}</h2>
+          <h2>{songs.artist}</h2>
+          <h2>{songs.genre}</h2>
+          <img src = {songs.image}></img>
+
+
+          <Link to = '/songs'><button className = 'deleteButton' onClick={handleDelete} value={songs.id}>
+          Delete
+          </button></Link>
+
+          <Edit handleUpdate = {handleUpdate} songs = {songs} setSongs = {setSongs} />
+
+        </>
+>>>>>>> dc23469fcdc4f889e8b4a413d593bdac8e7de909
     )
 }
 

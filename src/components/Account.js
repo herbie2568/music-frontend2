@@ -3,36 +3,43 @@ import axios from 'axios'
 
 const Account = (props) => {
 
-    let emptyAccount = { user: '', name: '', location: '', favoritegenre: '', image: '', }
-    const [account, setAccount] = useState(emptyAccount)
+  let emptyAccount = { owner: props.currentUser, location: '', favoritegenre: '', image: '', }
+  const [account, setAccount] = useState(emptyAccount)
+  const [toggleUpdate, setToggleUpdate] = useState(false)
+  // const [user, setUser] = useState({ props.currentUser })
 
-    const handleChange = (event) => {
-      setAccount({ ...account, [event.target.name]: event.target.value })
-    }
+  const handleChange = (event) => {
+    setAccount({ ...account, [event.target.name]: event.target.value })
+  }
 
-    const handleSubmit = (event) => {
-      event.preventDefault()
-      props.handleCreateAccount(account)
+  const handleSubmit = (event) => {
+    event.preventDefault()
+    props.handleCreateAccount(account)
+  }
+
+  const toggleUpdateForm = (event) => {
+    if (toggleUpdate) {
+      setToggleUpdate(false)
+    } else {
+      setToggleUpdate(true)
     }
+  }
 
     return (
         <div className = 'accountContainer'>
         <div className = 'accountDetails'>
         <h2>Account Details</h2>
-        <img src = {props.image}></img>
-        <h4>Name: </h4><div className = 'showStuff'>{props.name}</div>
+        <img src = {account.image}></img>
+        <h4>Name: </h4><div className = 'showStuff'>{props.currentUser.name}</div>
         <h4>Location: </h4><div className = 'showStuff'>{account.location}</div>
         <h4>Favorite genre: </h4><div className = 'showStuff'>{account.favoritegenre}</div>
         </div>
 
-        <div className = 'updateAccount'>
-        <h2>Update Account Info</h2>
+        <button className='signinButton' onClick={toggleUpdateForm}>Update Account Info</button>
+        {toggleUpdate ? (
+        <>
         <form className = 'accountForm' onSubmit={handleSubmit}>
-            <div>
-            <label htmlFor="name">Name:</label>
-            <input className = 'loginInput' type="text" name="name" value={account.name} onChange={handleChange} placeholder = 'Enter your name...'/>
-            </div>
-            <br />
+
             <div>
             <label htmlFor="location">Location:</label>
             <input className = 'loginInput' type="text" name="location" value={account.location} onChange={handleChange} placeholder = 'Enter your city...'/>
@@ -58,8 +65,12 @@ const Account = (props) => {
 
             <input className = 'submitButton' type="submit" />
             </form>
+            </>
+      ) : (
+          null
+      )}
             </div>
-        </div>
+        
     )
 
 }

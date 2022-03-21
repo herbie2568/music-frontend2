@@ -60,10 +60,17 @@ const Edit = (props) => {
 
         <label htmlFor = 'genre'></label>
         <select name = 'genre' id = 'genre' value = {song.genre} onChange = {handleChange}>
+<<<<<<< HEAD
         <option value='pop' id='pop'>Pop</option>
      <option value='rock' id='rock'>Rock</option>
      <option value='techno' id='techno'>Techno</option>
      <option value='hiphop' id='hiphop'>Hip-hop</option>
+=======
+            <option value='pop' id='pop'>Pop</option>
+            <option value='rock' id='rock'>Rock</option>
+            <option value='techno' id='techno'>Techno</option>
+            <option value='hiphop' id='hiphop'>Hip-hop</option>
+>>>>>>> dc23469fcdc4f889e8b4a413d593bdac8e7de909
 
         </select>
         <br />
