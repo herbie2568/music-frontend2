@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 //only need props as a param if we are passing in props to this component (we are going to here).
 const Add = (props) => {
 
-
+  
   const handleChange = (event) => {
     setSong({ ...song, [event.target.name]: event.target.value })
   }
@@ -18,6 +18,7 @@ const Add = (props) => {
   const [song, setSong] = useState(emptySong)
 
   return (
+
       <>
       <h3>Add Song</h3>
     <div className='addFormDiv'>
@@ -40,6 +41,7 @@ const Add = (props) => {
             <option value = 'techno'>Techno</option>
             <option value = 'hiphop'>Hip-hop</option>
         </select>
+
         <br />
         <br />
 
@@ -48,14 +50,11 @@ const Add = (props) => {
         <input className='addInput' type="text" name="image" value={song.image} onChange={handleChange} placeholder='Image URL...' />
         <br />
         <br />
-
-        <label htmlFor="price">Price: </label><br/>
+        <label htmlFor="price"></label>
         <input className = 'addInput' type="text" name="price" value={song.price} onChange={handleChange} placeholder = 'Price...'/>
-        <br />
-        <br />
-
-        <label htmlFor="audio">Audio file: </label><br/>
+        <label htmlFor="audio">audio</label>
         <input type="file" id="audio" name="audio" accept="audio/*"></input>
+        <input className='addInput' type="text" name="audio" value={song.audio} onChange={handleChange} placeholder='Audio file...' />
 
 
         <br />

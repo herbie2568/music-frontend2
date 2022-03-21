@@ -19,6 +19,7 @@ body {
     display: flex;
     flex-flow: row wrap;
     justify-content: center;
+
     gap: 10px;
     margin-top: 3vh;
     z-index: 999;
@@ -185,4 +186,47 @@ body {
     align-self: center;
     width: 300px;
     text-align: center;
+}
+
+.navbarDiv {
+    /* position: fixed; */
+    z-index: 999;
+}
+
+.navBar {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    margin-left: 5vw;
+    margin-top: 3vh;
+    gap: 50px;
+}
+
+.link {
+    color: white;
+    text-decoration: none;
+    transition-duration: 0.4s;
+}
+
+.link:hover {
+    cursor: pointer;
+    color: red;
+    transform: scale(1.1);
+}
+
+.searchDiv {
+    position: relative;
+}
+
+.searchInput {
+  height: 30px;
+  width: 20vw;
+  border-radius: 8px;
+  position: fixed;
+  z-index: 1000;
+  bottom: 90.75vh;
+  right: 4vw;
+  padding-left: 10px;
+  font-size: 1em;
+  font-weight: 600;
 }
