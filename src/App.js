@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
 import axios from 'axios'
 import Add from './components/Add'
 import Edit from './components/Edit'
-
 import Register from './components/Register'
 
 import Euphoria from './assets/euphoria.mp3'
@@ -12,10 +11,11 @@ import User from './components/User'
 import Songs from './components/Songs'
 import Navbar from './components/Navbar'
 import Login from './components/Login'
-import Signup from './components/Signup'
+
 import Account from './components/Account'
 import Cart from './components/Cart'
 import Show from './components/Show'
+
 
 import './App.css';
 import {
@@ -28,7 +28,7 @@ import {
 } from "react-router-dom";
 
 
-const App = () => {
+const App = (props) => {
 
   const [songs, setSongs] = useState([])
   const [users, setUsers] = useState([])
@@ -36,25 +36,14 @@ const App = () => {
   const [name, setName] = useState('')
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const [currentUser, setCurrentUser] = useState({})
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
-  const [toggleSignUp, setToggleSignUp] = useState(false)
   const [toggleLogin, setToggleLogin] = useState(true)
   const [toggleError, setToggleError] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
   const [toggleLogout, setToggleLogout] = useState(false)
-
-
-  // const [isPlaying, setIsPlaying] = useState(false);
-  // const [url, setUrl] = useState(null)
-  // const [controls, setControls] = useState(true)
-  // const [volume, setVolume] = useState(0.7)
-  // const [muted, setMuted] = useState(false)
-  // const [played, setPlayed] = useState(0)
-  // const [play, setPlay] = useState(null)
-  // const [pause, setPause] = useState(null)
-  // const [duration, setDuration] = useState(0)
-  // const [loop, setLoop] = useState(false)
+  const [currentUser, setCurrentUser] = useState({})
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [toggleSignUp, setToggleSignUp] = useState(false)
+  
 
   const handleLogin = (user) => {
       axios({
@@ -66,13 +55,21 @@ const App = () => {
         }
       })
       .then((response) => {
-        console.log(response.data)
-        setCurrentUser(response.data)
-        setIsAuthenticated(true)
+        if (response.data.username) {
+          console.log(response.data)
+          setToggleError(false)
+          setErrorMessage('')
+          setCurrentUser(response.data)
+          setIsAuthenticated(true)
+        } else {
+          console.log(response.data)
+          setErrorMessage('Sorry, invalid login.')
+          setToggleError(true)
+          
+        }
       })
   }
 
-  
 
   const handleToggleSignUp = (event) => {
     if (toggleLogin) {
@@ -82,6 +79,7 @@ const App = () => {
     }
   }
   
+
   const handleLogout = (event) => {
     setPassword('')
     setUsername('')
@@ -96,18 +94,9 @@ const App = () => {
      (response) => setSongs(response.data),
      (err) => console.error(err)
    )
-   .catch((error) => console.error(error))  
+   .catch((error) => console.error(error))
   }
 
-  const getUser = () => {
-  axios
-    .get('https://glacial-wave-24104.herokuapp.com/api/users')
-    .then(
-      (response) => setUsers(response.data),
-      (err) => console.error(err)
-    )
-    .catch((error) => console.error(error))
-  }
 
   useEffect(() => {
     getSong()
@@ -131,7 +120,7 @@ const App = () => {
       })
   }
 
-  const handleUpdate = (editSong) => {
+  const handleUpdateSong = (editSong) => {
     console.log(editSong.id)
     axios
       .put('https://glacial-wave-24104.herokuapp.com/api/songs/' + editSong.id, editSong)
@@ -151,9 +140,11 @@ const App = () => {
       .catch((error) => console.log(error))
   }
 
-  const handleCreateAccount = (addAccountInfo) => {
-      axios.post('https://glacial-wave-24104.herokuapp.com/api/accounts', addAccountInfo)
-      .then((response) => {
+
+  const handleCreateAccount = (newAccount) => {
+      axios.post('https://glacial-wave-24104.herokuapp.com/api/accounts', newAccount)
+        .then((response) => {
+        console.log(response.data)
         getAccountInfo()
       })
   }
@@ -169,55 +160,62 @@ const App = () => {
 
   return (
     <>
-      <h1>Music App</h1>
       {isAuthenticated ? (
         <>
-          <div className='navbarDiv'>
-            <h1>insert cool title here</h1>
-            <nav className='navBar'>
-              <Link className='link' to="/songs">Home</Link>
-              <Link className='link' to='/new'>Add Song</Link>
-              <Link className='link' to='/account'>Account Details</Link>
-              <Link className='link' to='/cart'>Your Cart</Link>
-              <button onClick={handleLogout}>Log out</button>
+          <div className = 'navbarDiv'>
+          <div className = 'logoName'>
+          <img className = 'logo' src = 'https://i.imgur.com/bZRUMGT.png'></img>
+          <div className = 'appName'>Music App</div>
+          </div>
+            <nav className = 'navBar'>
+              <Link className = 'link'to="/">Home</Link>
+              <Link className = 'link' to='/new'>Add Song</Link>
+              <Link className = 'link' to='/account'>Account Details</Link>
+              <Link className = 'link' to='/cart'>Your Cart</Link>
+               <button onClick={handleLogout}>Log out</button>
             </nav>
           </div>
-          <div className="wrapper">
-            <Routes>
-              <Route path="/songs" element={<Songs />} />
-              <Route path="/account" element={<Account handleCreateAccount={handleCreateAccount} />} />
-              <Route path="/cart" element={<Cart />} />
-              <Route path='/songs/:id' element={<Show songs={songs} handleUpdate={handleUpdate} />} />
-              <Route path="/new" element={<Add handleCreateSong={handleCreateSong} />} />
-            </Routes>
-          </div>
-        </>
-      ) : (
-        <>
-          {toggleLogin ? (
-            <>
-              <Login handleLogin={handleLogin} />
-                <p>
-                  <span>Need an account?</span><br/>
-                  <button onClick={handleToggleSignUp}>Sign up</button>
-                </p>
-            </>
-          ) : (
-            <>
-              <Register handleCreateUser={handleCreateUser} />
-              <br />
-              <p>
-                <span>Have an account already?</span><br/>
-                <button onClick={handleToggleSignUp}>Login</button>
-              </p>
-            </>
-          )}
-        </>
+
+        <div className="wrapper">
+          <Routes>
+            <Route path="/*" element={<Songs />}/>
+            <Route path="/account" element={<Account handleCreateAccount= {handleCreateAccount}/>}/>
+            <Route path="/cart" element={<Cart />}/>
+            <Route path = '/songs/:id' element = {<Show songs = {songs}  handleDelete = {handleDelete}/>}/>
+
+            <Route path="/createaccount" element={<User handleCreateUser = {handleCreateUser}/>}/>
+            <Route path = "/edit" element = {<Edit handleUpdateSong = {handleUpdateSong}/>} />
+            <Route path="/new" element={<Add handleCreateSong = {handleCreateSong}/>}/>
+          </Routes>
+        </div>
+      </>
+    ) : (
+       <>
+       {toggleLogin ? (
+         <>
+           <Login handleLogin={handleLogin} />
+             <div className = 'needAccount'>
+               <span>Need an account?</span><br/>
+               <div className = 'signupDiv' onClick={handleToggleSignUp}>Sign up</div>
+             </div>
+         </>
+         ) : (
+         <>
+            <Register handleCreateUser={handleCreateUser} handleCreateAccount={handleCreateAccount}/>
+           <div className = 'needAccount'>
+             <span>Have an account already?</span><br/>
+             <div className = 'signupDiv' onClick={handleToggleSignUp}>Login</div>
+           </div>
+         </>
+        )}
+       </>
       )
-      }
+    }
     </>
-  )
+   )
 }
 
 
+
 export default App;
+
