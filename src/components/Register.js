@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react'
 
 const Register = (props) => {
     let emptyUser = { name: '', email: '', username: '', password: '' }
+    let emptyAccount = { owner:'' }
     const [newUser, setNewUser] = useState(emptyUser)
+     const [newAccount, setNewAccount] = useState(emptyAccount)
 
 
     const handleChange = (event) => {
@@ -12,6 +14,7 @@ const Register = (props) => {
     const handleSubmit = (event) => {
         event.preventDefault()
         props.handleCreateUser(newUser)
+        props.handleCreateAccount(newAccount)
     }
 
     return (

@@ -15,6 +15,8 @@ import {
 } from "react-router-dom";
 import Show from './Show.js'
 
+
+
 const Songs = (props) => {
 
     let [songs, setSongs] = useState([])
@@ -90,6 +92,7 @@ const Songs = (props) => {
         <input className = 'searchInput' type="text" placeholder="search..." value={filter} onChange={(e) => {e.preventDefault(); setFilter(e.target.value);
         }}
         ></input>
+         <img className = 'search-picshow' src = 'https://www.freeiconspng.com/thumbs/magnifying-glass-icon/magnifying-glass-icon-13.png'></img>
 
         </div>
 
@@ -122,6 +125,11 @@ const Songs = (props) => {
                 <h5>Artist: {song.artist}</h5>
                 <h5>Genre: {song.genre}</h5>
                 <h5>Price: ${song.price}</h5>
+
+                <button className = 'deleteButton' onClick={handleDelete} value={song.id}>
+                        Delete
+                      </button>
+
 
                 <br/>
 

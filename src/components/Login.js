@@ -62,7 +62,7 @@ const Login = (props) => {
         name="username"
         onChange={handleChange}
         value={user.username}
-        placeholder = 'Username...'
+        placeholder = 'Enter your username...'
         className = 'loginInput'
         required
         />
@@ -74,7 +74,7 @@ const Login = (props) => {
         name="password"
         onChange={handleChange}
         value={user.password}
-        placeholder = 'Password...'
+        placeholder = 'Enter your password...'
         className = 'loginInput'
         required
         />
