@@ -2,16 +2,22 @@ import React, { useState, useEffect } from 'react'
 
 const Register = (props) => {
     let emptyUser = { name: '', email: '', username: '', password: '' }
+    let emptyAccount = { owner:'' }
     const [newUser, setNewUser] = useState(emptyUser)
+    const [newAccount, setNewAccount] = useState(emptyAccount)
 
 
     const handleChange = (event) => {
-        setNewUser({...newUser, [event.target.name]: event.target.value})
+        setNewUser({ ...newUser, [event.target.name]: event.target.value })
+        setNewAccount({ owner: newUser })
+        //console.log(newAccount)
     }
 
     const handleSubmit = (event) => {
         event.preventDefault()
+        //account should be created with new user
         props.handleCreateUser(newUser)
+        props.handleCreateAccount(newAccount)
     }
 
     return (

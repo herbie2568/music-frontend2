@@ -23,7 +23,7 @@ const Add = (props) => {
       <h3>Add Song</h3>
     <div className='addFormDiv'>
 
-      <form classname = 'addForm' onSubmit={handleSubmit}>
+      <form className = 'addForm' onSubmit={handleSubmit}>
         <label htmlFor="name">Name: </label><br/>
         <input className='addInput' type="text" name="name" value={song.name} onChange={handleChange} placeholder='Name...' />
         <br />

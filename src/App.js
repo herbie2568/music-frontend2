@@ -80,7 +80,6 @@ const App = (props) => {
   }
   
 
-
   const handleLogout = (event) => {
     setPassword('')
     setUsername('')
@@ -97,7 +96,6 @@ const App = (props) => {
    )
    .catch((error) => console.error(error))
   }
-
 
 
   useEffect(() => {
@@ -122,7 +120,7 @@ const App = (props) => {
       })
   }
 
-  const handleUpdate = (editSong) => {
+  const handleUpdateSong = (editSong) => {
     console.log(editSong.id)
     axios
       .put('https://glacial-wave-24104.herokuapp.com/api/songs/' + editSong.id, editSong)
@@ -143,9 +141,10 @@ const App = (props) => {
   }
 
 
-  const handleCreateAccount = (addAccountInfo) => {
-      axios.post('https://glacial-wave-24104.herokuapp.com/api/accounts', addAccountInfo)
-      .then((response) => {
+  const handleCreateAccount = (newAccount) => {
+      axios.post('https://glacial-wave-24104.herokuapp.com/api/accounts', newAccount)
+        .then((response) => {
+        console.log(response.data)
         getAccountInfo()
       })
   }
@@ -185,7 +184,7 @@ const App = (props) => {
             <Route path = '/songs/:id' element = {<Show songs = {songs}  handleDelete = {handleDelete}/>}/>
 
             <Route path="/createaccount" element={<User handleCreateUser = {handleCreateUser}/>}/>
-            <Route path = "/edit" element = {<Edit handleUpdate = {handleUpdate}/>} />
+            <Route path = "/edit" element = {<Edit handleUpdateSong = {handleUpdateSong}/>} />
             <Route path="/new" element={<Add handleCreateSong = {handleCreateSong}/>}/>
           </Routes>
         </div>
@@ -195,18 +194,18 @@ const App = (props) => {
        {toggleLogin ? (
          <>
            <Login handleLogin={handleLogin} />
-             <p className = 'needAccount'>
+             <div className = 'needAccount'>
                <span>Need an account?</span><br/>
                <div className = 'signupDiv' onClick={handleToggleSignUp}>Sign up</div>
-             </p>
+             </div>
          </>
          ) : (
          <>
-           <Register handleCreateUser={handleCreateUser} />
-           <p className = 'needAccount'>
+            <Register handleCreateUser={handleCreateUser} handleCreateAccount={handleCreateAccount}/>
+           <div className = 'needAccount'>
              <span>Have an account already?</span><br/>
              <div className = 'signupDiv' onClick={handleToggleSignUp}>Login</div>
-           </p>
+           </div>
          </>
         )}
        </>
