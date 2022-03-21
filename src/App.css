@@ -1,22 +1,366 @@
+@import url('https://fonts.googleapis.com/css2?family=Mukta:wght@200;300;400&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+}
 body {
     background: black;
     color: white;
+    font-family: 'Mukta', sans-serif;
+}
+ a{
+
+     color: #15a9e9;
+ }
+
+.songImage {
+    width: 200px;
+    border-radius: 5px;
+    transition-duration: 0.4s;
 }
 
-img {
-    width: 250px;
+.songImage:hover {
+    cursor: pointer;
+
 }
 
 .songContainer {
     display: flex;
     flex-flow: row wrap;
     justify-content: center;
-    gap: 3vw;
+
+    gap: 10px;
+    margin-top: 20vh;
+    z-index: 999;
+    background: #15a9e9;
+    padding-top: 5vh;
+    padding-bottom: 10vh;
 }
 
 .songCard {
     background: white;
     color: black;
+    padding: 20px;
+    transition-duration: 0.5s;
+}
+
+.songCard:hover {
+    transform: scale(1.02)
+}
+
+.navbarDiv {
+    top: 0;
+    width: 100%;
+    position: fixed;
+    z-index: 999;
+    background: black;
+    /* padding-bottom: 20px; */
+}
+
+.navBar {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    margin-left: 5vw;
+    margin-top: 3vh;
+    gap: 50px;
+    padding-top: 20px;
+}
+
+.navBar a {
+    color: white;
+    text-decoration: none;
+    /* font-size: 16px;
+    font-weight: 700; */
+    transition-duration: 0.4s;
+    margin-bottom: 1vh;
+    font-family: 'Mukta', sans-serif;
+}
+
+.link:hover {
+    cursor: pointer;
+    color: #15a9e9;
+    transform: scale(1.1);
+}
+
+.searchDiv {
+    position: relative;
+}
+
+.searchInput {
+  height: 30px;
+  width: 50vw;
+  border-radius: 5px;
+  position: fixed;
+  z-index: 1000;
+  bottom: 92vh;
+  right: 18vw;
+  padding-left: 10px;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: 'Mukta', sans-serif;
+}
+.search-picshow {
+  height: 20px;
+  width: 20px;
+  position: fixed;
+  bottom: 92.8%;
+  right: 19vw;
+  z-index: 1000;
+}
+
+.logoName {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    /* padding-top: 20px; */
+    margin-left: 10px;
+
+}
+
+.logoNameApp {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-top: 20px;
+    margin-left: 10px;
+}
+
+.appName {
+    font-size: 2em;
+    align-self: center;
+}
+
+.logo {
+    width: min(8%, 70px);
+}
+
+.login-box {
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.loginInput {
+    padding: 5px 10px;
     border-radius: 5px;
-    padding: 0 20px 20px 20px;
+    margin-left: 10px;
+    margin-top: 10px;
+    font-family: 'Mukta', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    margin-bottom: 20px;
+    width: 250px;
+}
+
+.signinButton {
+    padding: 8px 20px;
+    background: white;
+    border-radius: 20px;
+    font-family: 'Mukta', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    transition-duration: 0.4s;
+    margin-top: 20px;
+}
+
+.signinButton:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+    background: #15a9e9;
+}
+
+.loginForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 30px;
+}
+
+.loginDiv {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.signupAnchor {
+    color: #15a9e9;
+}
+
+.signupDiv {
+    text-decoration: underline;
+    color: #15a9e9;
+}
+
+.signupDiv:hover {
+    cursor: pointer;
+}
+
+.needAccount {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.register-box {
+    text-align: center;
+}
+
+.registerForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 30px;
+}
+
+.addFormDiv {
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.addForm {
+    align-self: center;
+    width: 300px;
+    text-align: center;
+}
+
+.logoutButton {
+    padding: 0 10px;
+    margin-right: 3vw;
+    height: 40px;
+    align-self: center;
+    border-radius: 20px;
+    font-family: 'Mukta', sans-serif;
+    background: #15a9e9;
+    transition-duration: 0.4s;
+}
+
+.logoutButton:hover {
+    cursor: pointer;
+    transform: scale(1.05);
+    background: white;
+}
+
+footer {
+    padding-top: 2vh;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+}
+
+.footerUL {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.footerLI:hover {
+    color: #15a9e9;
+    cursor: pointer;
+}
+
+.footerLI {
+    list-style-type: none;
+}
+
+.footerDiv {
+    align-self: center;
+    text-align: center;
+}
+
+.logoFooter {
+    width: 12%;
+}
+
+.names {
+    align-self: center;
+}
+
+.addContainer {
+    margin-top: 20vh;
+    text-align: center;
+    background: #15a9e9;
+}
+
+.addSong {
+    font-size: 1.5em;
+    margin-bottom: 5vh;
+}
+
+.addFormDiv {
+    padding-top: 5vh;
+    padding-bottom: 20vh;
+}
+
+.genreMenu {
+    width: 150px;
+    height: 40px;
+    font-family: 'Mukta';
+    font-size: 18px;
+    border-radius: 5px;
+}
+
+.fileButton {
+    padding: 5px 10px;
+    margin-left: 80px;
+}
+
+.submitButton {
+    padding: 8px 20px;
+    background: white;
+    border-radius: 20px;
+    font-family: 'Mukta', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    transition-duration: 0.5s;
+    margin-top: 20px;
+}
+
+.submitButton:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+
+}
+
+.showContainer {
+    background: #15a9e9;
+    margin-top: 20vh;
+    text-align: center;
+    padding-top: 5vh;
+}
+
+.showName {
+    color: black;
+}
+
+.deleteButton {
+    padding: 1px 5px;
+    margin-left: 75%;
+    margin-top: 5px;
+    border-radius: 10px;
+    font-family: 'Mukta', sans-serif;
+    transition-duration: 0.4s;
+}
+
+.deleteButton:hover {
+    background: red;
+    cursor: pointer;
+}
+
+.accountContainer {
+    margin-top: 20vh;
+    background: #15a9e9;
+    text-align: center;
+    padding-top: 5vh;
+    padding-bottom: 10vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 25%;
+}
+
+.accountForm {
+    display: flex;
+    flex-direction: column;
 }
