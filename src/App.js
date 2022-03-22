@@ -141,12 +141,17 @@ const App = (props) => {
   const getAccountInfo = () => {
     axios
       .get('https://glacial-wave-24104.herokuapp.com/api/accounts/' + currentUser.id)
-      .then(
-        (response) => setCurrentAccount(response.data),
-        (err) => console.error(err)
-      )
+      .then((response) => {
+        if (response.data.owner) {
+          setCurrentAccount(response.data)
+          setAccountExists(true)
+        } else {
+          console.log(response.data)
+        }
+      })
       .catch((error) => console.error(error))
   }
+
 
 
   const getSong = () => {
@@ -184,6 +189,7 @@ const App = (props) => {
 
   useEffect(() => {
     getSong()
+    getAccountInfo()
   }, [])
 
 
@@ -219,6 +225,7 @@ const App = (props) => {
                   currentUser={currentUser}
                   currentAccount={currentAccount}
                   accountExists={accountExists}
+                  getAccountInfo={getAccountInfo}
                 />}
               />
               <Route path="/cart"

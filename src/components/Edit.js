@@ -7,6 +7,7 @@ const Edit = (props) => {
     let emptySong = { id: props.id, name: '', artist: '', genre: '', image: '', audio: '', price: ''}
     const [song, setSong] = useState(emptySong)
     const [songs, setSongs] = useState([])
+     const [toggleEdit, setToggleEdit] = useState(false)
 
     const getSong = () => {
       axios
@@ -17,7 +18,7 @@ const Edit = (props) => {
         )
         .catch((error) => console.error(error))
     }
-    const handleUpdate = (editSong) => {
+    const handleUpdateSong = (editSong) => {
       console.log(editSong.id)
       axios
         .put('https://glacial-wave-24104.herokuapp.com/api/songs/' + editSong.id, editSong)
@@ -33,10 +34,16 @@ const Edit = (props) => {
 
     const handleSubmit = (event) => {
       event.preventDefault()
-      props.handleUpdate(song)
+      handleUpdateSong(song)
     }
 
-
+    const toggleEditForm = (event) => {
+      if (toggleEdit) {
+        setToggleEdit(false)
+      } else {
+        setToggleEdit(true)
+      }
+    }
 
     if (!song.image) {
         song.image = 'https://i.imgur.com/D3aOVsJ.png'
@@ -47,45 +54,47 @@ const Edit = (props) => {
 
   return (
     <div className = 'addForm'>
-    <h3>Edit Song</h3>
-    <form onSubmit={handleSubmit}>
+    <button className='editButton' onClick={toggleEditForm}>Edit Song</button>
+    {toggleEdit ? (
+        <>
+    <form className = 'editForm' onSubmit={handleSubmit}>
         <label htmlFor="name"></label>
-        <input className = 'addInput' type="text" name="name" value={song.name} onChange={handleChange} placeholder = 'Name...'/>
-        <br />
-        <br />
+        <input className = 'editInput' type="text" name="name" value={song.name} onChange={handleChange} placeholder = 'Name...'/>
+
         <label htmlFor="artist"></label>
-        <input className = 'addInput' type="text" name="artist" value={song.artist} onChange={handleChange} placeholder = 'Artist...'/>
-        <br />
-        <br />
+        <input className = 'editInput' type="text" name="artist" value={song.artist} onChange={handleChange} placeholder = 'Artist...'/>
 
         <label htmlFor = 'genre'></label>
-        <select name = 'genre' id = 'genre' value = {song.genre} onChange = {handleChange}>
+
+
+        <label htmlFor="image"></label>
+        <input className = 'editInput' type="text" name="image" value={song.image} onChange={handleChange} placeholder = 'Image URL...'/>
+
+
+
+
+        <label htmlFor="price"></label>
+        <input className = 'editInput' type="text" name="price" value={song.price} onChange={handleChange} placeholder = 'Price...'/><br/>
+
+        <select className = 'genreMenu' name = 'genre' id = 'genre' value = {song.genre} onChange = {handleChange}>
         <option value='pop' id='pop'>Pop</option>
      <option value='rock' id='rock'>Rock</option>
      <option value='techno' id='techno'>Techno</option>
      <option value='hiphop' id='hiphop'>Hip-hop</option>
 
-        </select>
-        <br />
-        <br />
-
-        <label htmlFor="image"></label>
-        <input className = 'addInput' type="text" name="image" value={song.image} onChange={handleChange} placeholder = 'Image URL...'/>
-        <br />
-        <br />
+        </select><br/>
 
         <label htmlFor="audio"></label>
-        <input className = 'addInput' type="file" name="audio" value={song.audio} onChange={handleChange} placeholder = 'Audio file...'/>
-        <br />
-        <br />
-
-        <label htmlFor="price"></label>
-        <input className = 'addInput' type="text" name="price" value={song.price} onChange={handleChange} placeholder = 'Price...'/>
+        <input className = 'editInput' type="file" name="audio" value={song.audio} onChange={handleChange} placeholder = 'Audio file...'/>
         <br />
         <br />
 
         <input className = 'submitButton' type="submit" />
     </form>
+    </>
+) : (
+    null
+)}
     </div>
   )
 }

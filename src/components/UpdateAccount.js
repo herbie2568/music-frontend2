@@ -1,44 +1,90 @@
-import react, {useState, useEffect} from 'react'
+import react, { useState, useEffect } from 'react'
 
 
 
 const UpdateAccount = (props) => {
-
-    let accountDetails = {}
-    const [currentUser, setCurrentUser] = useState(props.currentUser)
-    const [currentAccount, setCurrentAccount] = useState(accountDetails)
-
     
+    const genres = ['pop', 'rock', 'techno', 'hiphop', 'jazz', 'rap', 'country', 'metal', 'alternative', 'indie']
+    
+    const [accountDetails, setAccountDetails] = useState(props.currentAccount)
+    const [checked, setChecked] = useState([])
+    const [locationInput, setLocationInput] = useState("")
+    const [imageInput, setImageInput] = useState("") 
+
+
+    const handleChange = (event) => {
+        setAccountDetails({ ...accountDetails, [event.target.name]: event.target.value })
+        //console.log(accountDetails)
+    }
+    
+    const handleCheck = (event) => {
+        let updatedList = [...checked] 
+        if (event.target.checked) {
+            updatedList = [...checked, event.target.value]
+            setAccountDetails((prevState) => ({
+                ...prevState,
+                favorite_genres: [...prevState.favorite_genres, event.target.value]
+            }))
+        } else {
+            accountDetails.favorite_genres.splice(checked.indexOf(event.target.value), 1)
+            updatedList.splice(checked.indexOf(event.target.value), 1)
+        }
+        setChecked(updatedList)
+    }
+
+    const handleSubmit = (event) => {
+        event.preventDefault()
+        console.log(accountDetails)
+        props.handleCreateAccount(accountDetails)
+    }
+
+    console.log(checked)
 
     return (
-        <>
-         <h2>Update Account Info</h2>
-            <form onSubmit={handleSubmit}>
-            <label htmlFor="name"></label>
-                <input className = 'addInput' type="text" name="name" value={account.name} onChange={handleChange} placeholder = 'Name...'/>
-            <br />
-            <br />
-            <label htmlFor="location"></label>
-                <input className = 'addInput' type="text" name="location" value={account.location} onChange={handleChange} placeholder = 'Location...'/>
-            <br />
-            <br />
-            <label htmlFor = 'favoritegenre'></label>
-                <select name = 'favoritegenre' id = 'favoritegenre' value = {account.favoritegenre} onChange = {handleChange} required>
-
-                    <option value='pop' id='pop'>Pop</option>
-                    <option value='rock' id='rock'>Rock</option>
-                    <option value='techno' id='techno'>Techno</option>
-                    <option value='hiphop' id='hiphop'>Hip-hop</option>
-
-                </select><br/><br/>
-
-            <label htmlFor="image"></label>
-            <input className = 'addInput' type="text" name="image" value={account.image} onChange={handleChange} placeholder = 'Image URL...'/>
-            <br />
-            <br />
-            <input className = 'submitButton' type="submit" />
-            </form>
-        </>
+        <section className="account-detail-box">
+                <h1>Set Account Details</h1>
+                <form className = 'registerForm' onSubmit={handleSubmit}>
+                    <label htmlFor="name">Location:</label>
+                    <input
+                        placeholder = 'Your location...'
+                        type="text"
+                        name="location"
+                        onChange={handleChange}
+                        value={accountDetails.location}
+                        className = 'loginInput'
+                    />
+                    <div className='image'>
+                        <label htmlFor="email">Profile Picture:</label><br/>
+                        <input
+                        placeholder = 'Upload a profile picture...'
+                            type="text"
+                            name="image"
+                            onChange={handleChange}
+                            value={accountDetails.image}
+                            className = 'loginInput'
+                            required
+                        />
+                    </div>
+                <label htmlFor="username">Favorite Genres:</label>
+                <ul className="genre-list">
+                    {genres.map((genre, index) => {
+                        return (
+                        <li key={index}>
+                                <input
+                                    placeholder = 'Favorite genres...'
+                                    type="checkbox"
+                                    value={genre}                       
+                                    onChange={handleCheck}
+                                />
+                                <label htmlFor={`${index}-${genre}`}>{genre}</label>
+                        </li>
+                    )
+                })}
+                </ul>
+                
+                <input className = 'signinButton' type="submit" value='Create Profile' />
+                </form>
+              </section>
     )
 
 }
