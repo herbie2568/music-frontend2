@@ -3,10 +3,10 @@ import React, { useState, useEffect } from 'react'
 
 const CreateAccountDetails = (props) => {
 
-    const genres = ['Pop', 'Rock', 'Techno', 'Hip-hop', 'Jazz', 'Rap', 'Country', 'Metal', 'Alternative', 'Indie']
+    const genres = ['pop', 'rock', 'techno', 'hiphop', 'jazz', 'rap', 'country', 'metal', 'alternative', 'indie']
     
     const [accountDetails, setAccountDetails] = useState({
-        owner: props.currentUser,
+        owner: props.currentUser.id,
         location: '',
         favorite_genres: [],
         image: ''
@@ -20,7 +20,6 @@ const CreateAccountDetails = (props) => {
         //console.log(accountDetails)
     }
 
-        // ({ ...accountDetails, [event.target.name]: event.target.value })
     
     const handleCheck = (event) => {
         let updatedList = [...checked] 
@@ -32,13 +31,14 @@ const CreateAccountDetails = (props) => {
             }))
         } else {
             accountDetails.favorite_genres.splice(checked.indexOf(event.target.value), 1)
-            //updatedList.splice(checked.indexOf(event.target.value), 1)
+            updatedList.splice(checked.indexOf(event.target.value), 1)
         }
         setChecked(updatedList)
     }
 
     const handleSubmit = (event) => {
         event.preventDefault()
+        console.log(accountDetails)
         props.handleCreateAccount(accountDetails)
     }
 

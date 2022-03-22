@@ -90,6 +90,8 @@ const App = (props) => {
     setPassword('')
     setUsername('')
     setCurrentUser({})
+    setCurrentAccount({})
+    setAccountExists(false)
     setIsAuthenticated(false)
   }
 
@@ -108,21 +110,20 @@ const App = (props) => {
   }
 
 
-  const handleCreateAccount = (newAccount) => {
-    axios({
-      method: 'post',
-      url: 'https://glacial-wave-24104.herokuapp.com/api/accounts',
-      data: {
-        owner: newAccount
-      }
-    })
+  const handleCreateAccount = async (newAccount) => {
+    console.log(newAccount)
+    axios.post('https://glacial-wave-24104.herokuapp.com/api/accounts', newAccount)
       .then((response) => {
         if (response.data.owner) {
-          console.log(response.data)
+          console.log(response)
+          setCurrentAccount(response.data)
+          setAccountExists(true)
         } else {
           console.log(response.data)
         }
-      })
+      }
+    )
+    .catch((error) => console.error(error))
   }
 
   const handleCreateSong = (addSong) => {
@@ -141,7 +142,7 @@ const App = (props) => {
     axios
       .get('https://glacial-wave-24104.herokuapp.com/api/accounts/' + currentUser.id)
       .then(
-        (response) => setAccountInfo(response.data),
+        (response) => setCurrentAccount(response.data),
         (err) => console.error(err)
       )
       .catch((error) => console.error(error))
@@ -214,8 +215,8 @@ const App = (props) => {
               />
               <Route path="/account"
                 element={<Account
-                  currentUser={currentUser}
                   handleCreateAccount={handleCreateAccount}
+                  currentUser={currentUser}
                   currentAccount={currentAccount}
                   accountExists={accountExists}
                 />}

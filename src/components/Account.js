@@ -15,10 +15,13 @@ const Account = (props) => {
     setAccount({ ...account, [event.target.name]: event.target.value })
   }
 
-  const handleSubmit = (event) => {
+
+  const handleSubmit = (event, account) => {
+    console.log(account)
     event.preventDefault()
     props.handleCreateAccount(account)
   }
+
 
   const toggleUpdateForm = (event) => {
     if (toggleUpdate) {
@@ -27,8 +30,7 @@ const Account = (props) => {
       setToggleUpdate(true)
     }
   }
-
-
+  
 
   return (
   <>
@@ -46,7 +48,7 @@ const Account = (props) => {
         <button className='signinButton' onClick={toggleUpdateForm}>Update Account Info</button>
         {toggleUpdate ? (
         <>
-          <form className = 'accountForm' onSubmit={handleSubmit}>
+          <form className = 'accountForm' onSubmit={()=> handleSubmit(account)}>
               <div>
                 <label htmlFor="location">Location:</label>
                 <input className = 'loginInput' type="text" name="location" value={account.location} onChange={handleChange} placeholder = 'Enter your city...'/>
