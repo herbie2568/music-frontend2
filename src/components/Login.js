@@ -41,7 +41,7 @@ const Login = (props) => {
         <>
         <div className = 'logoName'>
           <img className = 'logo' src = 'https://i.imgur.com/bZRUMGT.png'></img>
-          <div className = 'appName'>Music App</div>
+          <div className = 'appName'>Disc</div>
         </div>
         <div className = 'loginBody'>
         <section className="login-box">

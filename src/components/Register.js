@@ -24,7 +24,7 @@ const Register = (props) => {
         <>
         <div className = 'logoName'>
         <img className = 'logo' src = 'https://i.imgur.com/bZRUMGT.png'></img>
-        <div className = 'appName'>Music App</div>
+        <div className = 'appName'>Disc</div>
         </div>
         <section className="register-box">
                 <h1>Create an Account</h1>

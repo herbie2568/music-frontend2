@@ -37,22 +37,30 @@ const Add = (props) => {
         <label htmlFor="price">Price: </label><br/>
         <input className = 'loginInput' type="text" name="price" value={song.price} onChange={handleChange} placeholder = 'Enter the price...'/>
         <br />
+
+        <label htmlFor="audio">Audio file: </label><br/>
+        <input className = 'loginInput' type="text" id="audio" name="audio" placeholder= 'Youtube/SoundCloud/Vimeo URL...' onChange={handleChange}></input>
+
+
+        <br />
+        <br />
         <label htmlFor = 'genre'>Genre: </label><br/>
         <select className = 'genreMenu' name = 'genre' id = 'genre' value = {song.genre} onChange = {handleChange} required>
         <option value='pop' id='pop'>Pop</option>
      <option value='rock' id='rock'>Rock</option>
      <option value='techno' id='techno'>Techno</option>
      <option value='hiphop' id='hiphop'>Hip-hop</option>
+     <option value='jazz' id='jazz'>Jazz</option>
+  <option value='rap' id='rap'>Rap</option>
+  <option value='country' id='country'>Country</option>
+  <option value='metal' id='metal'>Metal</option>
+  <option value='alternative' id='alternative'>Alternative</option>
+<option value='indie' id='indie'>Indie</option>
         </select>
         <br />
         <br />
 
-        <label htmlFor="audio">Audio file: </label><br/>
-        <input className = 'fileButton' type="text" id="audio" name="audio" onChange={handleChange}></input>
 
-
-        <br />
-        <br />
 
         <input className='submitButton' type="submit" />
       </form>

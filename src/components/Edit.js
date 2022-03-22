@@ -75,20 +75,27 @@ const Edit = (props) => {
 
 
         <label htmlFor="price"></label>
-        <input className = 'editInput' type="text" name="price" value={song.price} onChange={handleChange} placeholder = 'Price...'/><br/>
+        <input className = 'editInput' type="text" name="price" value={song.price} onChange={handleChange} placeholder = 'Price...'/>
 
+
+
+        <label htmlFor="audio"></label><br/>
+        <input className = 'editInput' type="text" id="audio" name="audio" placeholder= 'Youtube/SoundCloud/Vimeo URL...' onChange={handleChange}></input>
+
+        <br />
         <select className = 'genreMenu' name = 'genre' id = 'genre' value = {song.genre} onChange = {handleChange}>
         <option value='pop' id='pop'>Pop</option>
      <option value='rock' id='rock'>Rock</option>
      <option value='techno' id='techno'>Techno</option>
      <option value='hiphop' id='hiphop'>Hip-hop</option>
+     <option value='jazz' id='jazz'>Jazz</option>
+  <option value='rap' id='rap'>Rap</option>
+  <option value='country' id='country'>Country</option>
+  <option value='metal' id='metal'>Metal</option>
+  <option value='alternative' id='alternative'>Alternative</option>
+<option value='indie' id='indie'>Indie</option>
 
         </select><br/>
-
-        <label htmlFor="audio"></label>
-        <input className = 'editInput' type="file" name="audio" value={song.audio} onChange={handleChange} placeholder = 'Audio file...'/>
-        <br />
-        <br />
 
         <input className = 'submitButton' type="submit" />
     </form>

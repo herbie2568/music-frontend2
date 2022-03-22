@@ -96,7 +96,7 @@ const App = (props) => {
   }
 
   ////-------////
-  //POST (create) functions 
+  //POST (create) functions
 
   const handleCreateUser = async (addUser) => {
     axios
@@ -202,7 +202,7 @@ const App = (props) => {
         setCurrentUser({})
         setCurrentAccount({})
         setAccountExists(false)
-        
+
       })
   }
 
@@ -223,7 +223,7 @@ const App = (props) => {
           <div className = 'logoNameApp'>
           <div className = 'logoName'>
           <img className = 'logo' src = 'https://i.imgur.com/bZRUMGT.png'></img>
-          <div className = 'appName'>Music App</div>
+          <div className = 'appName'>Disc</div>
           </div>
           <button className = 'logoutButton' onClick={handleLogout}>Log out</button>
           </div>
@@ -231,7 +231,7 @@ const App = (props) => {
               <Link className = 'link'to="/">Home</Link>
               <Link className = 'link' to='/new'>Add Song</Link>
               <Link className = 'link' to='/account'>Account Details</Link>
-              <Link className = 'link' to='/cart'>Your Cart</Link>
+             
 
             </nav>
           </div>
@@ -251,8 +251,7 @@ const App = (props) => {
                   handleDeleteUser={handleDeleteUser}
                 />}
               />
-              <Route path="/cart"
-                element={<Cart />}
+             }
               />
               <Route path='/songs/:id'
                 element={<Show
@@ -287,7 +286,7 @@ const App = (props) => {
               </ul>
               <div className = 'footerDiv'>
                 <img className = 'logoFooter' src = 'https://i.imgur.com/bZRUMGT.png'></img>
-                <div className = 'footerName'>Music App</div>
+                <div className = 'footerName'>Disc</div>
               </div>
               <div className='names'>Made by <a href='https://www.linkedin.com/in/meredith-bloom/'>Meredith Bloom</a>, <a href='https://www.linkedin.com/in/christophermaleakethompson/'> Christopher Thompson</a>, and <a href='https://www.linkedin.com/in/lilychen910'> Lily Chen</a>
               </div>

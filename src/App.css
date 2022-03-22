@@ -115,7 +115,7 @@ body {
     gap: 20px;
     /* padding-top: 20px; */
     margin-left: 10px;
-
+    
 }
 
 .logoNameApp {
@@ -132,7 +132,7 @@ body {
 }
 
 .logo {
-    width: min(8%, 70px);
+    width: 50px;
 }
 
 .login-box {
@@ -253,6 +253,7 @@ footer {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
+    margin-bottom: 30px;
 }
 
 .footerLI:hover {
@@ -490,22 +491,37 @@ footer {
     color: #15a9e9;
     z-index: 1000;
     position: relative;
-    top: 4rem;
-    left: 30rem;
+    top: 5rem;
+    right: 350px;
+    position: fixed;
+
 }
 .searchByBtn input {
     margin-right: 5px;
     margin-left: 5px;
 }
 #player-wrapper {
-  padding: 20%;
-  margin-left: 20%;
+  /* padding-bottom: 50vh; */
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 2vh;
+ text-align: center;
+
+
 }
 
 #react-player {
-  margin: 0 auto;
+    /* margin-left: 30vw; */
+    /* margin-left: 300px; */
+  /* margin: 0 auto;
   width: 50%;
   height: 50%;
+  align-self: center; */
+  position: relative;
+    left: 0;
+    top: 0;
 }
 audio::-webkit-media-controls-enclosure, video::-webkit-media-controls-enclosure {
     width: 100%;
