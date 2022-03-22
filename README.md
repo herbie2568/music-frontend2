@@ -38,13 +38,13 @@ Live Heroku Base Url <https://glacial-wave-24104.herokuapp.com/>
 
 ### Unsolved Problems
 
-##### Time Shortage
+#### Time Shortage
 
 -We initially wanted our app to be an e-commerce site where users could buy music directly from artists. (We found that connecting our models and getting the embedded audio up and running took enough time that we were unfortunately unable to incorporate any real e-commerce features.)
 
 -We wanted to connect our user and song models, so users would be connected to any songs that they posted. Connecting our user (basic auth info) and account (basic info like location, fav genres) models was a steep challenge, but we did it. If we had another week, we probably could've tied in the song model.
 
-###### Stuck
+#### Stuck
 
 -React forms and checkboxes. Got favorite genre checkboxes to work when creating account details, but couldn't figure out update with checkboxes (not a huge deal, because the song api is full CRUD). Struggled with getting the ArrayField to display correctly on the admin portal.
 
@@ -52,10 +52,10 @@ Live Heroku Base Url <https://glacial-wave-24104.herokuapp.com/>
 
 ### Notes & Other Goals
 
--Social components, particularly interested in incorporating likes and reviews of songs, possibly even the capability to view musician profiles
--Being able to group songs as albums or playlists.
--Shopping cart - users can easily add and remove songs from their shopping cart, or other playlists
--
+- Social components, particularly interested in incorporating likes and reviews of songs, possibly even the capability to view musician profiles
+- Being able to group songs as albums or playlists.
+- Shopping cart. users can easily add and remove songs from their shopping cart, or other playlists
+
 
 
 # Getting Started with Create React App
