@@ -115,7 +115,7 @@ body {
     gap: 20px;
     /* padding-top: 20px; */
     margin-left: 10px;
-    
+
 }
 
 .logoNameApp {
@@ -605,4 +605,27 @@ audio::-webkit-media-controls-volume-slider {
     min-width: 15px;
     border: initial;
     color: inherit;
+}
+
+.genreLI {
+     list-style-type: none;
+     display: flex;
+     flex-direction: row;
+ }
+
+ .checkbox {
+     width: 20px;
+     height: 20px;
+     align-self: center;
+     margin-right: 5px;
+ }
+
+.genre-list {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.genreLabel {
+    align-self: center;
 }

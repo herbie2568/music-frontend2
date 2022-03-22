@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react'
 const CreateAccountDetails = (props) => {
 
     const genres = ['pop', 'rock', 'techno', 'hiphop', 'jazz', 'rap', 'country', 'metal', 'alternative', 'indie']
-    
+
     const [accountDetails, setAccountDetails] = useState({
         owner: props.currentUser.id,
         location: '',
@@ -13,16 +13,16 @@ const CreateAccountDetails = (props) => {
     })
     const [checked, setChecked] = useState([])
     const [locationInput, setLocationInput] = useState("")
-    const [imageInput, setImageInput] = useState("") 
+    const [imageInput, setImageInput] = useState("")
 
     const handleChange = (event) => {
         setAccountDetails({ ...accountDetails, [event.target.name]: event.target.value })
         //console.log(accountDetails)
     }
 
-    
+
     const handleCheck = (event) => {
-        let updatedList = [...checked] 
+        let updatedList = [...checked]
         if (event.target.checked) {
             updatedList = [...checked, event.target.value]
             setAccountDetails((prevState) => ({
@@ -72,19 +72,22 @@ const CreateAccountDetails = (props) => {
                 <ul className="genre-list">
                     {genres.map((genre, index) => {
                         return (
-                        <li key={index}>
+                        <li className = 'genreLI' key={index}>
+                        <div>
                                 <input
                                     placeholder = 'Favorite genres...'
                                     type="checkbox"
-                                    value={genre}                       
+                                    value={genre}
                                     onChange={handleCheck}
+                                    className = 'checkbox'
                                 />
-                                <label htmlFor={`${index}-${genre}`}>{genre}</label>
+                                <label className = 'genreLabel' htmlFor={`${index}-${genre}`}>{genre}</label>
+                            </div>
                         </li>
                     )
                 })}
                 </ul>
-                
+
                 <input className = 'signinButton' type="submit" value='Create Profile' />
                 </form>
               </section>
