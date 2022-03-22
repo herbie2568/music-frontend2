@@ -53,7 +53,7 @@ const Account = (props) => {
         <>
           <div className = 'accountContainer'>
             <div className = 'accountDetails'>
-              <h2>Account Details</h2>
+              <h2>Welcome back, {currentUser.username}</h2>
               <img src = {props.currentAccount.image}></img>
               <h4>Name: </h4><div className = 'showStuff'>{props.currentUser.name}</div>
               <h4>Location: </h4><div className = 'showStuff'>{props.currentAccount.location}</div>
