@@ -90,11 +90,13 @@ const App = (props) => {
     setPassword('')
     setUsername('')
     setCurrentUser({})
+    setCurrentAccount({})
+    setAccountExists(false)
     setIsAuthenticated(false)
   }
 
   ////-------////
-  //POST (create) functions
+  //POST (create) functions 
 
   const handleCreateUser = async (addUser) => {
     axios
@@ -104,25 +106,24 @@ const App = (props) => {
         setCurrentUser(response.data)
         setIsAuthenticated(true)
       })
-      .catch((error) => console.log(error))
+      .catch((error) => setErrorMessage(error))
   }
 
 
-  const handleCreateAccount = (newAccount) => {
-    axios({
-      method: 'post',
-      url: 'https://glacial-wave-24104.herokuapp.com/api/accounts',
-      data: {
-        owner: newAccount
-      }
-    })
+  const handleCreateAccount = async (newAccount) => {
+    console.log(newAccount)
+    axios.post('https://glacial-wave-24104.herokuapp.com/api/accounts', newAccount)
       .then((response) => {
         if (response.data.owner) {
-          console.log(response.data)
+          console.log(response)
+          setCurrentAccount(response.data)
+          setAccountExists(true)
         } else {
           console.log(response.data)
         }
-      })
+      }
+    )
+    .catch((error) => console.error(error))
   }
 
   const handleCreateSong = (addSong) => {
@@ -140,12 +141,17 @@ const App = (props) => {
   const getAccountInfo = () => {
     axios
       .get('https://glacial-wave-24104.herokuapp.com/api/accounts/' + currentUser.id)
-      .then(
-        (response) => setAccountInfo(response.data),
-        (err) => console.error(err)
-      )
+      .then((response) => {
+        if (response.data.owner) {
+          setCurrentAccount(response.data)
+          setAccountExists(true)
+        } else {
+          console.log(response.data)
+        }
+      })
       .catch((error) => console.error(error))
   }
+
 
 
   const getSong = () => {
@@ -169,6 +175,14 @@ const App = (props) => {
       })
   }
 
+  const handleUpdateAccount = (editAccount) => {
+    console.log(currentUser.id)
+    axios
+      .put('https://glacial-wave-24104.herokuapp.com/api/useraccount/' + currentUser.id, editAccount)
+      .then((response) => {
+        getAccountInfo()
+      })
+  }
 
   // DELETE functions
   const handleDeleteSong = (event) => {
@@ -179,11 +193,27 @@ const App = (props) => {
       })
   }
 
+  const handleDeleteUser = (event) => {
+    axios
+      .delete('https://glacial-wave-24104.herokuapp.com/api/useraccount/' + currentUser.id)
+      .then((response) => {
+        console.log(response.data)
+        setIsAuthenticated(false)
+        setCurrentUser({})
+        setCurrentAccount({})
+        setAccountExists(false)
+        
+      })
+  }
 
 
   useEffect(() => {
     getSong()
+    getAccountInfo()
   }, [])
+
+
+
 
   return (
     <>
@@ -213,10 +243,12 @@ const App = (props) => {
               />
               <Route path="/account"
                 element={<Account
-                  currentUser={currentUser}
                   handleCreateAccount={handleCreateAccount}
+                  currentUser={currentUser}
                   currentAccount={currentAccount}
                   accountExists={accountExists}
+                  getAccountInfo={getAccountInfo}
+                  handleDeleteUser={handleDeleteUser}
                 />}
               />
               <Route path="/cart"

@@ -1,21 +1,25 @@
-import react, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 
 
+const CreateAccountDetails = (props) => {
 
-const UpdateAccount = (props) => {
-    
     const genres = ['pop', 'rock', 'techno', 'hiphop', 'jazz', 'rap', 'country', 'metal', 'alternative', 'indie']
     
-    const [accountDetails, setAccountDetails] = useState(props.currentAccount)
+    const [accountDetails, setAccountDetails] = useState({
+        owner: props.currentUser.id,
+        location: '',
+        favorite_genres: [],
+        image: ''
+    })
     const [checked, setChecked] = useState([])
     const [locationInput, setLocationInput] = useState("")
     const [imageInput, setImageInput] = useState("") 
-
 
     const handleChange = (event) => {
         setAccountDetails({ ...accountDetails, [event.target.name]: event.target.value })
         //console.log(accountDetails)
     }
+
     
     const handleCheck = (event) => {
         let updatedList = [...checked] 
@@ -35,7 +39,7 @@ const UpdateAccount = (props) => {
     const handleSubmit = (event) => {
         event.preventDefault()
         console.log(accountDetails)
-        props.handleUpdateAccount(accountDetails)
+        props.handleCreateAccount(accountDetails)
     }
 
     console.log(checked)
@@ -62,7 +66,6 @@ const UpdateAccount = (props) => {
                             onChange={handleChange}
                             value={accountDetails.image}
                             className = 'loginInput'
-                            required
                         />
                     </div>
                 <label htmlFor="username">Favorite Genres:</label>
@@ -89,4 +92,4 @@ const UpdateAccount = (props) => {
 
 }
 
-export default UpdateAccount
+export default CreateAccountDetails
