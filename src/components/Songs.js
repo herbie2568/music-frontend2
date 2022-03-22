@@ -4,6 +4,8 @@ import Add from './Add.js'
 import Edit from './Edit.js'
 import User from './User.js'
 import '../App.css';
+import ReactPlayer from 'react-player/lazy'
+
 import {
     BrowserRouter as Router,
     Switch,
@@ -21,61 +23,72 @@ const Songs = (props) => {
 
     let [songs, setSongs] = useState([])
     let [users, setUsers] = useState([])
+    let [searchArtist, setSearchArtist] = useState(false)
     const [filter, setFilter] = useState('')
     let navigate = useNavigate()
 
     const getSong = () => {
         axios
-        .get('https://glacial-wave-24104.herokuapp.com/api/songs')
-        .then(
-            (response) => setSongs(response.data),
-            (err) => console.error(err)
-        )
-        .catch((error) => console.error(error))
+            .get('https://glacial-wave-24104.herokuapp.com/api/songs')
+            .then(
+                (response) => setSongs(response.data),
+                (err) => console.error(err)
+            )
+            .catch((error) => console.error(error))
     }
 
     const getUser = () => {
         axios
-        .get('https://glacial-wave-24104.herokuapp.com/api/users')
-        .then(
-            (response) => setUsers(response.data),
-            (err) => console.error(err)
-        )
-        .catch((error) => console.error(error))
+            .get('https://glacial-wave-24104.herokuapp.com/api/users')
+            .then(
+                (response) => setUsers(response.data),
+                (err) => console.error(err)
+            )
+            .catch((error) => console.error(error))
     }
     const handleDelete = (event) => {
         axios
-        .delete('https://glacial-wave-24104.herokuapp.com/api/songs/' + event.target.value)
-        .then((response) => {
-            getSong()
-        })
+            .delete('https://glacial-wave-24104.herokuapp.com/api/songs/' + event.target.value)
+            .then((response) => {
+                getSong()
+            })
     }
 
     const handleUpdate = (editSong) => {
         console.log(editSong.id)
         axios
-        .put('https://glacial-wave-24104.herokuapp.com/api/songs/' + editSong.id, editSong)
-        .then((response) => {
-            getSong()
-        })
+            .put('https://glacial-wave-24104.herokuapp.com/api/songs/' + editSong.id, editSong)
+            .then((response) => {
+                getSong()
+            })
     }
 
     const handleCreate = (addSong) => {
         axios
-        .post('https://glacial-wave-24104.herokuapp.com/api/songs', addSong)
-        .then((response) => {
-            console.log(response)
-            getSong()
-        })
+            .post('https://glacial-wave-24104.herokuapp.com/api/songs', addSong)
+            .then((response) => {
+                console.log(response)
+                getSong()
+            })
     }
 
     const handleCreateUser = (addUser) => {
         axios
-        .post('https://glacial-wave-24104.herokuapp.com/api/users', addUser)
-        .then((response) => {
-            console.log(response)
-            getUser()
-        })
+            .post('https://glacial-wave-24104.herokuapp.com/api/users', addUser)
+            .then((response) => {
+                console.log(response)
+                getUser()
+            })
+    }
+
+    const handleSearchValue = (e) => {
+        console.log({ e })
+
+        if (e === "artist") {
+            setSearchArtist(true)
+        } else {
+            setSearchArtist(false)
+        }
     }
 
 
@@ -85,60 +98,105 @@ const Songs = (props) => {
 
     return (
         <>
+            <div className='searchByBtn'>
+                <input type="radio" value='artist' checked={searchArtist === true} name='artist' onChange={e => handleSearchValue(e.target.value)} />
+                <label htmlFor='artist'>Artist</label>
+                <input type="radio" value='name' name='name' checked={searchArtist === false} onChange={e => handleSearchValue(e.target.value)} />
+                <label htmlFor='name'>Name</label>
+            </div>
+
+            <div className='searchDiv'>
+
+                <input className='searchInput' type="text" placeholder="search..." value={filter} onChange={(e) => {
+                    e.preventDefault(); setFilter(e.target.value);
+                }}
+                ></input>
+                <img className='search-picshow' src='https://www.freeiconspng.com/thumbs/magnifying-glass-icon/magnifying-glass-icon-13.png'></img>
+
+            </div>
 
 
-        <div className = 'searchDiv'>
+            <div className="songContainer">
+                {searchArtist ? songs.filter((search) =>
+                    search.artist.toLowerCase().includes(filter.toLowerCase())).map((song, index) => {
 
-        <input className = 'searchInput' type="text" placeholder="search..." value={filter} onChange={(e) => {e.preventDefault(); setFilter(e.target.value);
-        }}
-        ></input>
-         <img className = 'search-picshow' src = 'https://www.freeiconspng.com/thumbs/magnifying-glass-icon/magnifying-glass-icon-13.png'></img>
+                        if (!song.image) {
+                            song.image = 'https://i.imgur.com/D3aOVsJ.png'
+                        }
+                        if (!song.price) {
+                            song.price = '1.29'
+                        }
+                        return (
 
-        </div>
+                            <>
+                                <div>
+                                    <Routes>
+                                        <Route path='/songs/:id' element={<Show songs={songs} song={song} handleUpdate={handleUpdate} handleDelete={handleDelete} />} />
+                                    </Routes>
+                                </div>
+                                <div className="songCard" key={song.id + index}>
+                                    <img onClick={() => {
+                                        navigate('/songs/' + song.id
+                                        )
+                                    }} className='songImage' src={song.image}></img>
+
+                                    <h4 className='name'>{song.name}</h4>
+
+                                    <h5>Artist: {song.artist}</h5>
+                                    <h5>Genre: {song.genre}</h5>
+                                    <h5>Price: ${song.price}</h5>
 
 
-        <div className="songContainer">
-        {songs.filter((search) =>
-            search.name.toLowerCase().includes(filter.toLowerCase())).map((song, index) => {
+                                    <button className='deleteButton' onClick={handleDelete} value={song.id}>
+                                        Delete
+                                    </button>
+                                    {/* <Edit /> */}
+                                </div>
+                            </>
 
-                if (!song.image) {
-                    song.image = 'https://i.imgur.com/D3aOVsJ.png'
-                }
-                if (!song.price) {
-                    song.price = '1.29'
-                }
-                return (
-
-                    <>
-                      <div>
-                        <Routes>
-                          <Route path='/songs/:id' element = {<Show songs = {songs} song = {song} handleUpdate={handleUpdate} handleDelete = {handleDelete}/>}/>
-                        </Routes>
-                      </div>
-                      <div className="songCard" key={song.id + index}>
-                        <img onClick = {() => {
-                          navigate('/songs/' + song.id
                         )
-                        }} className = 'songImage' src = {song.image}></img>
 
-                        <h4 className = 'name'>{song.name}</h4>
+                    }) : songs.filter((search) =>
+                        search.name.toLowerCase().includes(filter.toLowerCase())).map((song, index) => {
 
-                        <h5>Artist: {song.artist}</h5>
-                        <h5>Genre: {song.genre}</h5>
-                        <h5>Price: ${song.price}</h5>
+                            if (!song.image) {
+                                song.image = 'https://i.imgur.com/D3aOVsJ.png'
+                            }
+                            if (!song.price) {
+                                song.price = '1.29'
+                            }
+                            return (
+
+                                <>
+                                    <div>
+                                        <Routes>
+                                            <Route path='/songs/:id' element={<Show songs={songs} song={song} handleUpdate={handleUpdate} handleDelete={handleDelete} />} />
+                                        </Routes>
+                                    </div>
+                                    <div className="songCard" key={song.id + index}>
+                                        <img onClick={() => {
+                                            navigate('/songs/' + song.id
+                                            )
+                                        }} className='songImage' src={song.image}></img>
+
+                                        <h4 className='name'>{song.name}</h4>
+
+                                        <h5>Artist: {song.artist}</h5>
+                                        <h5>Genre: {song.genre}</h5>
+                                        <h5>Price: ${song.price}</h5>
 
 
-                        <button className = 'deleteButton' onClick={handleDelete} value={song.id}>
-                          Delete
-                        </button>
-                        {/* <Edit /> */}
-                      </div>
-                  </>
+                                        <button className='deleteButton' onClick={handleDelete} value={song.id}>
+                                            Delete
+                                        </button>
+                                        {/* <Edit /> */}
+                                    </div>
+                                </>
 
-              )
+                            )
 
-          })}
-          </div>
+                        })}
+            </div>
         </>
     )
 }

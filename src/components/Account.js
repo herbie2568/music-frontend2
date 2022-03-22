@@ -1,24 +1,28 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import CreateAccountDetails from './CreateAccountDetails'
+import UpdateAccount from './UpdateAccount'
 
 const Account = (props) => {
 
-  //let emptyAccount = { owner: props.currentUser, location: '', favoritegenre: '', image: '', }
   const [account, setAccount] = useState(props.currentAccount)
   const [toggleUpdate, setToggleUpdate] = useState(false)
-  //const [createForm, setCreateForm] = useState(true)
   const [accountExists, setAccountExists] = useState(props.accountExists)
+  const [toggleAccount, setToggleAccount] = useState(false)
+  const [currentAccount, setCurrentAccount] = useState(props.currentAccount)
   const [currentUser, setCurrentUser] = useState(props.currentUser)
 
   const handleChange = (event) => {
     setAccount({ ...account, [event.target.name]: event.target.value })
   }
 
-  const handleSubmit = (event) => {
+
+  const handleSubmit = (event, account) => {
+    console.log(account)
     event.preventDefault()
-    props.handleCreateAccount(account)
+    props.handleUpdateAccount(account)
   }
+
 
   const toggleUpdateForm = (event) => {
     if (toggleUpdate) {
@@ -27,48 +31,40 @@ const Account = (props) => {
       setToggleUpdate(true)
     }
   }
+  
+
+  const toggleAccountExists = () => {
+    if (accountExists) {
+      setToggleAccount(true)
+    } else {
+      setToggleAccount(false)
+    }
+  }
 
 
+  useEffect(() => {
+    toggleAccountExists()
+    props.getAccountInfo()
+  }, [])
 
   return (
   <>
-    {accountExists ? (
+    {props.accountExists ? (
         <>
-        <div className = 'accountContainer'>
-          <div className = 'accountDetails'>
-            <h2>Account Details</h2>
-            <img src = {account.image}></img>
-            <h4>Name: </h4><div className = 'showStuff'>{props.currentUser.name}</div>
-            <h4>Location: </h4><div className = 'showStuff'>{account.location}</div>
-            <h4>Favorite genre: </h4><div className = 'showStuff'>{account.favoritegenre}</div>
-          </div>
+          <div className = 'accountContainer'>
+            <div className = 'accountDetails'>
+              <h2>Account Details</h2>
+              <img src = {props.currentAccount.image}></img>
+              <h4>Name: </h4><div className = 'showStuff'>{props.currentUser.name}</div>
+              <h4>Location: </h4><div className = 'showStuff'>{props.currentAccount.location}</div>
+              <h4>Favorite genres: </h4><div className = 'showStuff'>{props.currentAccount.favorite_genres}</div>
+            </div>
 
-        <button className='signinButton' onClick={toggleUpdateForm}>Update Account Info</button>
-        {toggleUpdate ? (
-        <>
-          <form className = 'accountForm' onSubmit={handleSubmit}>
-              <div>
-                <label htmlFor="location">Location:</label>
-                <input className = 'loginInput' type="text" name="location" value={account.location} onChange={handleChange} placeholder = 'Enter your city...'/>
-              </div>
-              <br />
-              <div>
-                <label htmlFor = 'favoritegenre'></label>
-                <select className = 'genreMenu' name = 'favoritegenre' id = 'favoritegenre' value = {account.favoritegenre} onChange = {handleChange} required>
-                    <option value='pop' id='pop'>Pop</option>
-                    <option value='rock' id='rock'>Rock</option>
-                    <option value='techno' id='techno'>Techno</option>
-                    <option value='hiphop' id='hiphop'>Hip-hop</option>
-                </select>
-              </div>
-              <br/>
-              <div>
-                <label htmlFor="image">Image URL: </label>
-                <input className = 'loginInput' type="text" name="image" value={account.image} onChange={handleChange} placeholder = 'Enter the image URL...'/>
-              </div>
-                <input className = 'submitButton' type="submit" />
-              </form>
-            </>
+          <button className='updateAccountButton' onClick={toggleUpdateForm}>Update Account Info</button>
+          {toggleUpdate ? (
+          <>
+                <h1>Welcome, {currentUser.name} </h1>
+          </>
       ) : (
           null
       )}
@@ -81,6 +77,7 @@ const Account = (props) => {
               <CreateAccountDetails
                 currentUser={props.currentUser}
                 handleCreateAccount={props.handleCreateAccount}
+                accountExists={props.accountExists}
               />
             </div>
          </>   
