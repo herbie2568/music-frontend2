@@ -35,7 +35,7 @@ const UpdateAccount = (props) => {
     const handleSubmit = (event) => {
         event.preventDefault()
         console.log(accountDetails)
-        props.handleCreateAccount(accountDetails)
+        props.handleUpdateAccount(accountDetails)
     }
 
     console.log(checked)

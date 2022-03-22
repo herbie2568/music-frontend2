@@ -106,7 +106,7 @@ const App = (props) => {
         setCurrentUser(response.data)
         setIsAuthenticated(true)
       })
-      .catch((error) => console.log(error))
+      .catch((error) => setErrorMessage(error))
   }
 
 
@@ -175,6 +175,14 @@ const App = (props) => {
       })
   }
 
+  const handleUpdateAccount = (editAccount) => {
+    console.log(currentUser.id)
+    axios
+      .put('https://glacial-wave-24104.herokuapp.com/api/useraccount/' + currentUser.id, editAccount)
+      .then((response) => {
+        getAccountInfo()
+      })
+  }
 
   // DELETE functions
   const handleDeleteSong = (event) => {
@@ -185,6 +193,18 @@ const App = (props) => {
       })
   }
 
+  const handleDeleteUser = (event) => {
+    axios
+      .delete('https://glacial-wave-24104.herokuapp.com/api/useraccount/' + currentUser.id)
+      .then((response) => {
+        console.log(response.data)
+        setIsAuthenticated(false)
+        setCurrentUser({})
+        setCurrentAccount({})
+        setAccountExists(false)
+        
+      })
+  }
 
 
   useEffect(() => {
@@ -193,56 +213,7 @@ const App = (props) => {
   }, [])
 
 
-  // ////-------////
-  // //GET functions
 
-  // const getAccountInfo = () => {
-  //   axios
-  //     .get('https://glacial-wave-24104.herokuapp.com/api/accounts/' + currentUser.id)
-  //     .then(
-  //       (response) => setAccountInfo(response.data),
-  //       (err) => console.error(err)
-  //     )
-  //     .catch((error) => console.error(error))
-  // }
-
-
-  // const getSong = () => {
-  //   axios
-  //     .get('https://glacial-wave-24104.herokuapp.com/api/songs')
-  //     .then(
-  //       (response) => setSongs(response.data),
-  //       (err) => console.error(err)
-  //     )
-  //     .catch((error) => console.error(error))
-  // }
-
-
-  // // PUT functions (update)
-  // const handleUpdateSong = (editSong) => {
-  //   console.log(editSong.id)
-  //   axios
-  //     .put('https://glacial-wave-24104.herokuapp.com/api/songs/' + editSong.id, editSong)
-  //     .then((response) => {
-  //       getSong()
-  //     })
-  // }
-
-
-  // // DELETE functions
-  // const handleDeleteSong = (event) => {
-  //   axios
-  //     .delete('https://glacial-wave-24104.herokuapp.com/api/songs/' + event.target.value)
-  //     .then((response) => {
-  //       getSong()
-  //     })
-  // }
-
-
-
-  useEffect(() => {
-    getSong()
-  }, [])
 
   return (
     <>
@@ -277,6 +248,7 @@ const App = (props) => {
                   currentAccount={currentAccount}
                   accountExists={accountExists}
                   getAccountInfo={getAccountInfo}
+                  handleDeleteUser={handleDeleteUser}
                 />}
               />
               <Route path="/cart"

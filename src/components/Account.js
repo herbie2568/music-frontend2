@@ -57,10 +57,25 @@ const Account = (props) => {
               <img src = {props.currentAccount.image}></img>
               <h4>Name: </h4><div className = 'showStuff'>{props.currentUser.name}</div>
               <h4>Location: </h4><div className = 'showStuff'>{props.currentAccount.location}</div>
-              <h4>Favorite genres: </h4><div className = 'showStuff'>{props.currentAccount.favorite_genres}</div>
+              <h4>Favorite genres: </h4>
+              <ul className='genre-list'>
+                {props.currentAccount.favorite_genres.map((genre, index) => {
+                  return (
+                    <li key={genre}>
+                      {genre}
+                    </li>
+                  ) 
+                })}
+              </ul>
             </div>
 
-          <button className='updateAccountButton' onClick={toggleUpdateForm}>Update Account Info</button>
+            <button className='updateAccountButton' onClick={toggleUpdateForm}>
+              Update Account Info
+            </button><br/>
+            <button className='deleteButton' onClick={props.handleDeleteUser} value={currentUser.id}>
+              Delete Account
+            </button>
+            
           {toggleUpdate ? (
           <>
                 <h1>Welcome, {currentUser.name} </h1>
