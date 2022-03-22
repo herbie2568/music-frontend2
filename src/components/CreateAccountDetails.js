@@ -66,7 +66,6 @@ const CreateAccountDetails = (props) => {
                             onChange={handleChange}
                             value={accountDetails.image}
                             className = 'loginInput'
-                            required
                         />
                     </div>
                 <label htmlFor="username">Favorite Genres:</label>

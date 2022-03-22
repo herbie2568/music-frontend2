@@ -48,7 +48,7 @@ const Add = (props) => {
         <br />
 
         <label htmlFor="audio">Audio file: </label><br/>
-        <input className = 'fileButton' type="file" id="audio" name="audio" accept="audio/*"></input>
+        <input className = 'fileButton' type="text" id="audio" name="audio" onChange={handleChange}></input>
 
 
         <br />

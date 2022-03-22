@@ -106,7 +106,7 @@ const App = (props) => {
         setCurrentUser(response.data)
         setIsAuthenticated(true)
       })
-      .catch((error) => console.log(error))
+      .catch((error) => setErrorMessage(error))
   }
 
 
@@ -175,6 +175,14 @@ const App = (props) => {
       })
   }
 
+  const handleUpdateAccount = (editAccount) => {
+    console.log(currentUser.id)
+    axios
+      .put('https://glacial-wave-24104.herokuapp.com/api/useraccount/' + currentUser.id, editAccount)
+      .then((response) => {
+        getAccountInfo()
+      })
+  }
 
   // DELETE functions
   const handleDeleteSong = (event) => {
@@ -185,12 +193,26 @@ const App = (props) => {
       })
   }
 
+  const handleDeleteUser = (event) => {
+    axios
+      .delete('https://glacial-wave-24104.herokuapp.com/api/useraccount/' + currentUser.id)
+      .then((response) => {
+        console.log(response.data)
+        setIsAuthenticated(false)
+        setCurrentUser({})
+        setCurrentAccount({})
+        setAccountExists(false)
+        
+      })
+  }
 
 
   useEffect(() => {
     getSong()
     getAccountInfo()
   }, [])
+
+
 
 
   return (
@@ -226,6 +248,7 @@ const App = (props) => {
                   currentAccount={currentAccount}
                   accountExists={accountExists}
                   getAccountInfo={getAccountInfo}
+                  handleDeleteUser={handleDeleteUser}
                 />}
               />
               <Route path="/cart"

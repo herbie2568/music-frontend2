@@ -18,6 +18,7 @@ import {
 import Show from './Show.js'
 
 
+
 const Songs = (props) => {
 
 
@@ -91,6 +92,8 @@ const Songs = (props) => {
         }
     }
 
+    
+
 
     useEffect(() => {
         getSong()
@@ -98,7 +101,7 @@ const Songs = (props) => {
 
     return (
         <>
-            <div className='searchByBtn'>
+        <div className='searchByBtn'>
                 <input type="radio" value='artist' checked={searchArtist === true} name='artist' onChange={e => handleSearchValue(e.target.value)} />
                 <label htmlFor='artist'>Artist</label>
                 <input type="radio" value='name' name='name' checked={searchArtist === false} onChange={e => handleSearchValue(e.target.value)} />
