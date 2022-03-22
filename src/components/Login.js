@@ -24,7 +24,7 @@ const Login = (props) => {
 
     const handleSubmit = async (event) => {
         event.preventDefault()
-        console.log(user)
+        //console.log(user)
         props.handleLogin(user)
     }
 

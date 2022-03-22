@@ -4,37 +4,45 @@ import React, { useState, useEffect } from 'react'
 const CreateAccountDetails = (props) => {
 
     const genres = ['Pop', 'Rock', 'Techno', 'Hip-hop', 'Jazz', 'Rap', 'Country', 'Metal', 'Alternative', 'Indie']
-    let emptyAccountDetails = { owner: props.currentUser, location: '', favorite_genres: '', image: '' }
-
-
-    const [accountDetails, setAccountDetails] = useState(emptyAccountDetails)
-    const [checkedGenreState, setCheckedGenreState] = useState(
-        new Array(genres.length).fill(false)
-    )
+    
+    const [accountDetails, setAccountDetails] = useState({
+        owner: props.currentUser,
+        location: '',
+        favorite_genres: [],
+        image: ''
+    })
+    const [checked, setChecked] = useState([])
+    const [locationInput, setLocationInput] = useState("")
+    const [imageInput, setImageInput] = useState("") 
 
     const handleChange = (event) => {
         setAccountDetails({ ...accountDetails, [event.target.name]: event.target.value })
-        console.log(accountDetails)
+        //console.log(accountDetails)
     }
 
-    const handleCheckboxChange = (position) => {
-        const updatedCheckedState = checkedGenreState.map((item, index) => {
-            if (index === position) {
-                return !item;
-            } else {
-                return item
-            }
-        })
-        setCheckedGenreState(updatedCheckedState)
+        // ({ ...accountDetails, [event.target.name]: event.target.value })
+    
+    const handleCheck = (event) => {
+        let updatedList = [...checked] 
+        if (event.target.checked) {
+            updatedList = [...checked, event.target.value]
+            setAccountDetails((prevState) => ({
+                ...prevState,
+                favorite_genres: [...prevState.favorite_genres, event.target.value]
+            }))
+        } else {
+            accountDetails.favorite_genres.splice(checked.indexOf(event.target.value), 1)
+            //updatedList.splice(checked.indexOf(event.target.value), 1)
+        }
+        setChecked(updatedList)
     }
-
 
     const handleSubmit = (event) => {
         event.preventDefault()
         props.handleCreateAccount(accountDetails)
     }
 
-
+    console.log(checked)
 
     return (
         <section className="account-detail-box">
@@ -69,11 +77,8 @@ const CreateAccountDetails = (props) => {
                                 <input
                                     placeholder = 'Favorite genres...'
                                     type="checkbox"
-                                    name="favorite_genres"
-                                    key={`${index}-${genre}`}
-                                    value={genre}
-                                    checked={checkedGenreState[index]}
-                                    onChange={() => handleCheckboxChange(index)}
+                                    value={genre}                       
+                                    onChange={handleCheck}
                                 />
                                 <label htmlFor={`${index}-${genre}`}>{genre}</label>
                         </li>
