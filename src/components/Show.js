@@ -2,6 +2,8 @@ import {useParams} from 'react-router-dom'
 import {useState, useEffect} from 'react'
 import axios from 'axios'
 import Edit from './Edit.js'
+import ReactPlayer from 'react-player/lazy'
+import Euphoria from '../assets/kalidescope.mp3'
 
 import {
     Link,
@@ -11,7 +13,7 @@ import {
 const Show = (props) => {
     const params = useParams();
     const [songs, setSongs] = useState([])
-
+    console.log(params.id);
 
     const getSong = () => {
       axios
@@ -23,14 +25,15 @@ const Show = (props) => {
         .catch((error) => console.error(error))
     }
 
-    const handleUpdate = (editSong) => {
+    const handleUpdateSong = (editSong) => {
       console.log(editSong.id)
       axios
-        .put('https://glacial-wave-24104.herokuapp.com/api/songs/' + params.id, editSong)
+        .put('https://glacial-wave-24104.herokuapp.com/api/songs/' + editSong.id, editSong)
         .then((response) => {
           getSong()
         })
     }
+
 
     const handleDelete = (event) => {
       axios
@@ -58,14 +61,24 @@ if (!songs.price) {
         <h2 className = 'showName'>{songs.name}</h2>
         <h3>{songs.artist}</h3>
         <h3>{songs.genre}</h3>
+        <div id='player-wrapper'>
+        <ReactPlayer
+          id='react-player'
+          url={songs.audio}
+          controls={true}
+        />
+      </div>
+      {console.log(Euphoria)}
+
 
         <div className = 'showButtons'>
-        <Link className = 'linkButton' to = '/songs'><button className = 'deleteButtonShow' onClick={handleDelete} value={songs.id}>
-        Delete
-        </button></Link>
 
-        <Edit handleUpdate = {handleUpdate} songs = {songs} setSongs = {setSongs} />
+
+        <Edit handleUpdateSong = {handleUpdateSong} songs = {songs} setSongs = {setSongs} id = {params.id}/>
         </div>
+        <button className = 'deleteButtonShow' onClick={handleDelete} value={songs.id}>
+        Delete
+        </button>
         </div>
     )
 }

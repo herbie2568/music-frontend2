@@ -45,8 +45,12 @@ const App = (props) => {
   const [currentAccount, setCurrentAccount] = useState({})
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [toggleSignUp, setToggleSignUp] = useState(false)
+  const [accountExists, setAccountExists] = useState(false)
+  const [userDetails, setUserDetails] = useState({})
 
 
+  ////-------////
+  //authentication functions
   const handleLogin = (user) => {
     axios({
       method: 'put',
@@ -89,61 +93,8 @@ const App = (props) => {
     setIsAuthenticated(false)
   }
 
-  const getAccountInfo = () => {
-    axios
-   .get('https://glacial-wave-24104.herokuapp.com/api/accounts')
-   .then(
-     (response) => setAccountInfo(response.data),
-     (err) => console.error(err)
-   )
-   .catch((error) => console.error(error))
-  }
-
-
-  useEffect(() => {
-    getSong()
-  }, [])
-
-
-    useEffect(() => {
-      getAccountInfo()
-    }, [])
-
-  const getSong = () => {
-    axios
-      .get('https://glacial-wave-24104.herokuapp.com/api/songs')
-      .then(
-        (response) => setSongs(response.data),
-        (err) => console.error(err)
-      )
-      .catch((error) => console.error(error))
-  }
-
-  const handleDelete = (event) => {
-    axios
-      .delete('https://glacial-wave-24104.herokuapp.com/api/songs/' + event.target.value)
-      .then((response) => {
-        getSong()
-      })
-  }
-
-  const handleUpdateSong = (editSong) => {
-    console.log(editSong.id)
-    axios
-      .put('https://glacial-wave-24104.herokuapp.com/api/songs/' + editSong.id, editSong)
-      .then((response) => {
-        getSong()
-      })
-  }
-
-  const handleUpdateAccount = (editAccount) => {
-    console.log(editAccount.id)
-    axios
-      .put('https://glacial-wave-24104.herokuapp.com/api/accounts/' + editAccount.id, editAccount)
-      .then((response) => {
-        getAccountInfo()
-      })
-  }
+  ////-------////
+  //POST (create) functions
 
   const handleCreateUser = async (addUser) => {
     axios
@@ -152,7 +103,6 @@ const App = (props) => {
         console.log(response.data)
         setCurrentUser(response.data)
         setIsAuthenticated(true)
-        handleCreateAccount(currentUser)
       })
       .catch((error) => console.log(error))
   }
@@ -184,84 +134,164 @@ const App = (props) => {
       })
   }
 
+  ////-------////
+  //GET functions
+
+  const getAccountInfo = () => {
+    axios
+      .get('https://glacial-wave-24104.herokuapp.com/api/accounts/' + currentUser.id)
+      .then(
+        (response) => setAccountInfo(response.data),
+        (err) => console.error(err)
+      )
+      .catch((error) => console.error(error))
+  }
+
+
+  const getSong = () => {
+    axios
+      .get('https://glacial-wave-24104.herokuapp.com/api/songs')
+      .then(
+        (response) => setSongs(response.data),
+        (err) => console.error(err)
+      )
+      .catch((error) => console.error(error))
+  }
+
+
+  // PUT functions (update)
+  const handleUpdateSong = (editSong) => {
+    console.log(editSong.id)
+    axios
+      .put('https://glacial-wave-24104.herokuapp.com/api/songs/' + editSong.id, editSong)
+      .then((response) => {
+        getSong()
+      })
+  }
+
+
+  // DELETE functions
+  const handleDeleteSong = (event) => {
+    axios
+      .delete('https://glacial-wave-24104.herokuapp.com/api/songs/' + event.target.value)
+      .then((response) => {
+        getSong()
+      })
+  }
+
+
+
+  useEffect(() => {
+    getSong()
+  }, [])
+
   return (
     <>
       {isAuthenticated ? (
         <>
-      <div className = 'navbarDiv'>
-      <div className = 'logoNameApp'>
-      <div className = 'logoName'>
-      <img className = 'logo' src = 'https://i.imgur.com/bZRUMGT.png'></img>
-      <div className = 'appName'>Music App</div>
-      </div>
-      <button className = 'logoutButton' onClick={handleLogout}>Log out</button>
-      </div>
-        <nav className = 'navBar'>
-          <Link className = 'link'to="/">Home</Link>
-          <Link className = 'link' to='/new'>Add Song</Link>
-          <Link className = 'link' to='/account'>Account Details</Link>
-          <Link className = 'link' to='/cart'>Your Cart</Link>
+          <div className = 'navbarDiv'>
+          <div className = 'logoNameApp'>
+          <div className = 'logoName'>
+          <img className = 'logo' src = 'https://i.imgur.com/bZRUMGT.png'></img>
+          <div className = 'appName'>Music App</div>
+          </div>
+          <button className = 'logoutButton' onClick={handleLogout}>Log out</button>
+          </div>
+            <nav className = 'navBar'>
+              <Link className = 'link'to="/">Home</Link>
+              <Link className = 'link' to='/new'>Add Song</Link>
+              <Link className = 'link' to='/account'>Account Details</Link>
+              <Link className = 'link' to='/cart'>Your Cart</Link>
 
-        </nav>
-      </div>
+            </nav>
+          </div>
 
-      <div className="wrapper">
-        <Routes>
+          <div className="wrapper">
+            <Routes>
+              <Route path="/*"
+                element={<Songs />}
+              />
+              <Route path="/account"
+                element={<Account
+                  currentUser={currentUser}
+                  handleCreateAccount={handleCreateAccount}
+                  currentAccount={currentAccount}
+                  accountExists={accountExists}
+                />}
+              />
+              <Route path="/cart"
+                element={<Cart />}
+              />
+              <Route path='/songs/:id'
+                element={<Show
+                  songs={songs}
+                  handleDeleteSong={handleDeleteSong}
+                />}
+              />
+              <Route path="/createaccount"
+                element={<User
+                  handleCreateUser={handleCreateUser}
+                />}
+              />
+              <Route path="/edit"
+                element={<Edit
+                  handleUpdateSong={handleUpdateSong}
+                />}
+              />
+              <Route path="/new"
+                element={<Add
+                  handleCreateSong={handleCreateSong}
+                />}
+              />
+            </Routes>
 
-          <Route path="/*" element={<Songs />}/>
-          <Route path="/account" element={<Account currentUser = {currentUser} accountInfo = {accountInfo} handleCreateAccount= {handleCreateAccount} handleUpdateAccount = {handleUpdateAccount}/>}/>
-          <Route path="/cart" element={<Cart />}/>
-          <Route path = '/songs/:id' element = {<Show songs = {songs}  handleDelete = {handleDelete}/>}/>
-
-          <Route path="/createaccount" element={<User handleCreateUser = {handleCreateUser}/>}/>
-          <Route path = "/edit" element = {<Edit handleUpdateSong = {handleUpdateSong}/>} />
-          <Route path="/new" element={<Add handleCreateSong = {handleCreateSong}/>}/>
-        </Routes>
-
-        <footer>
-        <ul className = 'footerUL'>
-
-      <li  className = 'footerLI'>About</li>
-      <li  className = 'footerLI'>Legal Terms</li>
-      <li  className = 'footerLI'>Privacy Statement</li>
-      <li  className = 'footerLI'>Careers</li>
-      <li className = 'footerLI'>Customer Support</li>
-      </ul>
-      <div className = 'footerDiv'>
-      <img className = 'logoFooter' src = 'https://i.imgur.com/bZRUMGT.png'></img>
-      <div className = 'footerName'>Music App</div>
-      </div>
-      <div className = 'names'>Made by <a href = 'https://www.linkedin.com/in/meredith-bloom/'>Meredith Bloom</a>, <a href = 'https://www.linkedin.com/in/christophermaleakethompson/'> Christopher Thompson</a>, and <a href = 'https://www.linkedin.com/in/lilychen910'> Lily Chen</a></div>
-
-
-        </footer>
-      </div>
+            <footer>
+              <ul className = 'footerUL'>
+                <li  className = 'footerLI'>About</li>
+                <li  className = 'footerLI'>Legal Terms</li>
+                <li  className = 'footerLI'>Privacy Statement</li>
+                <li  className = 'footerLI'>Careers</li>
+                <li className = 'footerLI'>Customer Support</li>
+              </ul>
+              <div className = 'footerDiv'>
+                <img className = 'logoFooter' src = 'https://i.imgur.com/bZRUMGT.png'></img>
+                <div className = 'footerName'>Music App</div>
+              </div>
+              <div className='names'>Made by <a href='https://www.linkedin.com/in/meredith-bloom/'>Meredith Bloom</a>, <a href='https://www.linkedin.com/in/christophermaleakethompson/'> Christopher Thompson</a>, and <a href='https://www.linkedin.com/in/lilychen910'> Lily Chen</a>
+              </div>
+            </footer>
+          </div>
+        </>
+      ) : (
+        <>
+          {toggleLogin ? (
+            <>
+              <Login handleLogin={handleLogin} />
+                <div className = 'needAccount'>
+                  <span>Need an account?</span><br/>
+                  <div className = 'signupDiv' onClick={handleToggleSignUp}>Sign up</div>
+                </div>
+            </>
+          ) : (
+            <>
+              <Register
+                handleCreateUser={handleCreateUser}
+                handleCreateAccount={handleCreateAccount}
+              />
+              <div className = 'needAccount'>
+                <span>Have an account already?</span><br/>
+                  <div className='signupDiv' onClick={handleToggleSignUp}>
+                    Login
+                  </div>
+              </div>
+            </>
+            )
+          }
+        </>
+      )
+    }
     </>
-) : (
-     <>
-     {toggleLogin ? (
-   <>
-     <Login handleLogin={handleLogin} />
-       <div className = 'needAccount'>
-         <span>Need an account?</span><br/>
-         <div className = 'signupDiv' onClick={handleToggleSignUp}>Sign up</div>
-       </div>
-   </>
- ) : (
-   <>
-     <Register handleCreateUser={handleCreateUser} handleCreateAccount = {handleCreateAccount}/>
-
-     <div className = 'needAccount'>
-       <span>Have an account already?</span><br/>
-       <div className = 'signupDiv' onClick={handleToggleSignUp}>Login</div>
-     </div>
-   </>
- )}
-</>
-)
-}
-</>
-)
+  )
 }
 
 

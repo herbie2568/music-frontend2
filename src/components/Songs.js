@@ -4,6 +4,8 @@ import Add from './Add.js'
 import Edit from './Edit.js'
 import User from './User.js'
 import '../App.css';
+import ReactPlayer from 'react-player/lazy'
+
 import {
     BrowserRouter as Router,
     Switch,
@@ -16,11 +18,13 @@ import {
 import Show from './Show.js'
 
 
+
 const Songs = (props) => {
 
 
     let [songs, setSongs] = useState([])
     let [users, setUsers] = useState([])
+    let [searchArtist, setSearchArtist] = useState(false)
     const [filter, setFilter] = useState('')
     let navigate = useNavigate()
 
@@ -78,6 +82,16 @@ const Songs = (props) => {
         })
     }
 
+    const handleSearchValue = (e) => {
+      console.log({ e })
+
+      if (e === "artist") {
+          setSearchArtist(true)
+      } else {
+          setSearchArtist(false)
+      }
+  }
+
 
     useEffect(() => {
         getSong()
@@ -85,6 +99,13 @@ const Songs = (props) => {
 
     return (
         <>
+        <div className='searchByBtn'>
+                <input type="radio" value='artist' checked={searchArtist === true} name='artist' onChange={e => handleSearchValue(e.target.value)} />
+                <label htmlFor='artist'>Artist</label>
+                <input type="radio" value='name' name='name' checked={searchArtist === false} onChange={e => handleSearchValue(e.target.value)} />
+                <label htmlFor='name'>Name</label>
+            </div>
+
 
 
         <div className = 'searchDiv'>
@@ -98,7 +119,7 @@ const Songs = (props) => {
 
 
         <div className="songContainer">
-        {songs.filter((search) =>
+        {searchArtist ? songs.filter((search) =>
             search.name.toLowerCase().includes(filter.toLowerCase())).map((song, index) => {
 
                 if (!song.image) {
@@ -112,7 +133,7 @@ const Songs = (props) => {
                     <>
                       <div>
                         <Routes>
-                          <Route path='/songs/:id' element = {<Show songs = {songs} song = {song} handleUpdate={handleUpdate} handleDelete = {handleDelete}/>}/>
+                          <Route path='/songs/:id' element = {<Show songs = {songs} song = {song} handleUpdate={handleUpdate} handleDelete = {handleDelete} id = {song.id}/>}/>
                         </Routes>
                       </div>
                       <div className="songCard" key={song.id + index}>
@@ -137,8 +158,47 @@ const Songs = (props) => {
 
               )
 
-          })}
-          </div>
+          }) : songs.filter((search) =>
+                        search.name.toLowerCase().includes(filter.toLowerCase())).map((song, index) => {
+
+                            if (!song.image) {
+                                song.image = 'https://i.imgur.com/D3aOVsJ.png'
+                            }
+                            if (!song.price) {
+                                song.price = '1.29'
+                            }
+                            return (
+
+                                <>
+                                    <div>
+                                        <Routes>
+                                            <Route path='/songs/:id' element={<Show songs={songs} song={song} handleUpdate={handleUpdate} handleDelete={handleDelete} />} />
+                                        </Routes>
+                                    </div>
+                                    <div className="songCard" key={song.id + index}>
+                                        <img onClick={() => {
+                                            navigate('/songs/' + song.id
+                                            )
+                                        }} className='songImage' src={song.image}></img>
+
+                                        <h4 className='name'>{song.name}</h4>
+
+                                        <h5>Artist: {song.artist}</h5>
+                                        <h5>Genre: {song.genre}</h5>
+                                        <h5>Price: ${song.price}</h5>
+
+
+                                        <button className='deleteButton' onClick={handleDelete} value={song.id}>
+                                            Delete
+                                        </button>
+                                        {/* <Edit /> */}
+                                    </div>
+                                </>
+
+                            )
+
+                        })}
+            </div>
         </>
     )
 }
