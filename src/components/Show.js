@@ -25,22 +25,23 @@ const Show = (props) => {
       .catch((error) => console.error(error))
   }
 
-  const handleUpdate = (editSong) => {
-    console.log(editSong.id)
-    axios
-      .put('https://glacial-wave-24104.herokuapp.com/api/songs/' + params.id, editSong)
-      .then((response) => {
-        getSong()
-      })
-  }
+    const handleUpdateSong = (editSong) => {
+      console.log(editSong.id)
+      axios
+        .put('https://glacial-wave-24104.herokuapp.com/api/songs/' + editSong.id, editSong)
+        .then((response) => {
+          getSong()
+        })
+    }
 
-  const handleDelete = (event) => {
-    axios
-      .delete('https://glacial-wave-24104.herokuapp.com/api/songs/' + event.target.value)
-      .then((response) => {
-        getSong()
-      })
-  }
+
+    const handleDelete = (event) => {
+      axios
+        .delete('https://glacial-wave-24104.herokuapp.com/api/songs/' + event.target.value)
+        .then((response) => {
+          getSong()
+        })
+     }
 
   useEffect(() => {
     axios.get('https://glacial-wave-24104.herokuapp.com/api/songs/' + params.id)
@@ -53,14 +54,14 @@ const Show = (props) => {
   }
   if (!songs.price) {
     songs.price = '1.29'
-  }
-  return (
-    <div className='showContainer'>
-      <img src={songs.image}></img>
-      <h2 className='showName'>{songs.name}</h2>
-      <h3>{songs.artist}</h3>
-      <h3>{songs.genre}</h3>
-      <div id='player-wrapper'>
+}
+    return (
+        <div className = 'showContainer'>
+        <img src = {songs.image}></img>
+        <h2 className = 'showName'>{songs.name}</h2>
+        <h3>{songs.artist}</h3>
+        <h3>{songs.genre}</h3>
+        <div id='player-wrapper'>
         <ReactPlayer
           id='react-player'
           url={songs.audio}
@@ -69,15 +70,17 @@ const Show = (props) => {
       </div>
       {console.log(Euphoria)}
 
-      <div className='showButtons'>
-        <Link className='linkButton' to='/songs'><button className='deleteButtonShow' onClick={handleDelete} value={songs.id}>
-          Delete
-        </button></Link>
 
-        <Edit handleUpdate={handleUpdate} songs={songs} setSongs={setSongs} />
-      </div>
-    </div>
-  )
+        <div className = 'showButtons'>
+
+
+        <Edit handleUpdateSong = {handleUpdateSong} songs = {songs} setSongs = {setSongs} id = {params.id}/>
+        </div>
+        <button className = 'deleteButtonShow' onClick={handleDelete} value={songs.id}>
+        Delete
+        </button>
+        </div>
+    )
 }
 
 export default Show

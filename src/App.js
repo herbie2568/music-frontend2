@@ -193,6 +193,57 @@ const App = (props) => {
   }, [])
 
 
+  ////-------////
+  //GET functions
+
+  const getAccountInfo = () => {
+    axios
+      .get('https://glacial-wave-24104.herokuapp.com/api/accounts/' + currentUser.id)
+      .then(
+        (response) => setAccountInfo(response.data),
+        (err) => console.error(err)
+      )
+      .catch((error) => console.error(error))
+  }
+
+
+  const getSong = () => {
+    axios
+      .get('https://glacial-wave-24104.herokuapp.com/api/songs')
+      .then(
+        (response) => setSongs(response.data),
+        (err) => console.error(err)
+      )
+      .catch((error) => console.error(error))
+  }
+
+
+  // PUT functions (update)
+  const handleUpdateSong = (editSong) => {
+    console.log(editSong.id)
+    axios
+      .put('https://glacial-wave-24104.herokuapp.com/api/songs/' + editSong.id, editSong)
+      .then((response) => {
+        getSong()
+      })
+  }
+
+
+  // DELETE functions
+  const handleDeleteSong = (event) => {
+    axios
+      .delete('https://glacial-wave-24104.herokuapp.com/api/songs/' + event.target.value)
+      .then((response) => {
+        getSong()
+      })
+  }
+
+
+
+  useEffect(() => {
+    getSong()
+  }, [])
+
   return (
     <>
       {isAuthenticated ? (
