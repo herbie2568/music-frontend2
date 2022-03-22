@@ -69,11 +69,13 @@ const Show = (props) => {
       </div>
       {console.log(Euphoria)}
 
-      <Link to='/songs'><button className='deleteButton' onClick={handleDelete} value={songs.id}>
-        Delete
-      </button></Link>
+      <div className='showButtons'>
+        <Link className='linkButton' to='/songs'><button className='deleteButtonShow' onClick={handleDelete} value={songs.id}>
+          Delete
+        </button></Link>
 
-      <Edit handleUpdate={handleUpdate} songs={songs} setSongs={setSongs} />
+        <Edit handleUpdate={handleUpdate} songs={songs} setSongs={setSongs} />
+      </div>
     </div>
   )
 }

@@ -354,15 +354,138 @@ footer {
     text-align: center;
     padding-top: 5vh;
     padding-bottom: 10vh;
-    display: flex;
+    /* display: flex;
     flex-direction: row;
     justify-content: center;
-    gap: 25%;
+    gap: 25%; */
+}
+
+.accountDetails {
+    margin-bottom: 5vh;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
 }
 
 .accountForm {
     display: flex;
     flex-direction: column;
+    align-items: center;
+}
+
+.updateAccountButton {
+    height: 30px;
+    padding: 10px 15px 30px 15px;
+    border-radius: 20px;
+    font-family: 'Mukta', sans-serif;
+    transition-duration: 0.4s;
+    background: white;
+    margin-bottom: 50px;
+}
+
+.updateAccountButton:hover {
+    transform: scale(1.02);
+}
+
+
+.showStuff {
+    color: black;
+    font-size: 20px;
+
+}
+
+.profilePicDiv {
+    width: 100%;
+    text-align: center;
+    align-self: center;
+}
+
+.profilePic {
+    width: 150px;
+
+}
+
+.accountDetailsDiv {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 100px;
+    margin-top: 3vh;
+}
+.accountImage {
+    align-self: center;
+}
+
+.editAccountButton {
+    padding: 8px 20px;
+    background: white;
+    border-radius: 20px;
+    font-family: 'Mukta', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    transition-duration: 0.5s;
+    margin-top: 20px;
+    width: 100px;
+}
+
+.editAccountButton:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+
+}
+
+.showButtons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-left: 100px;
+    padding-bottom: 10vh;
+}
+
+.editButton {
+    padding: 1px 5px;
+    margin-right: 50px;
+    margin-top: 5px;
+    border-radius: 10px;
+    font-family: 'Mukta', sans-serif;
+    transition-duration: 0.4s;
+}
+
+.editButton:hover {
+    background: yellow;
+    cursor: pointer;
+}
+
+.editInput {
+    padding: 4px 8px;
+    border-radius: 5px;
+    margin-left: 10px;
+    margin-top: 10px;
+    font-family: 'Mukta', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    margin-bottom: 20px;
+    width: 200px;
+}
+
+.editForm {
+    margin-right: 50px;
+    margin-top: 3vh;
+}
+
+.deleteButtonShow {
+    padding: 1px 5px;
+    margin-left: 50px;
+    margin-top: 5px;
+    border-radius: 10px;
+    font-family: 'Mukta', sans-serif;
+    transition-duration: 0.4s;
+}
+
+.deleteButtonShow:hover {
+    background: red;
+    cursor: pointer;
 }
 .searchByBtn {
     color: #15a9e9;

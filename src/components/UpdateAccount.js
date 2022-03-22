@@ -9,7 +9,6 @@ const UpdateAccount = (props) => {
     const [currentAccount, setCurrentAccount] = useState(accountDetails)
 
 
-
     return (
         <>
             <h2>Update Account Info</h2>
