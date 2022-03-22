@@ -46,8 +46,11 @@ const App = (props) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [toggleSignUp, setToggleSignUp] = useState(false)
   const [accountExists, setAccountExists] = useState(false)
+  const [userDetails, setUserDetails] = useState({})
 
 
+  ////-------////
+  //authentication functions
   const handleLogin = (user) => {
     axios({
       method: 'put',
@@ -90,47 +93,8 @@ const App = (props) => {
     setIsAuthenticated(false)
   }
 
-  const getAccountInfo = () => {
-    axios
-   .get('https://glacial-wave-24104.herokuapp.com/api/accounts')
-   .then(
-     (response) => setSongs(response.data),
-     (err) => console.error(err)
-   )
-   .catch((error) => console.error(error))
-  }
-
-
-  useEffect(() => {
-    getSong()
-  }, [])
-
-  const getSong = () => {
-    axios
-      .get('https://glacial-wave-24104.herokuapp.com/api/songs')
-      .then(
-        (response) => setSongs(response.data),
-        (err) => console.error(err)
-      )
-      .catch((error) => console.error(error))
-  }
-
-  const handleDelete = (event) => {
-    axios
-      .delete('https://glacial-wave-24104.herokuapp.com/api/songs/' + event.target.value)
-      .then((response) => {
-        getSong()
-      })
-  }
-
-  const handleUpdateSong = (editSong) => {
-    console.log(editSong.id)
-    axios
-      .put('https://glacial-wave-24104.herokuapp.com/api/songs/' + editSong.id, editSong)
-      .then((response) => {
-        getSong()
-      })
-  }
+  ////-------////
+  //POST (create) functions 
 
   const handleCreateUser = async (addUser) => {
     axios
@@ -139,7 +103,6 @@ const App = (props) => {
         console.log(response.data)
         setCurrentUser(response.data)
         setIsAuthenticated(true)
-        handleCreateAccount(currentUser)
       })
       .catch((error) => console.log(error))
   }
@@ -170,6 +133,58 @@ const App = (props) => {
         getSong()
       })
   }
+
+  ////-------////
+  //GET functions
+
+  const getAccountInfo = () => {
+    axios
+      .get('https://glacial-wave-24104.herokuapp.com/api/accounts/' + currentUser.id)
+      .then(
+        (response) => setAccountInfo(response.data),
+        (err) => console.error(err)
+      )
+      .catch((error) => console.error(error))
+  }
+
+
+  const getSong = () => {
+    axios
+      .get('https://glacial-wave-24104.herokuapp.com/api/songs')
+      .then(
+        (response) => setSongs(response.data),
+        (err) => console.error(err)
+      )
+      .catch((error) => console.error(error))
+  }
+
+
+  // PUT functions (update)
+  const handleUpdateSong = (editSong) => {
+    console.log(editSong.id)
+    axios
+      .put('https://glacial-wave-24104.herokuapp.com/api/songs/' + editSong.id, editSong)
+      .then((response) => {
+        getSong()
+      })
+  }
+
+
+  // DELETE functions
+  const handleDeleteSong = (event) => {
+    axios
+      .delete('https://glacial-wave-24104.herokuapp.com/api/songs/' + event.target.value)
+      .then((response) => {
+        getSong()
+      })
+  }
+
+
+
+  useEffect(() => {
+    getSong()
+  }, [])
+
 
   return (
     <>
@@ -211,7 +226,7 @@ const App = (props) => {
               <Route path='/songs/:id'
                 element={<Show
                   songs={songs}
-                  handleDelete={handleDelete}
+                  handleDeleteSong={handleDeleteSong}
                 />}
               />
               <Route path="/createaccount"

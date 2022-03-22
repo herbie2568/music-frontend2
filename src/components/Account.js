@@ -9,7 +9,7 @@ const Account = (props) => {
   const [toggleUpdate, setToggleUpdate] = useState(false)
   //const [createForm, setCreateForm] = useState(true)
   const [accountExists, setAccountExists] = useState(props.accountExists)
-  // const [user, setUser] = useState({ props.currentUser })
+  const [currentUser, setCurrentUser] = useState(props.currentUser)
 
   const handleChange = (event) => {
     setAccount({ ...account, [event.target.name]: event.target.value })
