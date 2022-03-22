@@ -180,7 +180,8 @@ const App = (props) => {
     axios
       .put('https://glacial-wave-24104.herokuapp.com/api/useraccount/' + currentUser.id, editAccount)
       .then((response) => {
-        getAccountInfo()
+        console.log(response.data)
+        setCurrentAccount(response.data)
       })
   }
 
@@ -202,7 +203,6 @@ const App = (props) => {
         setCurrentUser({})
         setCurrentAccount({})
         setAccountExists(false)
-        
       })
   }
 
