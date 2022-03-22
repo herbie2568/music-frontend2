@@ -4,16 +4,18 @@
 
 #### Links
 
-Front-end:
-Github Repo <https://github.com/herbie2568/music-frontend2>
-Live Heroku Link <https://gentle-caverns-01145.herokuapp.com/>
+-Front-end:
+-Github Repo <https://github.com/herbie2568/music-frontend2>
+-Live Heroku Link <https://gentle-caverns-01145.herokuapp.com/>
 
-Back-end:
-Github Repo <https://github.com/herbie2568/music-backend2>
-Live Heroku Base Url <https://glacial-wave-24104.herokuapp.com/>
- -- /api/songs
- -- /api/accounts
- -- /api/useraccount
+-Back-end:
+-Github Repo <https://github.com/herbie2568/music-backend2>
+-Live Heroku Base Url <https://glacial-wave-24104.herokuapp.com/>
+URL PATHS
+
+1. /api/songs
+2. /api/accounts
+3. /api/useraccount
 
 ### User Stories
 
