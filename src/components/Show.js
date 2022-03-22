@@ -1,29 +1,29 @@
-import {useParams} from 'react-router-dom'
-import {useState, useEffect} from 'react'
+import { useParams } from 'react-router-dom'
+import { useState, useEffect } from 'react'
 import axios from 'axios'
 import Edit from './Edit.js'
 import ReactPlayer from 'react-player/lazy'
 import Euphoria from '../assets/kalidescope.mp3'
 
 import {
-    Link,
+  Link,
 } from "react-router-dom";
 
 
 const Show = (props) => {
-    const params = useParams();
-    const [songs, setSongs] = useState([])
-    console.log(params.id);
+  const params = useParams();
+  const [songs, setSongs] = useState([])
 
-    const getSong = () => {
-      axios
-        .get('https://glacial-wave-24104.herokuapp.com/api/songs')
-        .then(
-          (response) => setSongs(response.data),
-          (err) => console.error(err)
-        )
-        .catch((error) => console.error(error))
-    }
+
+  const getSong = () => {
+    axios
+      .get('https://glacial-wave-24104.herokuapp.com/api/songs')
+      .then(
+        (response) => setSongs(response.data),
+        (err) => console.error(err)
+      )
+      .catch((error) => console.error(error))
+  }
 
     const handleUpdateSong = (editSong) => {
       console.log(editSong.id)
@@ -43,16 +43,16 @@ const Show = (props) => {
         })
      }
 
-     useEffect(() => {
-        axios.get('https://glacial-wave-24104.herokuapp.com/api/songs/' + params.id)
-        .then((response) =>
+  useEffect(() => {
+    axios.get('https://glacial-wave-24104.herokuapp.com/api/songs/' + params.id)
+      .then((response) =>
         setSongs(response.data))
-      }, []);
+  }, []);
 
-if (!songs.image) {
+  if (!songs.image) {
     songs.image = 'https://i.imgur.com/D3aOVsJ.png'
-}
-if (!songs.price) {
+  }
+  if (!songs.price) {
     songs.price = '1.29'
 }
     return (
